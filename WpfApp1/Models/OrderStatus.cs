@@ -14,6 +14,10 @@ namespace WpfApp1.Models
     internal enum OrderStatus
     {
         /// <summary>
+        /// The order has been created and is still being modified by the Customer.
+        /// </summary>
+        Taking,
+        /// <summary>
         /// The orden has been taken and is waiting to be taken care of...
         /// </summary>
         Taken,
