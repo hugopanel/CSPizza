@@ -37,15 +37,19 @@ namespace WpfApp1.Models
         /// The Clerk's main loop. 
         /// The Clerk will check for messages and handle them accordingly.
         /// </summary>
-        public void Word()
+        public void Work()
         {
-            // Check for an incoming phone call. 
+            // Check for a
+            // MessageType.InitialCall
+            // message from a new Customer.
 
             // Check for a 
             // MessageType.KitchenOrderReady
             // message from the cooks. 
 
             // Check for a 
+            // MessageType.DeliveryArrivedAtPizzeria
+            // message from the DeliveryMan.
         }
 
         /// <summary>

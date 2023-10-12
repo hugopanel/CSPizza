@@ -9,9 +9,14 @@ namespace WpfApp1.Models
     class Address
     {
         /// <summary>
-        /// Street name
+        /// Street name (and number)
         /// </summary>
-        public string Name { get; set; }
+        public string Street { get; set; }
+
+        /// <summary>
+        /// City name
+        /// </summary>
+        public string City { get; set; }
 
         /// <summary>
         /// Time it takes to deliver an order to that address (in milliseconds).
@@ -23,8 +28,9 @@ namespace WpfApp1.Models
         /// </summary>
         /// <param name="name">The address as a string</param>
         /// <param name="deliveryTime">The time it takes to deliver to that address (in milliseconds)</param>
-        public Address(string name, int deliveryTime) {
-            Name = name;
+        public Address(string street, string city, int deliveryTime) {
+            Street = street;
+            City = city;
             DeliveryTime = deliveryTime;
         }
     }

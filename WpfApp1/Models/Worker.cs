@@ -17,6 +17,7 @@ namespace WpfApp1.Models
         /// The identifier of the worker.
         /// </summary>
         public int Id { get => _id; }
+        
         /// <summary>
         /// The name of the worker.
         /// </summary>
