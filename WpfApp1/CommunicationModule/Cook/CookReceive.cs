@@ -1,6 +1,6 @@
-﻿using System;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
 
 namespace Cook
 {

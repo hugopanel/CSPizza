@@ -7,4 +7,55 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="CommunicationModule\Clerk\obj\Debug\**" />
+    <Compile Remove="CommunicationModule\Clerk\obj\Release\**" />
+    <Compile Remove="CommunicationModule\Cook\obj\Debug\**" />
+    <Compile Remove="CommunicationModule\Cook\obj\Release\**" />
+    <Compile Remove="CommunicationModule\Customer\obj\Debug\**" />
+    <Compile Remove="CommunicationModule\Customer\obj\Release\**" />
+    <Compile Remove="CommunicationModule\Delivery\obj\Debug\**" />
+    <Compile Remove="CommunicationModule\Delivery\obj\Release\**" />
+    <Compile Remove="CommunicationModule\TopicSend\obj\Debug\**" />
+    <Compile Remove="CommunicationModule\TopicSend\obj\Release\**" />
+    <EmbeddedResource Remove="CommunicationModule\Clerk\obj\Debug\**" />
+    <EmbeddedResource Remove="CommunicationModule\Clerk\obj\Release\**" />
+    <EmbeddedResource Remove="CommunicationModule\Cook\obj\Debug\**" />
+    <EmbeddedResource Remove="CommunicationModule\Cook\obj\Release\**" />
+    <EmbeddedResource Remove="CommunicationModule\Customer\obj\Debug\**" />
+    <EmbeddedResource Remove="CommunicationModule\Customer\obj\Release\**" />
+    <EmbeddedResource Remove="CommunicationModule\Delivery\obj\Debug\**" />
+    <EmbeddedResource Remove="CommunicationModule\Delivery\obj\Release\**" />
+    <EmbeddedResource Remove="CommunicationModule\TopicSend\obj\Debug\**" />
+    <EmbeddedResource Remove="CommunicationModule\TopicSend\obj\Release\**" />
+    <None Remove="CommunicationModule\Clerk\obj\Debug\**" />
+    <None Remove="CommunicationModule\Clerk\obj\Release\**" />
+    <None Remove="CommunicationModule\Cook\obj\Debug\**" />
+    <None Remove="CommunicationModule\Cook\obj\Release\**" />
+    <None Remove="CommunicationModule\Customer\obj\Debug\**" />
+    <None Remove="CommunicationModule\Customer\obj\Release\**" />
+    <None Remove="CommunicationModule\Delivery\obj\Debug\**" />
+    <None Remove="CommunicationModule\Delivery\obj\Release\**" />
+    <None Remove="CommunicationModule\TopicSend\obj\Debug\**" />
+    <None Remove="CommunicationModule\TopicSend\obj\Release\**" />
+    <Page Remove="CommunicationModule\Clerk\obj\Debug\**" />
+    <Page Remove="CommunicationModule\Clerk\obj\Release\**" />
+    <Page Remove="CommunicationModule\Cook\obj\Debug\**" />
+    <Page Remove="CommunicationModule\Cook\obj\Release\**" />
+    <Page Remove="CommunicationModule\Customer\obj\Debug\**" />
+    <Page Remove="CommunicationModule\Customer\obj\Release\**" />
+    <Page Remove="CommunicationModule\Delivery\obj\Debug\**" />
+    <Page Remove="CommunicationModule\Delivery\obj\Release\**" />
+    <Page Remove="CommunicationModule\TopicSend\obj\Debug\**" />
+    <Page Remove="CommunicationModule\TopicSend\obj\Release\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="FileName.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="6.6.0" />
+  </ItemGroup>
+
 </Project>

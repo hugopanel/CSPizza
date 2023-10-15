@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WpfApp1.Models
 {
@@ -20,7 +16,7 @@ namespace WpfApp1.Models
         /// The status of the order, as defined by OrderStatus.
         /// </summary>
         public OrderStatus Status { get; set; } = OrderStatus.Taken;
-        
+
         /// <summary>
         /// The list of items in the order.
         /// </summary>

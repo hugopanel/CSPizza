@@ -1,10 +1,10 @@
-﻿using System;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
 
-namespace Cook
+namespace Delivery
 {
-    class CookReceive
+    class DeliveryReceive
     {
         static void Main(string[] args)
         {

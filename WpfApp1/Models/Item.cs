@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WpfApp1.Models
+﻿namespace WpfApp1.Models
 {
     internal abstract class Item
     {
@@ -12,7 +6,7 @@ namespace WpfApp1.Models
         /// Name of the item.
         /// </summary>
         public string Name { get; set; }
-        
+
         /// <summary>
         /// Price of the item (in euros)
         /// </summary>
