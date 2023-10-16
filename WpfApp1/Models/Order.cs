@@ -85,5 +85,14 @@ namespace WpfApp1.Models
 
             // Remarque : le message pour signaler que la commande a été validée est envoyée depuis une autre fonction. 
         }
+
+        public float getPrice(){
+            float price = 0;
+            foreach (Item item in Items)
+            {
+                price+=item.Price;
+            }
+            return price;
+        }
     }
 }
