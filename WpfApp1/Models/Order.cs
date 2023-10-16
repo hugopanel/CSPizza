@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal class Order
+    public class Order
     {
         private static int GlobalIdCount = 0;
 
@@ -93,6 +93,15 @@ namespace WpfApp1.Models
                 price+=item.Price;
             }
             return price;
+        }
+
+        public float addToCumulative(Customer customer, float amount)
+        {
+            if(this.Customer == customer)
+            {
+                amount += this.getPrice();
+            }
+            return amount;
         }
     }
 }

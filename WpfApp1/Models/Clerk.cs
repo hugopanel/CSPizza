@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace WpfApp1.Models
 {
-    internal class Clerk : Worker
+    public class Clerk : Worker
     {
         /// <summary>
         /// The Customer the Clerk is handling.

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    class Address
+    public class Address
     {
         /// <summary>
         /// Street name (and number)
@@ -32,6 +32,11 @@ namespace WpfApp1.Models
             Street = street;
             City = city;
             DeliveryTime = deliveryTime;
+        }
+
+        public override string ToString()
+        {
+            return $"Street: {Street}, City: {City}, Delivery Time: {DeliveryTime}ms";
         }
     }
 }

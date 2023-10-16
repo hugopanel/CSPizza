@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    class CustomerInfo
+    public class CustomerInfo
     {
         public string Surname { get; set; }
         public string FirstName { get; set; }
@@ -23,6 +23,11 @@ namespace WpfApp1.Models
         public CustomerInfo(string surname, string firstName, string telephoneNumber, DateOnly? firstOrderDate) : this(surname, firstName, telephoneNumber)
         {
             FirstOrderDate = firstOrderDate;
-        }   
+        }
+
+        public override string ToString()
+        {
+            return $"Surname: {Surname}, FirstName: {FirstName}, Telephone number: {TelephoneNumber}, First Order Date: {FirstOrderDate?.ToString() ?? "N/A"}";
+        }
     }
 }

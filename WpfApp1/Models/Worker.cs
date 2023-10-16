@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    abstract class Worker
+    public abstract class Worker
     {
         private static int IdCount = 0;
 

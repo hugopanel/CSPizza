@@ -7,7 +7,7 @@ using WpfApp1.Modules;
 
 namespace WpfApp1.Models
 {
-    class Customer
+    public class Customer
     {
         public CustomerInfo CustomerInfo { get; set; }
         public Address? Address { get; set; }
@@ -30,6 +30,17 @@ namespace WpfApp1.Models
         public Customer(string surname, string firstName, string telephoneNumber, DateOnly firstOrderDate)
         {
             CustomerInfo = new CustomerInfo(surname, firstName, telephoneNumber, firstOrderDate);
+        }
+
+        public float GetCumulativeAmount(List<Order> OrderList)
+        {
+            float amount = 0;
+            foreach (Order order in OrderList)
+            {
+                amount = order.addToCumulative(this, amount);
+            }
+            return amount;
+
         }
     }
 }
