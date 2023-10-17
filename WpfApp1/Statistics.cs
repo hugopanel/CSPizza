@@ -33,15 +33,15 @@ namespace WpfApp1
         }
 
 
-        // public float AverageOrderPrice(List<Order> Orders)
-        // {
-        //     float total = 0;
-        //     foreach (Order order in Orders)
-        //     {
-        //         total += order.getPrice();
-        //     }
-        //     return total / Orders.Count;
-        // }
+        public float AverageOrderPrice(List<Order> Orders)
+        {
+             float total = 0;
+             foreach (Order order in Orders)
+             {
+                 total += order.getPrice();
+             }
+             return total / Orders.Count;
+        }
 
         static void Main(string[] args)
         {
@@ -109,6 +109,7 @@ namespace WpfApp1
             {
                 Console.WriteLine("Number of orders for "+clerk.Name + " : "+clerk.GetNumberOfOrders(OrderList));
             }
+            Console.WriteLine("\nAverage price of orders :" + stats.AverageOrderPrice(OrderList));
         }
     }
 }
