@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal class Pizza : Item
+    public class Pizza : Item
     {
         /// <summary>
         /// The type of the pizza.

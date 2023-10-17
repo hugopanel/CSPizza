@@ -97,11 +97,20 @@ namespace WpfApp1.Models
 
         public float addToCumulative(Customer customer, float amount)
         {
-            if(this.Customer == customer)
+            if(Customer == customer)
             {
                 amount += this.getPrice();
             }
             return amount;
+        }
+
+        public int IsToClerk(Clerk clerk, int nbOrders)
+        {
+            if (this.Clerk == clerk)
+            {
+                nbOrders += 1;
+            }
+            return nbOrders;
         }
     }
 }

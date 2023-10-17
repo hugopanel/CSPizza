@@ -28,9 +28,9 @@ namespace WpfApp1.Models
             throw new NotImplementedException();
         }
 
-        public Customer AddNewCustomer(Customer customer)
+        public void AddNewCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            _currentCustomer = customer;
         }
 
         /// <summary>
@@ -95,6 +95,16 @@ namespace WpfApp1.Models
             // Send a message to the Cooks to tell them to prepare the command ASAP.
 
             // The rest should be handled in another function.
+        }
+        public int GetNumberOfOrders(List<Order> OrderList)
+        {
+            int nb = 0;
+            foreach (Order order in OrderList)
+            {
+                nb = order.IsToClerk(this, nb);
+            }
+            return nb;
+
         }
     }
 }
