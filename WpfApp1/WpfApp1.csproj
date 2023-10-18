@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <StartupObject>WpfApp1.Statistics</StartupObject>
+    <StartupObject>WpfApp1.App</StartupObject>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>

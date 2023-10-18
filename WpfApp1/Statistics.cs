@@ -28,8 +28,9 @@ namespace WpfApp1
         }
 
         public List<Customer> OrderCustomerByCumulativeAmount(List<Customer> CustomerList, List<Order> OrderList)
-        { 
-            return CustomerList.OrderBy(customer => customer.GetCumulativeAmount(OrderList)).ToList(); ;
+        {
+            List<Customer> orderedCustomers = new List<Customer>(CustomerList);
+            return orderedCustomers.OrderBy(customer => customer.CumulativeAmount).ToList();
         }
 
 

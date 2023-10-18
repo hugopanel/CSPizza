@@ -57,6 +57,7 @@ namespace WpfApp1.Models
             Items = items;
         }
 
+
         /// <summary>
         /// Add an item to the order.
         /// </summary>
@@ -64,6 +65,7 @@ namespace WpfApp1.Models
         public void AddItem(Item item)
         {
             Items.Add(item);
+            Customer.CumulativeAmount += item.Price;
         }
 
         /// <summary>
@@ -73,6 +75,7 @@ namespace WpfApp1.Models
         public void RemoveItem(Item item)
         {
             Items.Remove(item);
+            Customer.CumulativeAmount -= item.Price;
         }
 
         /// <summary>
@@ -99,7 +102,7 @@ namespace WpfApp1.Models
         {
             if(Customer == customer)
             {
-                amount += this.getPrice();
+                customer.CumulativeAmount += this.getPrice();
             }
             return amount;
         }

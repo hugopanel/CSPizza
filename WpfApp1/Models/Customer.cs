@@ -12,14 +12,18 @@ namespace WpfApp1.Models
         public CustomerInfo CustomerInfo { get; set; }
         public Address? Address { get; set; }
 
+        public float CumulativeAmount { get; set; }
+
         public Customer(CustomerInfo customerInfo)
         {
             CustomerInfo = customerInfo;
+            CumulativeAmount = 0;
         }
 
         public Customer(CustomerInfo customerInfo, Address? address) : this(customerInfo)
         {
             Address = address;
+            CumulativeAmount = 0;
         }
 
         public Customer(string surname, string firstName, string telephoneNumber)
