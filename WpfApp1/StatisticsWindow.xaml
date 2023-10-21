@@ -4,6 +4,8 @@
         Title="Statistics Display" Height="400" Width="600">
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
+            <Button Name="BtnShowClerkStatistics" Content="Show Clerk Statistics" Click="BtnShowClerkStatistics_Click" />
+            <Button Name="BtnShowDelivererStatistics" Content="Show Deliverer Statistics" Click="BtnShowDelivererStatistics_Click" />
             <Button Name="BtnOrderAlphabetical" Content="Order by Alphabetical" Click="BtnOrderAlphabetical_Click" />
             <Button Name="BtnOrderCity" Content="Order by City" Click="BtnOrderCity_Click" />
             <Button Name="BtnOrderCumulativeAmount" Content="Order by Cumulative Amount" Click="BtnOrderCumulativeAmount_Click" />
@@ -24,5 +26,15 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
+        <ListBox Name="clerkListBox" HorizontalAlignment="Left" Margin="10,10,10,50">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding OrderCount}" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

@@ -15,6 +15,7 @@ namespace WpfApp1.Models
         /// </summary>
         private Customer? _currentCustomer;
 
+
         /// <summary>
         /// Gets a Customer object from a telephone number.
         /// 

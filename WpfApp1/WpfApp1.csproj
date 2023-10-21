@@ -8,4 +8,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="RibbitMQ">
+      <HintPath>..\..\..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

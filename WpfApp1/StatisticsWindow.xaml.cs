@@ -85,5 +85,17 @@ namespace WpfApp1
             ListBoxResults.Items.Clear();
             ListBoxResults.Items.Add($"Average Order Price: {averagePrice:C}");
         }
+
+        private void BtnShowClerkStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            ClerkStatisticsWindow clerkStatisticsWindow = new ClerkStatisticsWindow();
+            clerkStatisticsWindow.Show();
+        }
+
+        private void BtnShowDelivererStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            DeliveryStatisticsWindow deliveryStatisticsWindow = new DeliveryStatisticsWindow();
+            deliveryStatisticsWindow.Show();
+        }
     }
 }
