@@ -7,6 +7,14 @@
              xmlns:local="clr-namespace:WpfApp1.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style x:Key="NoScrollbarsDataGrid" TargetType="{x:Type DataGrid}">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -72,9 +80,9 @@
                 Background="#200F53"
                 CornerRadius="10" 
                 Padding="10">
-            <DataGrid ColumnWidth="*"
+            <DataGrid Style="{StaticResource NoScrollbarsDataGrid}" ColumnWidth="*"
                   Background="#200F53"
-                  BorderThickness="0">
+                  BorderThickness="0" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="False" x:Name="ClientDataGrid"  CanUserResizeRows="False" RowHeaderWidth="0">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="Transparent"/>
@@ -82,18 +90,46 @@
                         <Setter Property="Padding" Value="10,0,0,10"/>
                         <Setter Property="FontFamily" Value="Montserrat"/>
                         <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                       
+
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Margin" Value="0,10" />
+                        <Setter Property="Padding" Value="1" />
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        
+                    </Style>
+                </DataGrid.CellStyle>
+
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="ID" HeaderStringFormat=""/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="First name"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Last name"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Phone"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Address"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Purchases"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="First Order"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
+                    <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                    <DataGridTextColumn Header="Purchases" Binding="{Binding Purchases}" />
+                    <DataGridTextColumn Header="First Order" Binding="{Binding FirstOrder}" />
                 </DataGrid.Columns>
+
             </DataGrid>
+            
         </Border>
     </Grid>
 </UserControl>

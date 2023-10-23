@@ -44,7 +44,12 @@ namespace WpfApp1.View
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            // Create and show Window2
+            MainView window2 = new MainView();
+            window2.Show();
+
+            // Optionally, close the current window
+            this.Close();
         }
     } 
 }
