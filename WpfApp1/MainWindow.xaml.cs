@@ -41,5 +41,10 @@ namespace WpfApp1
             rtb_Customer.ScrollToEnd();
             txt_UserInput.Clear();
         }
+
+        private void txt_UserInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
