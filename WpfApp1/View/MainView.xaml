@@ -1,0 +1,121 @@
+﻿<Window x:Class="WpfApp1.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.View"
+        mc:Ignorable="d"
+        Title="LoginView" Height="800" Width="1100"
+        WindowStyle="None"
+
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        >
+    
+    <Border CornerRadius="30"
+        BorderThickness="2"
+        Opacity="1">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#462AD8" Offset="0"/>
+                <GradientStop Color="#DA34AE" Offset="0.75"/>
+                <GradientStop Color="#FFA62F" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                <GradientStop Color="#060531" Offset="0"/>
+                <GradientStop Color="#1B1448" Offset="0.75"/>
+                <GradientStop Color="#151B54" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!--Nav menu-->
+                <ColumnDefinition Width="250"/>
+                <!--Content-->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        
+
+            <!--Nav menu-->
+
+            <Border CornerRadius="30,0,0,30"
+                    Grid.Column="0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.7">
+                        <GradientStop Color="#24105F" Offset="0"/>
+                        <GradientStop Color="#210F55" Offset="0.75"/>
+                        <!--<GradientStop Color="#151B54" Offset="1"/>-->
+                    </LinearGradientBrush>
+                </Border.Background>
+            
+
+            <StackPanel>
+                <!--Logo & name-->
+                <StackPanel Orientation="Horizontal"
+                            Height="35"
+                            Margin="15,25,0,40">
+                    <Image Source="/Images/Pizza.png" Height="30"/>
+                    <TextBlock Text="PIZZERIA HOLUPA"
+                               Foreground="White"
+                               FontSize="20"
+                               FontFamily="Montserrat"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0"/>
+
+                </StackPanel>
+                
+                <!--Buttons-->
+
+                <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="#E285DE"
+                                 IsChecked="True"
+                                 Command="{Binding ShowHomeViewCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBlock Text="Dashboard" Style="{StaticResource menuButtonText}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                        Tag="#E285DE"
+                        IsChecked="False"
+                        Command="{Binding ShowHomeViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock Text="Dashboard" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                         Tag="#E285DE"
+                         IsChecked="False"
+                         Command="{Binding ShowHomeViewCommand}">   
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock Text="Dashboard" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                </StackPanel>
+            </Border>
+            <!--Content Section-->
+
+            <Border CornerRadius="0,30,30,0"
+                    Grid.Column="1">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                        <GradientStop Color="#0A003A" Offset="0"/>
+                        <GradientStop Color="#1C0E49" Offset="0.75"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            
+            
+        </Grid>
+    </Border>
+</Window>
