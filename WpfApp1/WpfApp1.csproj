@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
     <StartupObject>WpfApp1.App</StartupObject>
     <Nullable>enable</Nullable>
@@ -10,8 +10,11 @@
 
   <ItemGroup>
     <Reference Include="RibbitMQ">
-      <HintPath>..\..\..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+  </ItemGroup>
 </Project>
