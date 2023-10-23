@@ -3,16 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:WpfApp1.View"
+        xmlns:viewModel="clr-namespace:WpfApp1.ViewModel"
         mc:Ignorable="d"
-        Title="LoginView" Height="800" Width="1100"
+        Title="LoginView" Height="700" Width="1100"
         WindowStyle="None"
 
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
         >
-    
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+            <local:HomeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ClientViewModel}">
+            <local:ClientView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:WorkerViewModel}">
+            <local:WorkerView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:StatViewModel}">
+            <local:StatView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:RegisterViewModel}">
+            <local:RegisterView/>
+        </DataTemplate>
+
+    </Window.Resources>
+
+
     <Border CornerRadius="30"
         BorderThickness="2"
         Opacity="1">
@@ -61,7 +87,7 @@
                             Margin="15,25,0,40">
                     <Image Source="/Images/Pizza.png" Height="30"/>
                     <TextBlock Text="PIZZERIA HOLUPA"
-                               Foreground="White"
+                               Foreground="#a09fd6"
                                FontSize="20"
                                FontFamily="Montserrat"
                                VerticalAlignment="Center"
@@ -76,28 +102,48 @@
                                  IsChecked="True"
                                  Command="{Binding ShowHomeViewCommand}">
                     <StackPanel Orientation="Horizontal">
-                        
-                        <TextBlock Text="Dashboard" Style="{StaticResource menuButtonText}"/>
+                            <fa:ImageAwesome Icon="CreditCard"  Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Commands" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
-                        Tag="#E285DE"
+                        Tag="#78A3FC"
                         IsChecked="False"
-                        Command="{Binding ShowHomeViewCommand}">
+                        Command="{Binding ShowClientViewCommand}" Checked="RadioButton_Checked">
                         <StackPanel Orientation="Horizontal">
-
-                            <TextBlock Text="Dashboard" Style="{StaticResource menuButtonText}"/>
+                            <fa:ImageAwesome Icon="Child"  Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Clients" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
-                         Tag="#E285DE"
+                         Tag="#FB539B"
                          IsChecked="False"
-                         Command="{Binding ShowHomeViewCommand}">   
+                         Command="{Binding ShowWorkerViewCommand}">   
                         <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Laptop"  Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Workers" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
 
-                            <TextBlock Text="Dashboard" Style="{StaticResource menuButtonText}"/>
+                    <RadioButton Style="{StaticResource menuButton}"
+                         Tag="#4ADAEC"
+                         IsChecked="False"
+                         Command="{Binding ShowStatViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="SortNumericAsc"  Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Stats" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                         Tag="#FBA1AA"
+                         IsChecked="False"
+                         Command="{Binding ShowRegisterViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="PlusSquareOutline" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="New Register" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -113,9 +159,83 @@
                         <GradientStop Color="#1C0E49" Offset="0.75"/>
                     </LinearGradientBrush>
                 </Border.Background>
+            
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <!--Control bar-->
+                    <RowDefinition Height="35"/>
+                    <!--Header / Caption-->
+                    <RowDefinition Height="35"/>
+                    <!--Content section / Child views-->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+
+                    <!--Control bar-->
+                    <StackPanel x:Name="CloseMinBar"
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        FlowDirection="RightToLeft"
+                        Background="Transparent"
+                        Margin="0,10,25,0"
+                        MouseLeftButtonDown="CloseMinBar_MouseLeftButtonDown">
+                    <Button x:Name="MainClose"
+                                    Style="{StaticResource controlButton}"
+                                    Tag="#FB539B"
+                                    Click="MainClose_Click">
+                            <fa:ImageAwesome Icon="Close" Width="12" Height="15" Style="{StaticResource controlButtonIcon}"/>
+                    </Button>
+                    <Button x:Name="MainMaximize"
+                                    Style="{StaticResource controlButton}"
+                                    Tag="#FFC047"
+                                    Click="MainMaximize_Click">
+                        <fa:ImageAwesome Icon="Square" Style="{StaticResource controlButtonIcon}"/>
+                    </Button>
+                    <Button x:Name="MainMinimize"
+                                        Style="{StaticResource controlButton}"
+                                        Tag="#78A3FC"
+                                        Click="MainMinimize_Click">
+                        <fa:ImageAwesome Icon="WindowMinimize" Style="{StaticResource controlButtonIcon}"/>
+                    </Button>
+            </StackPanel>
+
+                    <!--Header / Caption-->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Caption-->
+                        <StackPanel Grid.Column="0"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <fa:ImageAwesome Icon="CreditCard"
+                                          Height="20"
+                                          Width="20"
+                                          Foreground="#D5CFF5"
+                                          Margin="35,0,10,0"/>
+
+                            <TextBlock Text="{Binding Caption}"
+                                       Foreground="#D5CFF5"
+                                       FontSize="16"
+                                       FontFamily="Montserrat"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                    </Grid>
+                
+                    <!--Content section / Child views-->
+                    <ContentControl Content="{Binding CurrentChildView}"
+                                    Grid.Row="2"
+                                    Margin="25"/>
+
+
+
+                </Grid>
             </Border>
-            
-            
         </Grid>
     </Border>
 </Window>

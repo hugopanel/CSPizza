@@ -5,10 +5,28 @@
     <Compile Update="StatisticsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\ClientView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\CommandView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\HomeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\MainView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\RegisterView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\StatView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\WorkerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -19,10 +37,28 @@
     <Page Update="StatisticsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\ClientView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CommandView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\HomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\LoginView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RegisterView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\StatView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\WorkerView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
