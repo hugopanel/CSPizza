@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    public abstract class Worker
+    public abstract class Worker : INotifyPropertyChanged
     {
         public static int IdCount = 0;
 
@@ -32,6 +33,13 @@ namespace WpfApp1.Models
         public void CheckOut()
         {
             throw new NotImplementedException();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -40,6 +41,80 @@ namespace WpfApp1.View
         private void BtnShowDeliveryMen_Click(object sender, RoutedEventArgs e)
         {
             WorkerDataGrid.ItemsSource = Pizzeria.DeliveryMen;
+        }
+
+        private T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is T)
+                {
+                    return (T)child;
+                }
+                else
+                {
+                    T childOfChild = FindVisualChild<T>(child);
+                    if (childOfChild != null)
+                    {
+                        return childOfChild;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public void UpdateDataGrid()
+        {
+            WorkerDataGrid.ItemsSource = Pizzeria.Customers;
+        }
+
+        private DataGridCell GetCell(DataGrid dataGrid, int rowIndex, int columnIndex)
+        {
+            DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex);
+            if (row != null)
+            {
+                DataGridCellsPresenter presenter = FindVisualChild<DataGridCellsPresenter>(row);
+                if (presenter != null)
+                {
+                    DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(columnIndex);
+                    return cell;
+                }
+            }
+            return null;
+        }
+
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                DataGridCell cell = GetCell(WorkerDataGrid, e.Row.GetIndex(), e.Column.DisplayIndex);
+                TextBox textBox = e.EditingElement as TextBox;
+                if (cell != null && textBox != null)
+                {
+                    string editedValue = textBox.Text;
+
+                    if (WorkerDataGrid.SelectedItem is Worker selectedWorker)
+                    {
+                        if (e.Column.Header.ToString() == "Name")
+                        {
+                            selectedWorker.Name = editedValue;
+                            selectedWorker.OnPropertyChanged("CustomerInfo");
+                        }
+                        else if (e.Column.Header.ToString() == "Address")
+                        {
+                            selectedWorker.Address = editedValue;
+                            selectedWorker.OnPropertyChanged("CustomerInfo");
+                        }
+                        else if (e.Column.Header.ToString() == "Number of Orders")
+                        {
+                            selectedWorker.NbOrders = int.Parse(editedValue);
+                            selectedWorker.OnPropertyChanged("CustomerInfo");
+                        }
+                    }
+                }
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)

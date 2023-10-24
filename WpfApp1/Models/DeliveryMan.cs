@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal class DeliveryMan : Worker
+    public class DeliveryMan : Worker
     {
         /// <summary>
         /// Number of deliveries made.
