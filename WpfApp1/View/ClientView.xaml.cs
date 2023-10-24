@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.Models;
 
 namespace WpfApp1.View
 {
@@ -21,38 +23,106 @@ namespace WpfApp1.View
     /// </summary>
     public partial class ClientView : UserControl
     {
-        public ObservableCollection<Person> People { get; set; }
         public ClientView()
         {
             InitializeComponent();
-
-            // Create sample data
-            People = new ObservableCollection<Person>
-            {
-                new Person { ID = 1, FirstName = "John", LastName = "Doe", Phone = "555-123-4567", Address = "123 Main St", Purchases = 5, FirstOrder = new DateTime(2023, 1, 15) },
-                new Person { ID = 2, FirstName = "Jane", LastName = "Smith", Phone = "555-987-6543", Address = "456 Elm St", Purchases = 8, FirstOrder = new DateTime(2023, 2, 20) }
-                // Add more rows as needed
-            };
-
-            // Set the DataGrid's ItemsSource to your collection
-            ClientDataGrid.ItemsSource = People;
-        }
-
-
-        public class Person
-        {
-            public int ID { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Phone { get; set; }
-            public string Address { get; set; }
-            public int Purchases { get; set; }
-            public DateTime FirstOrder { get; set; }
+            ClientDataGrid.ItemsSource = Pizzeria.Customers;
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
+
+        private T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is T)
+                {
+                    return (T)child;
+                }
+                else
+                {
+                    T childOfChild = FindVisualChild<T>(child);
+                    if (childOfChild != null)
+                    {
+                        return childOfChild;
+                    }
+                }
+            }
+            return null;
+        }
+
+
+        private DataGridCell GetCell(DataGrid dataGrid, int rowIndex, int columnIndex)
+        {
+            DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex);
+            if (row != null)
+            {
+                DataGridCellsPresenter presenter = FindVisualChild<DataGridCellsPresenter>(row);
+                if (presenter != null)
+                {
+                    DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(columnIndex);
+                    return cell;
+                }
+            }
+            return null;
+        }
+
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                // Get the edited cell and its value
+                DataGridCell cell = GetCell(ClientDataGrid, e.Row.GetIndex(), e.Column.DisplayIndex);
+                TextBox textBox = e.EditingElement as TextBox;
+                if (cell != null && textBox != null)
+                {
+                    string editedValue = textBox.Text;
+
+                    // Access the Customer object
+                    if (ClientDataGrid.SelectedItem is Customer selectedCustomer)
+                    {
+                        if (e.Column.Header.ToString() == "First Name")
+                        {
+                            // Update the FirstName property of the CustomerInfo
+                            selectedCustomer.CustomerInfo.FirstName = editedValue;
+                            selectedCustomer.OnPropertyChanged("CustomerInfo");
+                        }
+                        else if (e.Column.Header.ToString() == "Last Name")
+                        {
+                            selectedCustomer.CustomerInfo.Surname = editedValue;
+                            selectedCustomer.OnPropertyChanged("CustomerInfo");
+                        }
+                        else if (e.Column.Header.ToString() == "Phone")
+                        {
+                            selectedCustomer.CustomerInfo.TelephoneNumber = editedValue;
+                            selectedCustomer.OnPropertyChanged("CustomerInfo");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button deleteButton)
+            {
+                if (deleteButton.Tag is Customer customerToDelete)
+                {
+                    // Prompt the user for confirmation or perform the delete action immediately
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this customer?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Delete the customer
+                        Pizzeria.Customers.Remove(customerToDelete);
+                    }
+                }
+            }
+
+        }
     }
-}
+    }

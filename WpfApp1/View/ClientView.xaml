@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfApp1.View.ClientView"
+﻿ <UserControl x:Class="WpfApp1.View.ClientView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,7 +14,7 @@
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
         </Style>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -43,7 +43,7 @@
                              VerticalContentAlignment="Center"
                              Margin="5,5,0,0"></TextBox>
             </StackPanel>
-            <Button Grid.Column="1"
+            <Button Grid.Column="3"
                             Command="{Binding LoginCommand}"                            
                             Content="Search"                            
                             FontSize="12"
@@ -80,7 +80,8 @@
                 Background="#200F53"
                 CornerRadius="10" 
                 Padding="10">
-            <DataGrid Style="{StaticResource NoScrollbarsDataGrid}" ColumnWidth="*"
+            <DataGrid
+                Style="{StaticResource NoScrollbarsDataGrid}" ColumnWidth="*"
                   Background="#200F53"
                   BorderThickness="0" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="False" x:Name="ClientDataGrid"  CanUserResizeRows="False" RowHeaderWidth="0">
                 <DataGrid.ColumnHeaderStyle>
@@ -92,7 +93,7 @@
                         <Setter Property="FontSize" Value="15"/>
                         <Setter Property="BorderBrush" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0" />
-                       
+
 
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
@@ -113,23 +114,60 @@
                         <Setter Property="FontSize" Value="15"/>
                         <Setter Property="BorderBrush" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0" />
-                        
+
                     </Style>
                 </DataGrid.CellStyle>
 
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
-                    <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
-                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
-                    <DataGridTextColumn Header="Purchases" Binding="{Binding Purchases}" />
-                    <DataGridTextColumn Header="First Order" Binding="{Binding FirstOrder}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerInfo.FirstName, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerInfo.Surname, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Phone" Binding="{Binding CustomerInfo.TelephoneNumber, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Purchases" Binding="{Binding CumulativeAmount, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="First Order" Binding="{Binding CustomerInfo.FirstOrderDate, Mode=TwoWay}" />
+                    <DataGridTemplateColumn Header="Delete" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" Click="DeleteButton_Click" Tag="{Binding}" FontSize="10"
+FontFamily="Montserrat"
+Cursor="Hand"
+BorderThickness="0"
+Foreground="White"
+VerticalAlignment="Top"
+                    Margin="10,0"
+                                        Opacity="0.7">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="OrangeRed"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border Height="30"
+                        CornerRadius="15"
+                        Background="{TemplateBinding Background}">
+                                                            <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#836EFB"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
 
             </DataGrid>
-            
+
         </Border>
     </Grid>
 </UserControl>

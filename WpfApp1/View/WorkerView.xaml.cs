@@ -41,5 +41,22 @@ namespace WpfApp1.View
         {
             WorkerDataGrid.ItemsSource = Pizzeria.DeliveryMen;
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button deleteButton)
+            {
+                if (deleteButton.Tag is Customer customerToDelete)
+                {
+                    // Prompt the user for confirmation or perform the delete action immediately
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this customer?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Delete the customer
+                        Pizzeria.Customers.Remove(customerToDelete);
+                    }
+                }
+            }
+        }
     }
 }
