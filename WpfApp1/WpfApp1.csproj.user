@@ -63,6 +63,9 @@
     <Page Update="View\StatView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\WelcomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\WorkerView.xaml">
       <SubType>Designer</SubType>
     </Page>
