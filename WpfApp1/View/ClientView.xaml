@@ -54,7 +54,7 @@
                     VerticalAlignment="Top">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Background" Value="#773DFF"/>
+                        <Setter Property="Background" Value="#4B0082"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">

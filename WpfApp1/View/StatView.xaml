@@ -7,6 +7,347 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel Orientation="Vertical" Margin="10" >
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0">
+
+                    <Button  Name="BtnShowClerkStatistics" Content="Show Clerk Statistics" Click="BtnShowClerkStatistics_Click" FontSize="12"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                BorderThickness="0"
+                Foreground="White"
+                VerticalAlignment="Top">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#4B0082"/>
+                                <Setter Property="Margin" Value="10,5"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Height="30"
+                                        CornerRadius="15"
+                                        Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#836EFB"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Name="BtnShowDelivererStatistics" Content="Show Deliverer Statistics" Click="BtnShowDelivererStatistics_Click" FontSize="12"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                BorderThickness="0"
+                Foreground="White"
+                VerticalAlignment="Top">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#4B0082"/>
+                                <Setter Property="Margin" Value="10,5"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Height="30"
+                                        CornerRadius="15"
+                                        Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#836EFB"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="0">
+                    <Button Name="BtnOrderAlphabetical" Content="Order by Alphabetical" Click="BtnOrderAlphabetical_Click" FontSize="12"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        BorderThickness="0"
+                        Foreground="White"
+                        VerticalAlignment="Top">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#4B0082"/>
+                                <Setter Property="Margin" Value="10,5"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Height="30"
+                        CornerRadius="15"
+                        Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#836EFB"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Name="BtnOrderCity" Content="Order by City" Click="BtnOrderCity_Click" FontSize="12"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        BorderThickness="0"
+                        Foreground="White"
+                        VerticalAlignment="Top">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#4B0082"/>
+                                <Setter Property="Margin" Value="10,5"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Height="30"
+                        CornerRadius="15"
+                        Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#836EFB"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+
+            <Button Name="BtnOrderCumulativeAmount" Content="Order by Cumulative Amount" Click="BtnOrderCumulativeAmount_Click" FontSize="12"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        BorderThickness="0"
+                        Foreground="White"
+                        VerticalAlignment="Top">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#4B0082"/>
+                        <Setter Property="Margin" Value="270,10,270,30"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                        CornerRadius="15"
+                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <ListBox Name="ListBoxResults" Visibility="Hidden"/>
+            <DataGrid x:Name="DataGridCustomers" ColumnWidth="*"
+                  Background="#200F53"
+                  BorderThickness="0" AutoGenerateColumns="False"  CanUserResizeRows="False" RowHeaderWidth="0">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="Padding" Value="5,5,0,5"/>
+                        <Setter Property="FontFamily" Value="Montserrat"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="BorderBrush" Value="White" />
+                        <Setter Property="BorderThickness" Value="0.5" />
+
+
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Margin" Value="0,10" />
+                        <Setter Property="Padding" Value="1" />
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+
+                    </Style>
+                </DataGrid.CellStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Surname" Binding="{Binding CustomerInfo.Surname}" Width="*" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerInfo.FirstName}" Width="*"/>
+                    <DataGridTextColumn Header="Phone Number" Binding="{Binding CustomerInfo.TelephoneNumber}" Width="*"/>
+                    <DataGridTextColumn Header="First Order Date" Binding="{Binding CustomerInfo.FirstOrderDate}" Width="*"/>
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*" />
+                    <DataGridTextColumn Header="Cumulative Amount" Binding="{Binding CumulativeAmount}" Width="140" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Name="BtnAverageAccountReceivable" Content="Average Account Receivable" Click="BtnAverageOrderPrice_Click" FontSize="12"
+    FontFamily="Montserrat"
+    Cursor="Hand"
+    BorderThickness="0"
+    Foreground="White"
+    VerticalAlignment="Top">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#4B0082"/>
+                        <Setter Property="Margin" Value="270,30"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                            CornerRadius="15"
+                            Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Name="BtnAverageOrderPrice" Content="Average Order Price" Click="BtnAverageOrderPrice_Click" FontSize="12"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                BorderThickness="0"
+                Foreground="White"
+                VerticalAlignment="Top">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#4B0082"/>
+                        <Setter Property="Margin" Value="270,30"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                        CornerRadius="15"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <DatePicker Name="d1" SelectedDateChanged="DatePicker_SelectedDateChanged" Grid.Column="0"/>
+                <DatePicker Name="d2" SelectedDateChanged="DatePicker_SelectedDateChanged" Grid.Column="1"/>
+            </Grid>
+            <DataGrid x:Name="DataGridOrders" ColumnWidth="*"
+                  Background="#200F53"
+                  BorderThickness="0" AutoGenerateColumns="False"  CanUserResizeRows="False" RowHeaderWidth="0">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="Padding" Value="5,5,0,5"/>
+                        <Setter Property="FontFamily" Value="Montserrat"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="BorderBrush" Value="White" />
+                        <Setter Property="BorderThickness" Value="0.5" />
+
+
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Margin" Value="0,10" />
+                        <Setter Property="Padding" Value="1" />
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*" />
+                    <DataGridTextColumn Header="Clerk Name" Binding="{Binding Clerk.Name}"  Width="*"/>
+                    <DataGridTextColumn Header="Customer Name" Binding="{Binding Customer.CustomerInfo.Surname}"  Width="*"/>
+                    <DataGridTextColumn Header="Phone Number" Binding="{Binding Customer.CustomerInfo.TelephoneNumber}"  Width="*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding dateTime}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <ListBox Name="clerkListBox" HorizontalAlignment="Left" Margin="10,10,10,50" Visibility="Hidden">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding OrderCount}" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
