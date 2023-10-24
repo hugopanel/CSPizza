@@ -61,14 +61,24 @@ namespace WpfApp1
 
 
 
-        public float AverageOrderPrice(List<Order> Orders)
+        public float AverageOrderPrice()
         {
              float total = 0;
-             foreach (Order order in Orders)
+             foreach (Order order in Pizzeria.Orders)
              {
                  total += order.getPrice();
              }
-             return total / Orders.Count;
+             return total / Pizzeria.Orders.Count;
+        }
+
+        public float AverageAccountReceivable()
+        {
+            float total = 0;
+            foreach (Order order in Pizzeria.Orders)
+            {
+                total += order.getPrice();
+            }
+            return total / Pizzeria.Customers.Count;
         }
 
         public List<Order> OrderByTimePeriod(List<Order> Orders, DateTime d1, DateTime d2)
@@ -150,7 +160,7 @@ namespace WpfApp1
             {
                 Console.WriteLine("Number of orders for "+clerk.Name + " : "+clerk.GetNumberOfOrders(OrderList));
             }
-            Console.WriteLine("\nAverage price of orders :" + stats.AverageOrderPrice(OrderList));
+            // Console.WriteLine("\nAverage price of orders :" + stats.AverageOrderPrice(OrderList));
         }
     }
 }

@@ -30,6 +30,7 @@ namespace WpfApp1.View
         public StatView()
         {
             InitializeComponent();
+            stats = new Statistics();
             CustomerList = Pizzeria.Customers;
             OrderList = Pizzeria.Orders;
             DataGridCustomers.ItemsSource = CustomerList;
@@ -66,9 +67,16 @@ namespace WpfApp1.View
 
         private void BtnAverageOrderPrice_Click(object sender, RoutedEventArgs e)
         {
-            float averagePrice = stats.AverageOrderPrice(OrderList);
+            float averagePrice = stats.AverageOrderPrice();
             ListBoxResults.Items.Clear();
             ListBoxResults.Items.Add($"Average Order Price: {averagePrice:C}");
+        }
+
+        private void BtnAverageAccountReceivable_Click(object sender, RoutedEventArgs e)
+        {
+            float averagePrice = stats.AverageAccountReceivable();
+            ListBoxResults.Items.Clear();
+            ListBoxResults.Items.Add($"Average Account Receivable: {averagePrice:C}");
         }
 
         private void BtnShowClerkStatistics_Click(object sender, RoutedEventArgs e)

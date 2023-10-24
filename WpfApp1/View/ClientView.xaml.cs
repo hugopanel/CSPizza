@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +54,10 @@ namespace WpfApp1.View
             return null;
         }
 
+        public void UpdateDataGrid()
+        {
+            ClientDataGrid.ItemsSource = Pizzeria.Customers;
+        }
 
         private DataGridCell GetCell(DataGrid dataGrid, int rowIndex, int columnIndex)
         {
@@ -102,6 +105,24 @@ namespace WpfApp1.View
                             selectedCustomer.CustomerInfo.TelephoneNumber = editedValue;
                             selectedCustomer.OnPropertyChanged("CustomerInfo");
                         }
+                    }
+                }
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button deleteButton)
+            {
+                if (deleteButton.Tag is Customer customerToDelete)
+                {
+                    // Prompt the user for confirmation or perform the delete action immediately
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this customer?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Delete the customer
+                        Pizzeria.Customers.Remove(customerToDelete);
+                        UpdateDataGrid();
                     }
                 }
             }

@@ -226,7 +226,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Button Name="BtnAverageAccountReceivable" Content="Average Account Receivable" Click="BtnAverageOrderPrice_Click" FontSize="12"
+            <Button Name="BtnAverageAccountReceivable" Content="Average Account Receivable" Click="BtnAverageAccountReceivable_Click" FontSize="12"
     FontFamily="Montserrat"
     Cursor="Hand"
     BorderThickness="0"
