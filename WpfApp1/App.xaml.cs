@@ -32,6 +32,18 @@ namespace WpfApp1
             FileModule.LoadOrders();
             FileModule.LoadWorkforce();
         }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            try
+            {
+                FileModule.SaveCustomers();
+            }
+            finally
+            {
+                base.OnExit(e);
+            }
+        }
     }
 
     public class DateOnlyConverter : JsonConverter<DateOnly>

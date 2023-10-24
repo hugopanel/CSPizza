@@ -6,10 +6,11 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfApp1.Modules;
+using System.ComponentModel;
 
 namespace WpfApp1.Models
 {
-    public class Customer
+    public class Customer : INotifyPropertyChanged
     {
         public CustomerInfo CustomerInfo { get; set; }
         public string? Address { get; set; }
@@ -17,6 +18,8 @@ namespace WpfApp1.Models
         public float CumulativeAmount { get; set; }
 
         public float AverageOrder { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Customer(CustomerInfo customerInfo)
         {
@@ -52,6 +55,11 @@ namespace WpfApp1.Models
             string address) : this(surname, firstName, telephoneNumber, firstOrderDate)
         {
             Address = address;
+        }
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public float GetCumulativeAmount(List<Order> OrderList)

@@ -121,12 +121,12 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerInfo.FirstName}" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerInfo.Surname}" />
-                    <DataGridTextColumn Header="Phone" Binding="{Binding CustomerInfo.TelephoneNumber}" />
-                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
-                    <DataGridTextColumn Header="Purchases" Binding="{Binding CumulativeAmount}" />
-                    <DataGridTextColumn Header="First Order" Binding="{Binding CustomerInfo.FirstOrderDate}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerInfo.FirstName, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerInfo.Surname, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Phone" Binding="{Binding CustomerInfo.TelephoneNumber, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Purchases" Binding="{Binding CumulativeAmount, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="First Order" Binding="{Binding CustomerInfo.FirstOrderDate, Mode=TwoWay}" />
                 </DataGrid.Columns>
 
             </DataGrid>
