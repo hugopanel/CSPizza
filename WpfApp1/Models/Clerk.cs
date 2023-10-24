@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml.Linq;
@@ -15,6 +16,17 @@ namespace WpfApp1.Models
         /// </summary>
         private Customer? _currentCustomer;
 
+        [JsonConstructor]
+        public Clerk(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public Clerk()
+        {
+
+        }
 
         /// <summary>
         /// Gets a Customer object from a telephone number.

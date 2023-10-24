@@ -20,7 +20,7 @@ namespace WpfApp1
                 }
                 else if (param == "city")
                 {
-                    orderedCustomers = orderedCustomers.OrderBy(customer => customer.Address.City).ToList();
+                    orderedCustomers = orderedCustomers.OrderBy(customer => customer.Address).ToList();
                 }
             }
 
@@ -53,12 +53,31 @@ namespace WpfApp1
             return orderedCustomers.OrderBy(customer => customer.CumulativeAmount).ToList();
         }
 
+        public List<Worker> OrderWorkerBy(List<Worker> WorkerList, params string[] list)
+        {
+            string[] parameters = { "alphabetical", "city" };
+            List<Worker> orderedWorkers = WorkerList;
+
+            foreach (string param in list)
+            {
+                if (param == "alphabetical")
+                {
+                    orderedWorkers = orderedWorkers.OrderBy(worker => worker.Name).ToList();
+                }
+                else if (param == "city")
+                {
+                    orderedWorkers = orderedWorkers.OrderBy(worker => worker.Address).ToList();
+                }
+            }
+
+            return orderedWorkers;
+        }
+
         public List<Worker> OrderWorkerByNumberOrders(List<Worker> WorkerList)
         {
             List<Worker> orderedWorkers = new List<Worker>(WorkerList);
             return orderedWorkers.OrderBy(worker => worker.NbOrders).ToList();
         }
-
 
         public float AverageOrderPrice(List<Order> Orders)
         {
@@ -70,6 +89,19 @@ namespace WpfApp1
              return total / Orders.Count;
         }
 
+        public List<Order> OrderByTimePeriod(List<Order> Orders, DateTime d1, DateTime d2)
+        {
+            List<Order> ordersInTimePeriod = new List<Order>();
+            foreach (Order order in Orders)
+            {
+                if (order.dateTime >= d1 && order.dateTime <= d2)
+                {
+                    ordersInTimePeriod.Add(order);
+                }
+            }
+            return ordersInTimePeriod;
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("hello");
@@ -77,9 +109,9 @@ namespace WpfApp1
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
             List<Customer> CustomerList = new List<Customer>
             {
-                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), new Address("Genshin Street","Kuala Lumpur", 1200000)),
-                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), new Address("Minoring Avenue","Paris", 1500000)),
-                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), new Address("Karmine Boulevard","Saint-Michel-Chef-Chef", 1500000))
+                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), "Kuala Lumpur, Genshin Street"),
+                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), "Paris, Minoring Avenue"),
+                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), "Sain-Michel-Chef-Chef, Karmine Boulevard")
             };
             Clerk Arthur = new Clerk();
             Arthur.Name = "Arthur";
@@ -105,10 +137,10 @@ namespace WpfApp1
                     Customer = CustomerList[2]
                 },
             };
-            OrderList[0].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita",8), new PizzaSize("small",0)));
-            OrderList[0].AddItem(new Pizza("Pizza", 12000, new PizzaType("calzone", 10), new PizzaSize("medium", 1.5F)));
-            OrderList[1].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("large", 3)));
-            OrderList[2].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));
+            OrderList[0].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita",8), new PizzaSize("small",0)));
+            OrderList[0].AddPizza(new Pizza("Pizza", 12000, new PizzaType("calzone", 10), new PizzaSize("medium", 1.5F)));
+            OrderList[1].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("large", 3)));
+            OrderList[2].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));
             foreach (Customer customer in CustomerList)
             {
                 Console.WriteLine(customer.CustomerInfo.ToString() + ", " + customer.Address.ToString());

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using RibbitMQ;
 using WpfApp1.Models;
+using WpfApp1.Modules;
 
 namespace WpfApp1
 {
@@ -15,6 +18,52 @@ namespace WpfApp1
     /// </summary>
     public partial class App : Application
     {
-        RibbitMQ<MessageType> ribbitMq = new();
+        internal static RibbitMQ<MessageType> RibbitMq = new();
+        internal static JsonSerializerOptions jsonOptions = new()
+        {
+            IncludeFields = true,
+            PropertyNameCaseInsensitive = true,
+            Converters = { new DateOnlyConverter() }
+        };
+
+        public App()
+        {
+            // Load the JSON files as soon as the app starts...
+            FileModule.LoadCustomers();
+            FileModule.LoadOrders();
+            FileModule.LoadWorkforce();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            // Save the JSON files when the app closes...
+            FileModule.SaveCustomers();
+            FileModule.SaveOrders();
+            FileModule.SaveWorkforce();
+
+            // Resume normal closing procedure
+            base.OnExit(e);
+        }
+    }
+
+    public class DateOnlyConverter : JsonConverter<DateOnly>
+    {
+        public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.String)
+            {
+                if (DateOnly.TryParse(reader.GetString(), out DateOnly result))
+                {
+                    return result;
+                }
+            }
+
+            return default; // Default value if parsing fails
+        }
+
+        public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.ToString());
+        }
     }
 }

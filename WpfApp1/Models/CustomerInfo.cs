@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WpfApp1.Models
 {
@@ -20,10 +22,13 @@ namespace WpfApp1.Models
             TelephoneNumber = telephoneNumber;
         }
 
+        [JsonConstructor]
+
         public CustomerInfo(string surname, string firstName, string telephoneNumber, DateOnly? firstOrderDate) : this(surname, firstName, telephoneNumber)
         {
             FirstOrderDate = firstOrderDate;
         }
+
 
         public override string ToString()
         {

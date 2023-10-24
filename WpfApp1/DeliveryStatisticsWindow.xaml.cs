@@ -32,17 +32,17 @@ namespace WpfApp1
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
             CustomerList = new List<Customer>
             {
-                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), new Address("Genshin Street","Kuala Lumpur", 1200000)),
-                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), new Address("Minoring Avenue","Paris", 1500000)),
-                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), new Address("Karmine Boulevard","Saint-Michel-Chef-Chef", 1500000))
+                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), "Paris, 15 rue de Genshin"),
+                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), "Paris, 3 rue Minoring"),
+                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), "Bourg-la-Reine, 10 rue du 8 mai 1945")
             };
             Clerk Arthur = new Clerk();
             Arthur.Name = "Arthur";
-            Arthur.Address = new Address("30-32 Av. de la République", "Villejuif", 10000);
+            Arthur.Address = "Villejuif, 18 rue du Général Leclerc";
             Arthur.AddNewCustomer(CustomerList[0]);
             Clerk Asma = new Clerk();
             Asma.Name = "Asma";
-            Asma.Address = new Address("136 bis Bd Maxime Gorki", "Villejuif", 9000);
+            Asma.Address = "Vitry, 30 avenue de Villejuif";
             Asma.AddNewCustomer(CustomerList[1]);
             ClerkList = new List<Worker>
             {
@@ -62,12 +62,10 @@ namespace WpfApp1
                     Customer = CustomerList[2]
                 },
             };
-            DeliveryMan Jess = new DeliveryMan();
-            Jess.Name = "Jess";
-            Jess.Address = new Address("136 bis Bd Maxime Gorki", "Villejuif", 9000);
-            DeliveryMan Fanny = new DeliveryMan();
-            Fanny.Name = "Fanny";
-            Fanny.Address = new Address("30-32 Av. de la République", "Villejuif", 10000);
+            DeliveryMan Jess = new DeliveryMan("Jess");
+            Jess.Address = "Villejuif, 136 bis Bd Maxime Gorki";
+            DeliveryMan Fanny = new DeliveryMan("Fanny");
+            Fanny.Address = "Villejuif, 30-32 Av. de la République";
             DeliverersList = new List<Worker>
             {
                 Jess,Fanny

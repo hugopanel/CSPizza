@@ -14,7 +14,7 @@
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
         </Style>
     </UserControl.Resources>
-    
+   
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -43,7 +43,7 @@
                              VerticalContentAlignment="Center"
                              Margin="5,5,0,0"></TextBox>
             </StackPanel>
-            <Button Grid.Column="1"
+            <Button Grid.Column="3"
                             Command="{Binding LoginCommand}"                            
                             Content="Search"                            
                             FontSize="12"
@@ -80,7 +80,8 @@
                 Background="#200F53"
                 CornerRadius="10" 
                 Padding="10">
-            <DataGrid Style="{StaticResource NoScrollbarsDataGrid}" ColumnWidth="*"
+            <DataGrid
+                Style="{StaticResource NoScrollbarsDataGrid}" ColumnWidth="*"
                   Background="#200F53"
                   BorderThickness="0" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="False" x:Name="ClientDataGrid"  CanUserResizeRows="False" RowHeaderWidth="0">
                 <DataGrid.ColumnHeaderStyle>
@@ -92,8 +93,6 @@
                         <Setter Property="FontSize" Value="15"/>
                         <Setter Property="BorderBrush" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0" />
-                       
-
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.RowStyle>
@@ -113,23 +112,21 @@
                         <Setter Property="FontSize" Value="15"/>
                         <Setter Property="BorderBrush" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0" />
-                        
                     </Style>
                 </DataGrid.CellStyle>
 
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
-                    <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerInfo.FirstName}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerInfo.Surname}" />
+                    <DataGridTextColumn Header="Phone" Binding="{Binding CustomerInfo.TelephoneNumber}" />
                     <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
-                    <DataGridTextColumn Header="Purchases" Binding="{Binding Purchases}" />
-                    <DataGridTextColumn Header="First Order" Binding="{Binding FirstOrder}" />
+                    <DataGridTextColumn Header="Purchases" Binding="{Binding CumulativeAmount}" />
+                    <DataGridTextColumn Header="First Order" Binding="{Binding CustomerInfo.FirstOrderDate}" />
                 </DataGrid.Columns>
 
             </DataGrid>
-            
         </Border>
     </Grid>
 </UserControl>

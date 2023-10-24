@@ -7,6 +7,42 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <!--Commands-->
+            <ColumnDefinition Width="250"/>
+            <!--State-->
+            <ColumnDefinition Width="*"/>
+            <!--Comm Module-->
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- First Column -->
+        <Grid Grid.Column="0" Background="LightGray">
+            <!-- Content for the first column -->
+            <TextBlock Text="First Column" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- Second Column -->
+        <DataGrid Grid.Column="1" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Column 1" Width="100"/>
+                <DataGridTextColumn Header="Column 2" Width="100"/>
+                <DataGridTextColumn Header="Column 3" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Third Column -->
+        <Grid Grid.Column="2" Background="LightBlue">
+            <!-- Content for the third column -->
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Row 1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="Row 2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="Row 3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
+
 </UserControl>

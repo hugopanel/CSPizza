@@ -189,7 +189,7 @@
                    VerticalContentAlignment="Center"/>
 
 
-                <TextBlock Text="Address"
+                <TextBlock Text="Address (City, Street)"
                    Foreground="DarkGray"
                    FontSize="13"
                    FontFamily="Montserrat"
