@@ -27,10 +27,36 @@ namespace WpfApp1
             return orderedCustomers;
         }
 
+        public List<Worker> OrderWorkerBy(List<Worker> WorkerList, params string[] list)
+        {
+            string[] parameters = { "alphabetical", "city" };
+            List<Worker> orderedWorkers = WorkerList;
+
+            foreach (string param in list)
+            {
+                if (param == "alphabetical")
+                {
+                    orderedWorkers = orderedWorkers.OrderBy(worker => worker.Name).ToList();
+                }
+                else if (param == "city")
+                {
+                    orderedWorkers = orderedWorkers.OrderBy(worker => worker.Address.City).ToList();
+                }
+            }
+
+            return orderedWorkers;
+        }
+
         public List<Customer> OrderCustomerByCumulativeAmount(List<Customer> CustomerList, List<Order> OrderList)
         {
             List<Customer> orderedCustomers = new List<Customer>(CustomerList);
             return orderedCustomers.OrderBy(customer => customer.CumulativeAmount).ToList();
+        }
+
+        public List<Worker> OrderWorkerByNumberOrders(List<Worker> WorkerList)
+        {
+            List<Worker> orderedWorkers = new List<Worker>(WorkerList);
+            return orderedWorkers.OrderBy(worker => worker.NbOrders).ToList();
         }
 
 

@@ -45,6 +45,8 @@ namespace WpfApp1.Models
                 // Go back to the pizzeria
                 Task.Delay(order.Customer.Address!.DeliveryTime).Wait();
 
+                NbOrders++;
+
                 // TODO: Give the money to the Clerk
             } catch (NullReferenceException ex)
             {
