@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using RibbitMQ;
 using WpfApp1.Models;
+using WpfApp1.Modules;
 
 namespace WpfApp1
 {
@@ -27,7 +28,9 @@ namespace WpfApp1
 
         public App()
         {
-
+            FileModule.LoadCustomers();
+            FileModule.LoadOrders();
+            FileModule.LoadWorkforce();
         }
     }
 

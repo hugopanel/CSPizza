@@ -73,12 +73,14 @@ namespace WpfApp1.Models
 
             foreach (Order order in Pizzeria.Orders)
             {
+                Console.WriteLine(order.Customer.CustomerInfo.Surname);
                 if (order.Customer == this)
                 {
                     totalAmount += order.getPrice();
                     orderCount++;
                 }
             }
+            Console.WriteLine(totalAmount.ToString());
 
             if (orderCount > 0)
             {

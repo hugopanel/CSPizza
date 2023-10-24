@@ -7,6 +7,15 @@
              xmlns:local="clr-namespace:WpfApp1.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+
+    <UserControl.Resources>
+        <Style x:Key="NoScrollbarsDataGrid" TargetType="{x:Type DataGrid}">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -15,6 +24,8 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal"
@@ -36,6 +47,72 @@
                           Margin="5,5,0,0"></TextBox>
             </StackPanel>
             <Button Grid.Column="1"
+Command="{Binding LoginCommand}"                            
+Content="Clerks"                            
+FontSize="12"
+FontFamily="Montserrat"
+Cursor="Hand"
+BorderThickness="0"
+Foreground="White"
+VerticalAlignment="Top"
+Click="BtnShowClerks_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#773DFF"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                        CornerRadius="15"
+                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Column="2"
+        Command="{Binding LoginCommand}"                            
+        Content="Delivery Men"                            
+        FontSize="12"
+        FontFamily="Montserrat"
+        Cursor="Hand"
+        BorderThickness="0"
+        Foreground="White"
+VerticalAlignment="Top"
+        Click="BtnShowDeliveryMen_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#773DFF"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                CornerRadius="15"
+                                Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Column="3"
                          Command="{Binding LoginCommand}"                            
                          Content="Search"                            
                          FontSize="12"
@@ -69,12 +146,12 @@
             </Button>
         </Grid>
         <Border Grid.Row="1"
-             Background="#200F53"
-             CornerRadius="10" 
-             Padding="10">
-            <DataGrid ColumnWidth="*"
-               Background="#200F53"
-               BorderThickness="0">
+        Background="#200F53"
+        CornerRadius="10" 
+        Padding="10">
+            <DataGrid Style="{StaticResource NoScrollbarsDataGrid}" ColumnWidth="*"
+          Background="#200F53"
+          BorderThickness="0" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="False" x:Name="WorkerDataGrid"  CanUserResizeRows="False" RowHeaderWidth="0">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="Transparent"/>
@@ -82,16 +159,44 @@
                         <Setter Property="Padding" Value="10,0,0,10"/>
                         <Setter Property="FontFamily" Value="Montserrat"/>
                         <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+
+
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Margin" Value="0,10" />
+                        <Setter Property="Padding" Value="1" />
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+
+                    </Style>
+                </DataGrid.CellStyle>
+
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="ID" HeaderStringFormat=""/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="First name"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Last name"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Phone"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Address"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                    <DataGridTextColumn Header="Number of Orders" Binding="{Binding NbOrders}" />
                 </DataGrid.Columns>
+
             </DataGrid>
+
         </Border>
     </Grid>
 </UserControl>
