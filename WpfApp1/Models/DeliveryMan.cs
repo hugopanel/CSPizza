@@ -31,19 +31,21 @@ namespace WpfApp1.Models
 
             try
             {
-                if (!Pizzeria.GPS.Contains(order.Customer.Address!))
+                Address? customerAddress = Pizzeria.GPS.Find(a => a.Equals(order.Customer.Address ?? ""));
+
+                if (customerAddress == null)
                 {
                     await Console.Out.WriteLineAsync("Unable to deliver. The address indicated by the customer isn't available.");
                     throw new Exception("Invalid address");
                 }
 
                 // Deliver the order to the customer
-                Task.Delay(order.Customer.Address!.DeliveryTime).Wait();
+                Task.Delay(customerAddress!.DeliveryTime).Wait();
 
                 // TODO: Take the money
 
                 // Go back to the pizzeria
-                Task.Delay(order.Customer.Address!.DeliveryTime).Wait();
+                Task.Delay(customerAddress!.DeliveryTime).Wait();
 
                 // TODO: Give the money to the Clerk
             } catch (NullReferenceException ex)

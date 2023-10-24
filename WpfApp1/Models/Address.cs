@@ -38,5 +38,11 @@ namespace WpfApp1.Models
         {
             return $"Street: {Street}, City: {City}, Delivery Time: {DeliveryTime}ms";
         }
+
+        public bool Equals(string address)
+        {
+            var fields = address.Split(", ");
+            return fields[0] == City && fields[1] == Street;
+        }
     }
 }

@@ -15,6 +15,6 @@ namespace WpfApp1
     /// </summary>
     public partial class App : Application
     {
-        RibbitMQ<MessageType> ribbitMq = new();
+        internal static RibbitMQ<MessageType> RibbitMq = new();
     }
 }

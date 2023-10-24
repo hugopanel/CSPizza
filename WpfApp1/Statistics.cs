@@ -20,7 +20,7 @@ namespace WpfApp1
                 }
                 else if (param == "city")
                 {
-                    orderedCustomers = orderedCustomers.OrderBy(customer => customer.Address.City).ToList();
+                    orderedCustomers = orderedCustomers.OrderBy(customer => customer.Address).ToList();
                 }
             }
 
@@ -51,9 +51,9 @@ namespace WpfApp1
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
             List<Customer> CustomerList = new List<Customer>
             {
-                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), new Address("Genshin Street","Kuala Lumpur", 1200000)),
-                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), new Address("Minoring Avenue","Paris", 1500000)),
-                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), new Address("Karmine Boulevard","Saint-Michel-Chef-Chef", 1500000))
+                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), "Kuala Lumpur, Genshin Street"),
+                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), "Paris, Minoring Avenue"),
+                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), "Sain-Michel-Chef-Chef, Karmine Boulevard")
             };
             Clerk Arthur = new Clerk();
             Arthur.Name = "Arthur";
