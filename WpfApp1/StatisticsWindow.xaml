@@ -19,7 +19,7 @@
                     <DataGridTextColumn Header="First Name" Binding="{Binding CustomerInfo.FirstName}" />
                     <DataGridTextColumn Header="Phone Number" Binding="{Binding CustomerInfo.TelephoneNumber}" />
                     <DataGridTextColumn Header="First Order Date" Binding="{Binding CustomerInfo.FirstOrderDate}" />
-                    <DataGridTextColumn Header="Street" Binding="{Binding Address}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
                     <DataGridTextColumn Header="Cumulative Amount" Binding="{Binding CumulativeAmount}" />
                     <DataGridTextColumn Header="Average Order" Binding="{Binding AverageOrder}" />
 

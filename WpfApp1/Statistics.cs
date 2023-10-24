@@ -24,7 +24,7 @@ namespace WpfApp1
                 }
                 else if (param == "city")
                 {
-                    // orderedCustomers = orderedCustomers.OrderBy(customer => customer.Address.City).ToList();
+                    orderedCustomers = orderedCustomers.OrderBy(customer => customer.Address).ToList();
                 }
             }
 
@@ -44,7 +44,7 @@ namespace WpfApp1
                 }
                 else if (param == "city")
                 {
-                    // orderedWorkers = orderedWorkers.OrderBy(worker => worker.Address.City).ToList();
+                    orderedWorkers = orderedWorkers.OrderBy(worker => worker.Address).ToList();
                 }
             }
 
