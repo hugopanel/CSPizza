@@ -68,7 +68,7 @@ namespace WpfApp1.Models
                 await Console.Out.WriteLineAsync("Unable to deliver. The customer hasn't specified an address.");
             }
 
-            IsDelivering = false; // Allow th edeliveryman to make another delivery
+            IsDelivering = false; // Allow the deliveryman to make another delivery
         }
     }
 }
