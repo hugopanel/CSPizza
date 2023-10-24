@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -70,11 +72,22 @@ namespace WpfApp1.View
                 return;
             }
 
-            MessageBox.Show(this, dDate.ToString(), "", MessageBoxButton.OK, MessageBoxImage.Information);
             Customer customer = new Customer(txtSurname.Text, txtFirstName.Text, txtNumber.Text, DateOnly.FromDateTime(dDate), txtAddress.Text);
 
-            FileModule.Customers.Add(customer);
+            FileModule.LoadCustomers();
+            Pizzeria.Customers.Add(customer);
             FileModule.SaveCustomers();
+
+            FileModule.LoadWorkforce();
+            Pizzeria.Clerks.Add(new Clerk(0, "TestClerk"));
+            Pizzeria.Cooks.Add(new Cook(0, "TestCook"));
+            Pizzeria.DeliveryMen.Add(new DeliveryMan(0, "TestDeliveryMan", 0));
+            FileModule.SaveWorkforce();
+            
+            FileModule.LoadMenu();
+            Pizzeria.PizzasMenu.Add(new Pizza("Default Medium Pizza", 1000, new PizzaType("Default", 2), new PizzaSize("Medium", 5)));
+            Pizzeria.DrinksMenu.Add(new Drink("Premium Tap Water", 12));
+            FileModule.SaveMenu();
 
             Application.Current.Shutdown();
         }

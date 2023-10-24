@@ -18,5 +18,12 @@ namespace WpfApp1.Models
             new Address("Minoring Avenue","Paris", 1500000),
             new Address("Karmine Boulevard","Saint-Michel-Chef-Chef", 1500000)
         };
+
+        public static List<Customer> Customers { get; set; } = new();
+        public static List<Clerk> Clerks { get; set; } = new();
+        public static List<Cook> Cooks { get; set; } = new();
+        public static List<DeliveryMan> DeliveryMen { get; set; } = new();
+        public static List<Pizza> PizzasMenu { get; set; } = new();
+        public static List<Drink> DrinksMenu { get; set; } = new();
     }
 }

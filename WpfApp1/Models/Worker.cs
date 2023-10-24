@@ -8,15 +8,12 @@ namespace WpfApp1.Models
 {
     public abstract class Worker
     {
-        private static int IdCount = 0;
+        public static int IdCount = 0;
 
-        // Assign the value of IdCount and increment the global counter by one.
-        private int _id = IdCount++; 
-        
         /// <summary>
         /// The identifier of the worker.
         /// </summary>
-        public int Id { get => _id; }
+        public int Id { get; set; }
         
         /// <summary>
         /// The name of the worker.

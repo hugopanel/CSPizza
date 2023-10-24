@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfApp1.Modules;
 
 namespace WpfApp1.Models
@@ -18,6 +20,14 @@ namespace WpfApp1.Models
         {
             CustomerInfo = customerInfo;
             CumulativeAmount = 0;
+        }
+
+        [JsonConstructor]
+        public Customer(CustomerInfo customerInfo, string address, float cumulativeAmount)
+        {
+            CustomerInfo = customerInfo;
+            Address = address;
+            cumulativeAmount = CumulativeAmount;
         }
 
         public Customer(CustomerInfo customerInfo, string? address) : this(customerInfo)

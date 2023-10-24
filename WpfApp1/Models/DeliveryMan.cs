@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,6 +19,20 @@ namespace WpfApp1.Models
         /// Whether the deliveryman is delivering (true) or idle (false).
         /// </summary>
         public bool IsDelivering { get; private set; } = false;
+
+        [JsonConstructor]
+        public DeliveryMan(int id, string name, int deliveries)
+        {
+            Id = id;
+            Name = name;
+            Deliveries = deliveries;
+        }
+
+        public DeliveryMan(string name)
+        {
+            Id = IdCount++;
+            Name = name;
+        }
 
         /// <summary>
         /// Deliver an Order to a Customer.
