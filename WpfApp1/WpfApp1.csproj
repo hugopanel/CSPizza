@@ -14,16 +14,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="RibbitMQ">
-      <HintPath>..\..\..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <EditorConfigFiles Remove="C:\Users\pauli\Documents\M1\S7\Intégration_de_systemes_applications\project\CSPizza\WpfApp1\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="C:\Users\pauli\Documents\M1\S7\Intégration_de_systemes_applications\project\CSPizza\WpfApp1\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RibbitMQ">
+      <HintPath>..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
