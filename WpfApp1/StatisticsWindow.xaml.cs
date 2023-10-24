@@ -60,13 +60,13 @@ namespace WpfApp1
 
             string fileName = "../../../Json/Customers.json";
             string jsonString = File.ReadAllText(fileName);
-            List<Customer> CustomerList = JsonConvert.DeserializeObject<List<Customer>>(jsonString)!;
-            string fileNameClerks = "../../../Json/Clerks.json";
+            CustomerList = JsonConvert.DeserializeObject<List<Customer>>(jsonString)!;
+            /*string fileNameClerks = "../../../Json/Clerks.json";
             string jsonStringClerks = File.ReadAllText(fileNameClerks);
-            List<Clerk> ClerkList = JsonConvert.DeserializeObject<List<Clerk>>(jsonStringClerks)!;
+            ClerkList = JsonConvert.DeserializeObject<List<Clerk>>(jsonStringClerks)!;*/
             string fileNameOrders = "../../../Json/Orders.json";
             string jsonStringOrders = File.ReadAllText(fileNameOrders);
-            List<Order> OrderList = JsonConvert.DeserializeObject<List<Order>>(jsonStringOrders)!;
+            OrderList = JsonConvert.DeserializeObject<List<Order>>(jsonStringOrders)!;
         }
 
         private void UpdateDataGrid(IEnumerable<Customer> customers)
