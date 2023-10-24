@@ -23,9 +23,28 @@ namespace WpfApp1.View
     /// </summary>
     public partial class LoginView : Window
     {
-        public LoginView()
+        public LoginView(string telephoneNumber, bool isNewUser)
         {
             InitializeComponent();
+
+            // Check if we can find the user
+            if (Pizzeria.Customers.Exists(c => c.CustomerInfo.TelephoneNumber == telephoneNumber))
+            {
+                // User exists
+                lblWindowTitle.Text = "LOGIN";
+                lblFormTitle.Text = "LOGIN";
+                lblFormDescription.Text = "PLEASE UPDATE EVERY INCORRECT INFORMATION";
+            }
+            else
+            {
+                // We check if the user said they already ordered here...
+                if (!isNewUser)
+                {
+                    MessageBox.Show(this,
+                        "We were unable to retrieve your Customer information from your telephone number. Please complete this form.",
+                        "Let's get to know you!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

@@ -47,7 +47,8 @@
                     <ColumnDefinition Width="25"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="REGISTER"
+                <TextBlock x:Name="lblWindowTitle" 
+                           Text="REGISTER"
                            Foreground="DarkGray"
                            FontSize="20"
                            FontFamily="Montserrat"
@@ -132,7 +133,8 @@
                         Orientation="Vertical"
                         Margin="0,2,0,0">
 
-                <TextBlock Text="REGISTER"
+                <TextBlock x:Name="lblFormTitle"
+                           Text="REGISTER"
                            Foreground="LightGray"
                            FontSize="20"
                            FontWeight="Medium"
@@ -140,13 +142,14 @@
                            TextWrapping="Wrap"
                            TextAlignment="Center"/>
 
-                <TextBlock Text="PLEASE FILL IN ALL THE BLANKS"
-                   Foreground="DarkGray"
-                   FontSize="13"
-                   FontFamily="Montserrat"
-                   TextWrapping="Wrap"
-                   TextAlignment="Center"
-                   Margin="0,8"/>
+                <TextBlock x:Name="lblFormDescription"
+                           Text="PLEASE FILL IN ALL THE BLANKS"
+                           Foreground="DarkGray"
+                           FontSize="13"
+                           FontFamily="Montserrat"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           Margin="0,8"/>
 
                 <TextBlock Text="Surname"
                    Foreground="DarkGray"

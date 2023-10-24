@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using RibbitMQ;
 using WpfApp1.Models;
 using WpfApp1.Modules;
@@ -18,6 +19,8 @@ namespace WpfApp1
     /// </summary>
     public partial class App : Application
     {
+        public static Dispatcher currentUiDispatcher = Application.Current.Dispatcher;
+
         internal static RibbitMQ<MessageType> RibbitMq = new();
         internal static JsonSerializerOptions jsonOptions = new()
         {
@@ -32,6 +35,8 @@ namespace WpfApp1
             FileModule.LoadCustomers();
             FileModule.LoadOrders();
             FileModule.LoadWorkforce();
+
+            Console.WriteLine("Loaded JSON files.");
         }
 
         protected override void OnExit(ExitEventArgs e)

@@ -65,7 +65,6 @@ namespace WpfApp1.Models
 
         }
 
-
         public void UpdateAverageOrder()
         {
             float totalAmount = 0;

@@ -1,11 +1,14 @@
-﻿using System;
+﻿using RibbitMQ;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
+using WpfApp1.View;
 
 namespace WpfApp1.Models
 {
@@ -118,6 +121,27 @@ namespace WpfApp1.Models
             }
             return nb;
 
+        }
+
+        private async Task ClerkHandleInitialCallAsync(IMessage<MessageType> message)
+        {
+            // We get the dispatcher to access the UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // We get the WelcomeView window
+                WelcomeView welcomeView = (WelcomeView)Application.Current.MainWindow;
+
+                // We add text to the richtextbox
+                welcomeView.AddTextNonUI("Clerk" + Id + ": " + "Hello and welcome to Pizzeria Hulopa! Are you a new customer? (yes/no)");
+            }, null);
+
+            // We ask the customer if it's their first order
+            App.RibbitMq.Send(MessageType.AskFirstOrder, new Message());
+        }
+
+        public void Register()
+        {
+            App.RibbitMq.Subscribe(MessageType.InitialCall, ClerkHandleInitialCallAsync);
         }
     }
 }
