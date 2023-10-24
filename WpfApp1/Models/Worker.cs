@@ -12,19 +12,19 @@ namespace WpfApp1.Models
 
 
         // Assign the value of IdCount and increment the global counter by one.
-        private int _id = IdCount++; 
-        
+        private int _id = IdCount++;
+
         /// <summary>
         /// The identifier of the worker.
         /// </summary>
         public int Id { get => _id; }
-        
+
         /// <summary>
         /// The name of the worker.
         /// </summary>
         public string Name { get; set; }
 
-        public Address? Address { get; set; }
+        public string? Address { get; set; }
 
         public int NbOrders { get; set; }
 

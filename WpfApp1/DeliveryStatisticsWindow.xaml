@@ -17,8 +17,7 @@
             <DataGrid Name="DataGridDeliverer" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                    <DataGridTextColumn Header="Street" Binding="{Binding Address.Street}" />
-                    <DataGridTextColumn Header="City" Binding="{Binding Address.City}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
                     <DataGridTextColumn Header="Order Count" Binding="{Binding NbOrders}" />
                 </DataGrid.Columns>
             </DataGrid>

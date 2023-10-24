@@ -28,7 +28,8 @@ namespace WpfApp1.Models
         /// </summary>
         /// <param name="name">The address as a string</param>
         /// <param name="deliveryTime">The time it takes to deliver to that address (in milliseconds)</param>
-        public Address(string street, string city, int deliveryTime) {
+        public Address(string street, string city, int deliveryTime)
+        {
             Street = street;
             City = city;
             DeliveryTime = deliveryTime;

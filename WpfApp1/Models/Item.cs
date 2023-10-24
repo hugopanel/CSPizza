@@ -12,7 +12,7 @@ namespace WpfApp1.Models
         /// Name of the item.
         /// </summary>
         public string Name { get; set; }
-        
+
         /// <summary>
         /// Price of the item (in euros)
         /// </summary>

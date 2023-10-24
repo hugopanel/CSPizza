@@ -7,6 +7,238 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <!--Commands-->
+            <ColumnDefinition Width="250"/>
+            <!--State-->
+            <ColumnDefinition Width="*"/>
+            <!--Comm Module-->
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- First Column -->
+        <Grid Grid.Row="0" Grid.Column="0" Background="#4B0150">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="Auto"/>
+                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" >
+                <Label Content="Pizzas"  HorizontalAlignment="Center" Foreground="White"/>
+            </Border>
+            <DataGrid x:Name="DgPizzas" AutoGenerateColumns="False" Grid.Row="1" >
+                <DataGrid.Background>
+                    <SolidColorBrush Color="Gray" Opacity="0.6"  />
+                </DataGrid.Background>
+                
+                <DataGrid.Columns >
+                    <DataGridComboBoxColumn Header="Name" SelectedItemBinding="{Binding Pizza.SelectedName}" Width="3*">
+                        <DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding Pizza.AvailableName}" />
+                            </Style>
+                        </DataGridComboBoxColumn.ElementStyle>
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding Pizza.AvailableName}" />
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
+                    <DataGridComboBoxColumn Header="Size" SelectedItemBinding="{Binding Pizza.SelectedSize}"  Width="3*">
+                        <DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding Pizza.AvailableSizes}" />
+                            </Style>
+                        </DataGridComboBoxColumn.ElementStyle>
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding Pizza.AvailableSizes}" />
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="2*" />
+                    <DataGridTemplateColumn  Width="25">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="BtnRemovePizza" Content="X" Click="BtnRemovePizza_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" >
+                <Label Content="Drinks" HorizontalAlignment="Center" Foreground="White"/>
+            </Border>
+            <DataGrid x:Name="DgDrinks" AutoGenerateColumns="False" Grid.Row="3" >
+                <DataGrid.Background>
+                    <SolidColorBrush Color="Gray" Opacity="0.6"  />
+                </DataGrid.Background>
+                <DataGrid.Resources>
+                    <Style x:Key="HeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="BorderThickness" Value="0,0,1,1" />
+                        <Setter Property="BorderBrush" Value="Black" />
+                        <Setter Property="Padding" Value="5" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns >
+                    <DataGridComboBoxColumn Header="Name" SelectedItemBinding="{Binding Drink.SelectedType}" Width="3*">
+                        <DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding Drink.AvailableType}" />
+                            </Style>
+                        </DataGridComboBoxColumn.ElementStyle>
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding Drink.AvailableType}" />
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
+                    <DataGridComboBoxColumn Header="Size" SelectedItemBinding="{Binding Drink.SelectedVolume}"  Width="3*">
+                        <DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding Drink.AvailableVolume}" />
+                            </Style>
+                        </DataGridComboBoxColumn.ElementStyle>
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding Drink.AvailableVolume}" />
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="2*" />
+                    <DataGridTemplateColumn  Width="25">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="BtnRemoveDrink" Content="X" Click="BtnRemoveDrink_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
             
+            <Grid  Grid.Row="4" Background="Transparent" Margin="0,0,0,0" Grid.RowSpan="3">
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" x:Name="LblTotalPrice" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Total Price"   Margin="10" Foreground="#D5CFF5"/>
+                <Button Grid.Row ="0" Grid.Column="0" Content="Add Pizza" Click="BtnAddPizza_Click" Margin="8,0,12,12" VerticalAlignment="Bottom"></Button>
+                <Label Grid.Row="0" Grid.Column="1" x:Name="LblTotalPriceValue" HorizontalAlignment="Right" Content="0" VerticalAlignment="Top" Margin="10" Foreground="#D5CFF5"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="Add Drink" Click="BtnAddDrink_Click" Margin="12,0,12,12" VerticalAlignment="Bottom"></Button>
+                <Button Grid.Row="1" Grid.Column="0" x:Name="BtnBack" Content="Back" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Click="BtnPrevious_Click"/>
+                <Button Grid.Row="1" Grid.Column="1" x:Name="BtnBuy" Content="Buy" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top"  Margin="10" Click="BtnBuy_Click"/>
+            </Grid>
+            <Button Grid.Row ="5" Content="LoadFile" Click="BtnLoad_Click" Margin="10"></Button>
+        </Grid>
+
+        <!-- Second Column -->
+        <DataGrid Grid.Column="1" AutoGenerateColumns="False" Margin="38,0,38,0" Background="#200F53"
+BorderThickness="0" SelectionChanged="DataGrid_SelectionChanged" x:Name="OrderDataGrid"  CanUserResizeRows="False" IsReadOnly="True" RowHeaderWidth="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Order" Width="48" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Price" Width="45" Binding="{Binding Prize}"/>
+                <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}"/>
+            </DataGrid.Columns>
+
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="#BCBEE0"/>
+                    <Setter Property="Padding" Value="5,5,0,5"/>
+                    <Setter Property="FontFamily" Value="Montserrat"/>
+                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="BorderBrush" Value="White" />
+                    <Setter Property="BorderThickness" Value="0.5" />
+
+
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="#BCBEE0"/>
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Margin" Value="0,10" />
+                    <Setter Property="Padding" Value="1" />
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="#BCBEE0"/>
+                    <Setter Property="FontSize" Value="15"/>
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+
+                </Style>
+            </DataGrid.CellStyle>
+
+
+        </DataGrid>
+
+        <!-- Third Column -->
+        <Grid Grid.Column="2" Background="LightBlue">
+            <!-- Content for the third column -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Clerk" Grid.Row="0"  Background="#4B0150" Foreground="white"  FontSize="13" TextWrapping="Wrap"/>
+            <RichTextBox Grid.Row="1" IsReadOnly="True" IsUndoEnabled="False"  Name="rtb_Clerk" Background="#36013F">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="Padding" Value="10,0,0,10"/>
+                        <Setter Property="FontFamily" Value="Montserrat"/>
+                        <Setter Property="FontSize" Value="15"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+            <TextBlock Text="Cook" Grid.Row="2" Background="#4B0150" Foreground="white"  FontSize="13" TextWrapping="Wrap"/>
+            <RichTextBox Grid.Row="3" IsReadOnly="True" IsUndoEnabled="False"  Name="rtb_Cook" Background="#36013F">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="Padding" Value="10,0,0,10"/>
+                        <Setter Property="FontFamily" Value="Montserrat"/>
+                        <Setter Property="FontSize" Value="15"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+            <TextBlock Text="Delivery Man" Grid.Row="4" Background="#4B0150" Foreground="white"  FontSize="13" TextWrapping="Wrap"/>
+            <RichTextBox Grid.Row="5" IsReadOnly="True" IsUndoEnabled="False"  Name="rtb_Deliverer" Background="#36013F">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="Padding" Value="10,0,0,10"/>
+                        <Setter Property="FontFamily" Value="Montserrat"/>
+                        <Setter Property="FontSize" Value="15"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+        </Grid>
     </Grid>
 </UserControl>

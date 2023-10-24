@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,11 @@ namespace WpfApp1.Models
     public class Customer
     {
         public CustomerInfo CustomerInfo { get; set; }
-        public Address? Address { get; set; }
+        public string? Address { get; set; }
 
         public float CumulativeAmount { get; set; }
+
+        public float AverageOrder { get; set; }
 
         public Customer(CustomerInfo customerInfo)
         {
@@ -20,7 +23,7 @@ namespace WpfApp1.Models
             CumulativeAmount = 0;
         }
 
-        public Customer(CustomerInfo customerInfo, Address? address) : this(customerInfo)
+        public Customer(CustomerInfo customerInfo, string? address) : this(customerInfo)
         {
             Address = address;
             CumulativeAmount = 0;
@@ -31,9 +34,13 @@ namespace WpfApp1.Models
             CustomerInfo = new CustomerInfo(surname, firstName, telephoneNumber);
         }
 
-        public Customer(string surname, string firstName, string telephoneNumber, DateOnly firstOrderDate)
+        [JsonConstructor]
+        public Customer(string surname, string firstName, string telephoneNumber, DateOnly firstOrderDate, string Address, float CumulativeAmount, float AverageOrder)
         {
             CustomerInfo = new CustomerInfo(surname, firstName, telephoneNumber, firstOrderDate);
+            this.Address = Address;
+            this.CumulativeAmount = CumulativeAmount;
+            this.AverageOrder = AverageOrder;
         }
 
         public float GetCumulativeAmount(List<Order> OrderList)
@@ -45,6 +52,30 @@ namespace WpfApp1.Models
             }
             return amount;
 
+        }
+
+        public void UpdateAverageOrder(List<Order> orders)
+        {
+            float totalAmount = 0;
+            int orderCount = 0;
+
+            foreach (Order order in orders)
+            {
+                if (order.Customer == this)
+                {
+                    totalAmount += order.getPrice();
+                    orderCount++;
+                }
+            }
+
+            if (orderCount > 0)
+            {
+                AverageOrder = totalAmount / orderCount;
+            }
+            else
+            {
+                AverageOrder = 0;
+            }
         }
     }
 }

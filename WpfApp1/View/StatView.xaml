@@ -7,6 +7,39 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <Button Name="BtnShowClerkStatistics" Content="Show Clerk Statistics" Click="BtnShowClerkStatistics_Click" />
+            <Button Name="BtnShowDelivererStatistics" Content="Show Deliverer Statistics" Click="BtnShowDelivererStatistics_Click" />
+            <Button Name="BtnOrderAlphabetical" Content="Order by Alphabetical" Click="BtnOrderAlphabetical_Click" />
+            <Button Name="BtnOrderCity" Content="Order by City" Click="BtnOrderCity_Click" />
+            <Button Name="BtnOrderCumulativeAmount" Content="Order by Cumulative Amount" Click="BtnOrderCumulativeAmount_Click" />
+            <Button Name="BtnAverageOrderPrice" Content="Average Order Price" Click="BtnAverageOrderPrice_Click" />
+
+            <ListBox Name="ListBoxResults" />
+
+            <DataGrid Name="DataGridCustomers" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Surname" Binding="{Binding CustomerInfo.Surname}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerInfo.FirstName}" />
+                    <DataGridTextColumn Header="Phone Number" Binding="{Binding CustomerInfo.TelephoneNumber}" />
+                    <DataGridTextColumn Header="First Order Date" Binding="{Binding CustomerInfo.FirstOrderDate}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                    <DataGridTextColumn Header="Cumulative Amount" Binding="{Binding CumulativeAmount}" />
+                    <DataGridTextColumn Header="Average Order" Binding="{Binding AverageOrder}" />
+
+                </DataGrid.Columns>
+            </DataGrid>
             
+        </StackPanel>
+        <ListBox Name="clerkListBox" HorizontalAlignment="Left" Margin="10,10,10,50">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding OrderCount}" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,9 @@ namespace WpfApp1.Models
         /// <param name="preparationTime">The time it takes for a cook to prepare the pizza.</param>
         /// <param name="pizzaType">The type of the pizza.</param>
         /// <param name="pizzaSize">The size of the pizza.</param>
-        public Pizza(string name, int preparationTime, PizzaType pizzaType, PizzaSize pizzaSize) {
+        [JsonConstructor]
+        public Pizza(string name, int preparationTime, PizzaType pizzaType, PizzaSize pizzaSize)
+        {
             Name = name;
             PreparationTime = preparationTime;
             PizzaType = pizzaType;

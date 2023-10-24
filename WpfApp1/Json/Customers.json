@@ -1,0 +1,32 @@
+[
+  {
+    "CustomerInfo": {
+      "Surname": "Brunesseaux",
+      "FirstName": "Lou",
+      "TelephoneNumber": "0607080910",
+      "FirstOrderDate": "2023-10-24"
+    },
+    "Address": "Paris, 15 rue de Genshin",
+    "CumulativeAmount": 19.5
+  },
+  {
+    "CustomerInfo": {
+      "Surname": "Panel",
+      "FirstName": "Hugo",
+      "TelephoneNumber": "0102030405",
+      "FirstOrderDate": "2023-10-24"
+    },
+    "Address": "Paris, 3 rue Minoring",
+    "CumulativeAmount": 11
+  },
+  {
+    "CustomerInfo": {
+      "Surname": "David",
+      "FirstName": "Pauline",
+      "TelephoneNumber": "0605040302",
+      "FirstOrderDate": "2023-10-24"
+    },
+    "Address": "Bourg-la-Reine, 10 rue du 8 mai 1945",
+    "CumulativeAmount": 9.5
+  }
+]

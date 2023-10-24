@@ -11,7 +11,7 @@ namespace WpfApp1.Models
         /// <summary>
         /// A list of all the valid addresses the pizzeria can deliver to. 
         /// </summary>
-        public static List<Address> GPS { get; set; } = new() { 
+        public static List<Address> GPS { get; set; } = new() {
             new Address("30-32 Av. de la République", "Villejuif", 10000),
             new Address("136 bis Bd Maxime Gorki", "Villejuif", 9000)
         };

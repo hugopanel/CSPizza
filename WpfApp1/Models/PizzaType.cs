@@ -18,7 +18,8 @@ namespace WpfApp1.Models
         /// </summary>
         public float BasePrice { get; set; }
 
-        public PizzaType(string name, float baseprice) { 
+        public PizzaType(string name, float baseprice)
+        {
             Name = name;
             BasePrice = baseprice;
         }

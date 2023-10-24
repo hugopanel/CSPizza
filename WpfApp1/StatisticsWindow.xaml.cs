@@ -4,6 +4,8 @@ using System.Linq;
 using System.Collections.Generic;
 using WpfApp1.Models;
 using System;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace WpfApp1
 {
@@ -19,11 +21,12 @@ namespace WpfApp1
             InitializeComponent();
             stats = new Statistics();
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            /*
             CustomerList = new List<Customer>
             {
-                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), new Address("Genshin Street","Kuala Lumpur", 1200000)),
-                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), new Address("Minoring Avenue","Paris", 1500000)),
-                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), new Address("Karmine Boulevard","Saint-Michel-Chef-Chef", 1500000))
+                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), "Paris, 15 rue de Genshin"),
+                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), "Paris, 3 rue Minoring"),
+                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), "Bourg-la-Reine, 10 rue du 8 mai 1945")
             };
             Clerk Arthur = new Clerk();
             Arthur.Name = "Arthur";
@@ -49,10 +52,21 @@ namespace WpfApp1
                     Customer = CustomerList[2]
                 },
             };
-            OrderList[0].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("small", 0)));
-            OrderList[0].AddItem(new Pizza("Pizza", 12000, new PizzaType("calzone", 10), new PizzaSize("medium", 1.5F)));
-            OrderList[1].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("large", 3)));
-            OrderList[2].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));
+            OrderList[0].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("small", 0)));
+            OrderList[0].AddPizza(new Pizza("Pizza", 12000, new PizzaType("calzone", 10), new PizzaSize("medium", 1.5F)));
+            OrderList[1].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("large", 3)));
+            OrderList[2].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));*/
+
+
+            string fileName = "../../../Json/Customers.json";
+            string jsonString = File.ReadAllText(fileName);
+            CustomerList = JsonConvert.DeserializeObject<List<Customer>>(jsonString)!;
+            /*string fileNameClerks = "../../../Json/Clerks.json";
+            string jsonStringClerks = File.ReadAllText(fileNameClerks);
+            ClerkList = JsonConvert.DeserializeObject<List<Clerk>>(jsonStringClerks)!;*/
+            string fileNameOrders = "../../../Json/Orders.json";
+            string jsonStringOrders = File.ReadAllText(fileNameOrders);
+            OrderList = JsonConvert.DeserializeObject<List<Order>>(jsonStringOrders)!;
         }
 
         private void UpdateDataGrid(IEnumerable<Customer> customers)

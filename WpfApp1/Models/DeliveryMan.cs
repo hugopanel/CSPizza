@@ -31,6 +31,7 @@ namespace WpfApp1.Models
 
             try
             {
+                /*
                 if (!Pizzeria.GPS.Contains(order.Customer.Address!))
                 {
                     await Console.Out.WriteLineAsync("Unable to deliver. The address indicated by the customer isn't available.");
@@ -45,10 +46,11 @@ namespace WpfApp1.Models
                 // Go back to the pizzeria
                 Task.Delay(order.Customer.Address!.DeliveryTime).Wait();
 
-                NbOrders++;
+                NbOrders++;*/
 
                 // TODO: Give the money to the Clerk
-            } catch (NullReferenceException ex)
+            }
+            catch (NullReferenceException ex)
             {
                 await Console.Out.WriteLineAsync("Unable to deliver. The customer hasn't specified an address.");
             }
