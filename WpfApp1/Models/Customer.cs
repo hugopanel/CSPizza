@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WpfApp1.Modules;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace WpfApp1.Models
 {
@@ -17,6 +18,8 @@ namespace WpfApp1.Models
 
         public float CumulativeAmount { get; set; }
 
+        public int NbOrders { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Customer(CustomerInfo customerInfo)
@@ -26,11 +29,12 @@ namespace WpfApp1.Models
         }
 
         [JsonConstructor]
-        public Customer(CustomerInfo customerInfo, string address, float cumulativeAmount)
+        public Customer(CustomerInfo customerInfo, string address, float cumulativeAmount, int nborders)
         {
             CustomerInfo = customerInfo;
             Address = address;
             CumulativeAmount = cumulativeAmount;
+            NbOrders = nborders;
         }
 
         public Customer(CustomerInfo customerInfo, string? address) : this(customerInfo)
@@ -68,8 +72,23 @@ namespace WpfApp1.Models
                 amount = order.addToCumulative(this, amount);
             }
             return amount;
-
         }
+
+        public void CalculateNbOrders(List<Order> orderList)
+        {
+            int doneOrderCount = 0;
+            foreach (Order order in orderList)
+            {
+                if (order.Customer.CustomerInfo.Surname == CustomerInfo.Surname && order.Status == OrderStatus.Done)
+                {
+                    doneOrderCount++;
+                }
+            }
+            NbOrders = doneOrderCount;
+            OnPropertyChanged("NbOrders");
+        }
+
+
 
     }
 }
