@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace WpfApp1.View
     /// </summary>
     public partial class ClientView : UserControl
     {
+        public ObservableCollection<Person> People { get; set; }
         public ClientView()
         {
             InitializeComponent();

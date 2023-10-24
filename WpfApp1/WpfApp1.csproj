@@ -17,5 +17,4 @@
       <HintPath>..\..\..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

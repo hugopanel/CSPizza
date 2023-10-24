@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using WpfApp1.Models;
 using WpfApp1.Modules;
 
+
 namespace WpfApp1.View
 {
     /// <summary>
@@ -22,6 +24,7 @@ namespace WpfApp1.View
     /// </summary>
     public partial class WorkerView : UserControl
     {
+        public ObservableCollection<WorkerPers> Workers { get; set; }
         public WorkerView()
         {
             InitializeComponent();
