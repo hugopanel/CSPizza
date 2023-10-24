@@ -19,10 +19,10 @@
                     <DataGridTextColumn Header="First Name" Binding="{Binding CustomerInfo.FirstName}" />
                     <DataGridTextColumn Header="Phone Number" Binding="{Binding CustomerInfo.TelephoneNumber}" />
                     <DataGridTextColumn Header="First Order Date" Binding="{Binding CustomerInfo.FirstOrderDate}" />
-                    <DataGridTextColumn Header="Street" Binding="{Binding Address.Street}" />
-                    <DataGridTextColumn Header="City" Binding="{Binding Address.City}" />
-                    <DataGridTextColumn Header="Delivery Time" Binding="{Binding Address.DeliveryTime}" />
+                    <DataGridTextColumn Header="Street" Binding="{Binding Address}" />
                     <DataGridTextColumn Header="Cumulative Amount" Binding="{Binding CumulativeAmount}" />
+                    <DataGridTextColumn Header="Average Order" Binding="{Binding AverageOrder}" />
+
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

@@ -74,6 +74,37 @@ namespace WpfApp1
              return total / Orders.Count;
         }
 
+        public float setAverageOrder(Customer customer)
+        {
+            string fileNameOrders = "../../../Json/Orders.json";
+            string jsonStringOrders = File.ReadAllText(fileNameOrders);
+            List<Order> Orders = JsonConvert.DeserializeObject<List<Order>>(jsonStringOrders)!;
+            float nbOrders = 0;
+            float amount = 0;
+            foreach (Order order in Orders)
+            {
+                if (order.Customer == customer)
+                {
+                    nbOrders++;
+                    amount += order.getPrice();
+                }
+            }
+            return amount/nbOrders;
+        }
+
+        public List<Order> OrderByTimePeriod(List<Order> Orders, DateTime d1, DateTime d2)
+        {
+            List<Order> ordersInTimePeriod = new List<Order>();
+            foreach(Order order in Orders)
+            {
+                if(order.dateTime >=  d1 && order.dateTime <= d2)
+                {
+                    ordersInTimePeriod.Add(order);
+                }
+            }
+            return ordersInTimePeriod;
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("hello");
@@ -128,7 +159,9 @@ namespace WpfApp1
             strJson = JsonSerializer.Serialize<IList<Order>>(OrderList, opt);
             Console.WriteLine(strJson);
             */
-            
+            DateTime currentDateh = DateTime.Now;
+            Console.WriteLine(currentDateh.ToString("yyyy-MM-ddTHH:mm:ss"));
+
             string fileName = "../../../Json/Customers.json";
             string jsonString = File.ReadAllText(fileName);
             List<Customer> CustomerList = JsonConvert.DeserializeObject<List<Customer>>(jsonString)!;
@@ -138,6 +171,11 @@ namespace WpfApp1
             string fileNameOrders = "../../../Json/Orders.json";
             string jsonStringOrders = File.ReadAllText(fileNameOrders);
             List<Order> OrderList = JsonConvert.DeserializeObject<List<Order>>(jsonStringOrders)!;
+
+            foreach(Customer customer in CustomerList)
+            {
+                customer.UpdateAverageOrder(OrderList);
+            }
 
             foreach (Customer customer in CustomerList)
             {
@@ -167,6 +205,13 @@ namespace WpfApp1
                 Console.WriteLine("Number of orders for "+clerk.Name + " : "+clerk.NbOrders);
             }
             Console.WriteLine("\nAverage price of orders :" + stats.AverageOrderPrice(OrderList));
+            DateTime d1 = new DateTime(2023, 10, 23, 10, 40, 18);
+            DateTime d2 = new DateTime(2023, 10, 23, 11, 59, 18);
+            List<Order> orders = stats.OrderByTimePeriod(OrderList, d1, d2);
+            Console.WriteLine("Orders by time period :");
+            foreach(Order order in orders) { 
+                Console.WriteLine("Order : "+order.Id + " at "+order.dateTime);
+            }
         }
     }
 }

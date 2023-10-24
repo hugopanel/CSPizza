@@ -15,6 +15,8 @@ namespace WpfApp1.Models
 
         public float CumulativeAmount { get; set; }
 
+        public float AverageOrder {  get; set; }
+
         public Customer(CustomerInfo customerInfo)
         {
             CustomerInfo = customerInfo;
@@ -33,12 +35,12 @@ namespace WpfApp1.Models
         }
 
         [JsonConstructor]
-        public Customer(string surname, string firstName, string telephoneNumber, DateOnly firstOrderDate, string Address, float CumulativeAmount)
+        public Customer(string surname, string firstName, string telephoneNumber, DateOnly firstOrderDate, string Address, float CumulativeAmount, float AverageOrder)
         {
             CustomerInfo = new CustomerInfo(surname, firstName, telephoneNumber, firstOrderDate);
             this.Address = Address;
             this.CumulativeAmount = CumulativeAmount;
-            Console.WriteLine(this.CumulativeAmount.ToString());
+            this.AverageOrder = AverageOrder;
         }
 
         public float GetCumulativeAmount(List<Order> OrderList)
@@ -50,6 +52,30 @@ namespace WpfApp1.Models
             }
             return amount;
 
+        }
+
+        public void UpdateAverageOrder(List<Order> orders)
+        {
+            float totalAmount = 0;
+            int orderCount = 0;
+
+            foreach (Order order in orders)
+            {
+                if (order.Customer == this)
+                {
+                    totalAmount += order.getPrice();
+                    orderCount++;
+                }
+            }
+
+            if (orderCount > 0)
+            {
+                AverageOrder = totalAmount / orderCount;
+            }
+            else
+            {
+                AverageOrder = 0;
+            }
         }
     }
 }

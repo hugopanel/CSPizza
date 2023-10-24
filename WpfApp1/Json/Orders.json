@@ -2,7 +2,7 @@
   {
     "Id": 0,
     "Status": 0,
-    "dateTime": "0001-01-01T00:00:00",
+    "dateTime": "2023-10-23T10:49:18",
     "Pizzas": [
       {
         "PizzaType": {
@@ -35,7 +35,7 @@
     "Clerk": {
       "Id": 0,
       "Name": "Arthur",
-      "Address": "Villejuif, 18 rue du G\u00E9n\u00E9ral Leclerc",
+      "Address": "Villejuif, 18 rue du General Leclerc",
       "NbOrders": 1
     },
     "Customer": {
@@ -43,7 +43,7 @@
         "Surname": "Brunesseaux",
         "FirstName": "Lou",
         "TelephoneNumber": "0607080910",
-        "FirstOrderDate": "2023-10-24"
+        "FirstOrderDate": "2023-10-23"
       },
       "Address": "Paris, 15 rue de Genshin",
       "CumulativeAmount": 19.5
@@ -52,7 +52,7 @@
   {
     "Id": 1,
     "Status": 0,
-    "dateTime": "0001-01-01T00:00:00",
+    "dateTime": "2023-10-23T11:49:18",
     "Pizzas": [
       {
         "PizzaType": {
@@ -80,7 +80,7 @@
         "Surname": "Panel",
         "FirstName": "Hugo",
         "TelephoneNumber": "0102030405",
-        "FirstOrderDate": "2023-10-24"
+        "FirstOrderDate": "2023-10-23"
       },
       "Address": "Paris, 3 rue Minoring",
       "CumulativeAmount": 11
@@ -89,7 +89,7 @@
   {
     "Id": 2,
     "Status": 0,
-    "dateTime": "0001-01-01T00:00:00",
+    "dateTime": "2023-10-24T10:49:18",
     "Pizzas": [
       {
         "PizzaType": {

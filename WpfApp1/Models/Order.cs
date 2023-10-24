@@ -54,6 +54,8 @@ namespace WpfApp1.Models
             this.Drinks = Drinks;
             this.Clerk = Clerk;
             this.Customer = customer;
+            Statistics stats = new Statistics();
+            GlobalIdCount++;
         }
         public Order(Clerk clerk) 
         {

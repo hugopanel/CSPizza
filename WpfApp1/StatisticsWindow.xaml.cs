@@ -4,6 +4,8 @@ using System.Linq;
 using System.Collections.Generic;
 using WpfApp1.Models;
 using System;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace WpfApp1
 {
@@ -19,6 +21,7 @@ namespace WpfApp1
             InitializeComponent();
             stats = new Statistics();
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            /*
             CustomerList = new List<Customer>
             {
                 new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), "Paris, 15 rue de Genshin"),
@@ -52,7 +55,18 @@ namespace WpfApp1
             OrderList[0].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("small", 0)));
             OrderList[0].AddPizza(new Pizza("Pizza", 12000, new PizzaType("calzone", 10), new PizzaSize("medium", 1.5F)));
             OrderList[1].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("large", 3)));
-            OrderList[2].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));
+            OrderList[2].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));*/
+
+
+            string fileName = "../../../Json/Customers.json";
+            string jsonString = File.ReadAllText(fileName);
+            List<Customer> CustomerList = JsonConvert.DeserializeObject<List<Customer>>(jsonString)!;
+            string fileNameClerks = "../../../Json/Clerks.json";
+            string jsonStringClerks = File.ReadAllText(fileNameClerks);
+            List<Clerk> ClerkList = JsonConvert.DeserializeObject<List<Clerk>>(jsonStringClerks)!;
+            string fileNameOrders = "../../../Json/Orders.json";
+            string jsonStringOrders = File.ReadAllText(fileNameOrders);
+            List<Order> OrderList = JsonConvert.DeserializeObject<List<Order>>(jsonStringOrders)!;
         }
 
         private void UpdateDataGrid(IEnumerable<Customer> customers)
