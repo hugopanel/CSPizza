@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using WpfApp1.Models;
+using WpfApp1.Modules;
 
 namespace WpfApp1.View
 {
@@ -22,35 +22,24 @@ namespace WpfApp1.View
     /// </summary>
     public partial class WorkerView : UserControl
     {
-        public ObservableCollection<WorkerPers> Workers { get; set; }
         public WorkerView()
         {
             InitializeComponent();
-
-            Workers = new ObservableCollection<WorkerPers>
-            {
-                new WorkerPers { IDWork = 1, FirstNameWork = "John", LastNameWork = "Doe", PhoneWork = "555-123-4567", AddressWork = "123 Main St" },
-                new WorkerPers { IDWork = 2, FirstNameWork = "Jane", LastNameWork = "Smith", PhoneWork = "555-987-6543", AddressWork = "456 Elm St" }
-                // Add more rows as needed
-            };
-
-            // Set the DataGrid's ItemsSource to your collection
-            WorkerDataGrid.ItemsSource = Workers;
-        }
-
-
-        public class WorkerPers
-        {
-            public int IDWork { get; set; }
-            public string FirstNameWork { get; set; }
-            public string LastNameWork { get; set; }
-            public string PhoneWork { get; set; }
-            public string AddressWork { get; set; }
+            WorkerDataGrid.ItemsSource = Pizzeria.Clerks;
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+        private void BtnShowClerks_Click(object sender, RoutedEventArgs e)
+        {
+            WorkerDataGrid.ItemsSource = Pizzeria.Clerks;
+        }
+
+        private void BtnShowDeliveryMen_Click(object sender, RoutedEventArgs e)
+        {
+            WorkerDataGrid.ItemsSource = Pizzeria.DeliveryMen;
         }
     }
 }

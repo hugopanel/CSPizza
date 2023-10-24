@@ -262,8 +262,8 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <DatePicker Name="d1" SelectedDateChanged="DatePicker_SelectedDateChanged" Grid.Column="0"/>
-                <DatePicker Name="d2" SelectedDateChanged="DatePicker_SelectedDateChanged" Grid.Column="1"/>
+                <DatePicker Name="d1" SelectedDateChanged="DatePicker_SelectedDateChanged" Grid.Column="0" BorderBrush="Transparent"/>
+                <DatePicker Name="d2" SelectedDateChanged="DatePicker_SelectedDateChanged" Grid.Column="1" BorderBrush="Transparent"/>
             </Grid>
             <DataGrid x:Name="DataGridOrders" ColumnWidth="*"
                   Background="#200F53"

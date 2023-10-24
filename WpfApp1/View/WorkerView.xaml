@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfApp1.View.WorkerView"
+﻿ <UserControl x:Class="WpfApp1.View.WorkerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,8 +7,8 @@
              xmlns:local="clr-namespace:WpfApp1.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
-    
+
+
     <UserControl.Resources>
         <Style x:Key="NoScrollbarsDataGrid" TargetType="{x:Type DataGrid}">
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
@@ -24,6 +24,8 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal"
@@ -45,6 +47,74 @@
                           Margin="5,5,0,0"></TextBox>
             </StackPanel>
             <Button Grid.Column="1"
+Command="{Binding LoginCommand}"                            
+Content="Clerks"                            
+FontSize="12"
+FontFamily="Montserrat"
+Cursor="Hand"
+BorderThickness="0"
+Foreground="White"
+VerticalAlignment="Top"
+Click="BtnShowClerks_Click"
+                    Margin="10,0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#4B0082"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                        CornerRadius="15"
+                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Column="2"
+        Command="{Binding LoginCommand}"                            
+        Content="Delivery Men"                            
+        FontSize="12"
+        FontFamily="Montserrat"
+        Cursor="Hand"
+        BorderThickness="0"
+        Foreground="White"
+VerticalAlignment="Top"
+        Click="BtnShowDeliveryMen_Click"
+                    Margin="10,0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#4B0082"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                CornerRadius="15"
+                                Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Column="3"
                          Command="{Binding LoginCommand}"                            
                          Content="Search"                            
                          FontSize="12"
@@ -52,10 +122,11 @@
                          Cursor="Hand"
                          BorderThickness="0"
                          Foreground="White"
-                 VerticalAlignment="Top">
+                 VerticalAlignment="Top"
+                    Margin="10,0">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Background" Value="#773DFF"/>
+                        <Setter Property="Background" Value="#4B0082"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
@@ -120,11 +191,11 @@
 
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding IDWork}" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstNameWork}" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastNameWork}" />
-                    <DataGridTextColumn Header="Phone" Binding="{Binding PhoneWork}" />
-                    <DataGridTextColumn Header="Address" Binding="{Binding AddressWork}" />
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                    <DataGridTextColumn Header="Number of Orders" Binding="{Binding NbOrders}" />
                 </DataGrid.Columns>
 
             </DataGrid>
