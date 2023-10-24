@@ -28,6 +28,7 @@ namespace WpfApp1
 
         public App()
         {
+            // Load the JSON files as soon as the app starts...
             FileModule.LoadCustomers();
             FileModule.LoadOrders();
             FileModule.LoadWorkforce();
@@ -35,14 +36,13 @@ namespace WpfApp1
 
         protected override void OnExit(ExitEventArgs e)
         {
-            try
-            {
-                FileModule.SaveCustomers();
-            }
-            finally
-            {
-                base.OnExit(e);
-            }
+            // Save the JSON files when the app closes...
+            FileModule.SaveCustomers();
+            FileModule.SaveOrders();
+            FileModule.SaveWorkforce();
+
+            // Resume normal closing procedure
+            base.OnExit(e);
         }
     }
 
