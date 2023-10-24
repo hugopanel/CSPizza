@@ -22,7 +22,18 @@
                     <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
                     <DataGridTextColumn Header="Cumulative Amount" Binding="{Binding CumulativeAmount}" />
                     <DataGridTextColumn Header="Average Order" Binding="{Binding AverageOrder}" />
+                </DataGrid.Columns>
+            </DataGrid>
 
+            <DatePicker Name="d1" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+            <DatePicker Name="d2" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+            <DataGrid x:Name="DataGridOrders" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Clerk Name" Binding="{Binding Clerk.Name}" />
+                    <DataGridTextColumn Header="Customer Name" Binding="{Binding Customer.CustomerInfo.Surname}" />
+                    <DataGridTextColumn Header="Phone Number" Binding="{Binding Customer.CustomerInfo.TelephoneNumber}" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding dateTime}" />
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

@@ -14,6 +14,8 @@ namespace WpfApp1
         private Statistics stats;
         private List<Customer> CustomerList;
         private List<Order> OrderList;
+        private DateTime? selectedDate1;
+        private DateTime? selectedDate2;
 
 
         public StatisticsWindow()
@@ -74,6 +76,11 @@ namespace WpfApp1
             DataGridCustomers.ItemsSource = customers;
         }
 
+        private void UpdateDataGridOrder(IEnumerable<Order> orders)
+        {
+            DataGridOrders.ItemsSource = orders;
+        }
+
 
         private void BtnOrderAlphabetical_Click(object sender, RoutedEventArgs e)
         {
@@ -110,6 +117,31 @@ namespace WpfApp1
         {
             DeliveryStatisticsWindow deliveryStatisticsWindow = new DeliveryStatisticsWindow();
             deliveryStatisticsWindow.Show();
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePicker = (DatePicker)sender;
+
+            if (datePicker.Name == "d1")
+            {
+                selectedDate1 = d1.SelectedDate;
+            }
+            else if (datePicker.Name == "d2")
+            {
+                selectedDate2 = d2.SelectedDate;
+            }
+
+            if (selectedDate1.HasValue && selectedDate2.HasValue)
+            {
+                DateTime date1 = selectedDate1.Value;
+                DateTime date2 = selectedDate2.Value;
+                if (date1 <= date2)
+                {
+                    List<Order> OrderByTimePeriod = stats.OrderByTimePeriod(OrderList, date1, date2);
+                    UpdateDataGridOrder(OrderByTimePeriod);
+                }
+            }
         }
     }
 }
