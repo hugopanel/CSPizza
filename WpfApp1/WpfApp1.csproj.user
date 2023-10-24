@@ -31,8 +31,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Modules\ButtonStyle.xaml">
+    <Page Update="ClerkStatisticsWindow.xaml">
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="DeliveryStatisticsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Modules\ButtonStyle.xaml">
     </Page>
     <Page Update="StatisticsWindow.xaml">
       <SubType>Designer</SubType>

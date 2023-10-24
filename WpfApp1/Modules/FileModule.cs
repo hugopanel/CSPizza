@@ -27,6 +27,21 @@ namespace WpfApp1.Modules
             File.WriteAllText("customers.json", jsonCustomers);
         }
 
+        public static void LoadOrders()
+        {
+            if (File.Exists("orders.json"))
+                Pizzeria.Orders =
+                    JsonSerializer.Deserialize<List<Order>>(File.ReadAllText("orders.json"), App.jsonOptions);
+            else
+                Pizzeria.Orders = new();
+        }
+
+        public static void SaveOrders()
+        {
+            var jsonOrders = JsonSerializer.Serialize(Pizzeria.Customers, App.jsonOptions);
+            File.WriteAllText("orders.json", jsonOrders);
+        }
+
         public static void LoadWorkforce()
         {
             Pizzeria.Clerks = new();

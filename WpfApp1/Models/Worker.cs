@@ -20,6 +20,10 @@ namespace WpfApp1.Models
         /// </summary>
         public string Name { get; set; }
 
+        public string? Address { get; set; }
+
+        public int NbOrders { get; set; }
+
         public void CheckIn()
         {
             throw new NotImplementedException();

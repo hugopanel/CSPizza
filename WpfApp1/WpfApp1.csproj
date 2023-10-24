@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <Reference Include="RibbitMQ">
-      <HintPath>..\..\hugopanel\RibbitMQ\RibbitMQ\bin\Debug\net7.0\RibbitMQ.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
 

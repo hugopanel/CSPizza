@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal class Drink : Item
+    public class Drink : Item
     {
         public Drink(string name, float price) {
             Name = name;

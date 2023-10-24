@@ -29,7 +29,7 @@ namespace WpfApp1.Models
         {
             CustomerInfo = customerInfo;
             Address = address;
-            cumulativeAmount = CumulativeAmount;
+            CumulativeAmount = cumulativeAmount;
         }
 
         public Customer(CustomerInfo customerInfo, string? address) : this(customerInfo)
