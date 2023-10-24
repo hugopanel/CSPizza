@@ -25,5 +25,7 @@ namespace WpfApp1.Models
         public static List<DeliveryMan> DeliveryMen { get; set; } = new();
         public static List<Pizza> PizzasMenu { get; set; } = new();
         public static List<Drink> DrinksMenu { get; set; } = new();
+
+        public static List<Order> Orders {  get; set; } = new();
     }
 }

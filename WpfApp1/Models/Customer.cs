@@ -16,6 +16,8 @@ namespace WpfApp1.Models
 
         public float CumulativeAmount { get; set; }
 
+        public float AverageOrder { get; set; }
+
         public Customer(CustomerInfo customerInfo)
         {
             CustomerInfo = customerInfo;
@@ -61,6 +63,31 @@ namespace WpfApp1.Models
             }
             return amount;
 
+        }
+
+
+        public void UpdateAverageOrder()
+        {
+            float totalAmount = 0;
+            int orderCount = 0;
+
+            foreach (Order order in Pizzeria.Orders)
+            {
+                if (order.Customer == this)
+                {
+                    totalAmount += order.getPrice();
+                    orderCount++;
+                }
+            }
+
+            if (orderCount > 0)
+            {
+                AverageOrder = totalAmount / orderCount;
+            }
+            else
+            {
+                AverageOrder = 0;
+            }
         }
     }
 }
