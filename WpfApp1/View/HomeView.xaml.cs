@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.Models;
 
 namespace WpfApp1.View
 {
@@ -25,44 +26,17 @@ namespace WpfApp1.View
     ///public double TotalPrice => mainWindow.clerk.currentCommand.Price;
     public partial class HomeView : UserControl
     {
-        public ObservableCollection<Ordering> Orders { get; set; }
+
         public HomeView()
         {
             InitializeComponent();
 
-            // Create sample data
-            Orders = new ObservableCollection<Ordering>
-            {
-                new Ordering { ID = 1, Prize = 21, Status = "In Progress" },
-                new Ordering { ID = 2, Prize = 14, Status = "Delivered" }
-
-            };
-
-            // Set the DataGrid's ItemsSource to your collection
-            OrderDataGrid.ItemsSource = Orders;
-
-            /* // permet de mettre à jour le prix total de la commande lorsque chaque pizza est modifiée
-             foreach (var pizza in mainWindow.clerk.currentCommand.Pizzas)
-             {
-                 pizza.PriceChanged += UpdateTotalPrice;
-             }
-             foreach (var drink in mainWindow.clerk.currentCommand.Drinks)
-             {
-                 drink.PriceChanged += UpdateTotalPrice;
-             }
-
-             // permet de mettre à jour le prix total de la commande lorsque la page est chargée
-             LblTotalPriceValue.Content = TotalPrice;
-             DgPizzas.ItemsSource = mainWindow.clerk.currentCommand.Pizzas;
-             DgDrinks.ItemsSource = mainWindow.clerk.currentCommand.Drinks;*/
+            OrderDataGrid.ItemsSource = Pizzeria.Orders;
         }
 
-        public class Ordering
+        public void UpdateDataGrid()
         {
-            public int ID { get; set; }
-            public int Prize { get; set; }
-            public string Status { get; set; }
-
+            OrderDataGrid.ItemsSource = Pizzeria.Orders;
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

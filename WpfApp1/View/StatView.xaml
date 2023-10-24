@@ -178,7 +178,7 @@
                 </Button.Style>
             </Button>
 
-            <ListBox Name="ListBoxResults" Visibility="Hidden"/>
+            <ListBox Name="ListBoxResults"/>
             <DataGrid x:Name="DataGridCustomers" ColumnWidth="*"
                   Background="#200F53"
                   BorderThickness="0" AutoGenerateColumns="False"  CanUserResizeRows="False" RowHeaderWidth="0">
@@ -226,67 +226,78 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Button Name="BtnAverageAccountReceivable" Content="Average Account Receivable" Click="BtnAverageAccountReceivable_Click" FontSize="12"
-    FontFamily="Montserrat"
-    Cursor="Hand"
-    BorderThickness="0"
-    Foreground="White"
-    VerticalAlignment="Top">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#4B0082"/>
-                        <Setter Property="Margin" Value="270,30"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Height="30"
-                            CornerRadius="15"
-                            Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#836EFB"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Name="BtnAverageOrderPrice" Content="Average Order Price" Click="BtnAverageOrderPrice_Click" FontSize="12"
-                FontFamily="Montserrat"
-                Cursor="Hand"
-                BorderThickness="0"
-                Foreground="White"
-                VerticalAlignment="Top">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#4B0082"/>
-                        <Setter Property="Margin" Value="270,30"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Height="30"
-                                        CornerRadius="15"
-                                        Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                                          HorizontalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#836EFB"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1" Name="BtnAverageAccountReceivable" Content="Average Account Receivable" Click="BtnAverageAccountReceivable_Click" FontSize="12"
+FontFamily="Montserrat"
+Cursor="Hand"
+BorderThickness="0"
+Foreground="White"
+VerticalAlignment="Top">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#4B0082"/>
+                            <Setter Property="Margin" Value="10,30"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Height="30"
+                        CornerRadius="15"
+                        Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#836EFB"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button  Grid.Column="2" Name="BtnAverageOrderPrice" Content="Average Order Price" Click="BtnAverageOrderPrice_Click" FontSize="12"
+            FontFamily="Montserrat"
+            Cursor="Hand"
+            BorderThickness="0"
+            Foreground="White"
+            VerticalAlignment="Top">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#4B0082"/>
+                            <Setter Property="Margin" Value="10,30"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Height="30"
+                                    CornerRadius="15"
+                                    Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#836EFB"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+    </Grid>
+    <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
