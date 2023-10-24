@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,9 @@ namespace WpfApp1.Models
         /// <summary>
         /// The list of items in the order.
         /// </summary>
-        public List<Item> Items { get; set; } = new();
+        public List<Pizza> Pizzas { get; set; } = new();
+
+        public List<Drink> Drinks { get; set; } = new();
         
         /// <summary>
         /// The Clerk in charge of the command.
@@ -41,6 +44,17 @@ namespace WpfApp1.Models
         /// </summary>
         public Customer Customer { get; init; }
 
+        [JsonConstructor]
+        public Order(int id, OrderStatus Status, DateTime dateTime, List<Pizza> Pizzas, List<Drink> Drinks, Clerk Clerk, Customer customer)
+        {
+            this.Id = id;
+            this.Status = Status;
+            this.dateTime = dateTime;
+            this.Pizzas = Pizzas;
+            this.Drinks = Drinks;
+            this.Clerk = Clerk;
+            this.Customer = customer;
+        }
         public Order(Clerk clerk) 
         {
             Clerk = clerk;
@@ -53,9 +67,9 @@ namespace WpfApp1.Models
             Status = status;
         }
 
-        public Order(Clerk clerk, OrderStatus status, List<Item> items) : this(clerk, status)
+        public Order(Clerk clerk, OrderStatus status, List<Pizza> items) : this(clerk, status)
         {
-            Items = items;
+            Pizzas = items;
         }
 
 
@@ -63,21 +77,29 @@ namespace WpfApp1.Models
         /// Add an item to the order.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        public void AddItem(Item item)
+        public void AddPizza(Pizza pizza)
         {
-            Items.Add(item);
-            Customer.CumulativeAmount += item.Price;
+            Pizzas.Add(pizza);
+            Customer.CumulativeAmount += pizza.Price;
         }
 
+
+        public void AddDrink(Drink drink)
+        {
+            Drinks.Add(drink);
+            Customer.CumulativeAmount += drink.Price;
+        }
         /// <summary>
         /// Remove an item from the order.
         /// </summary>
         /// <param name="item">The item to remove.</param>
+        /// 
+        /*
         public void RemoveItem(Item item)
         {
             Items.Remove(item);
             Customer.CumulativeAmount -= item.Price;
-        }
+        }*/
 
         /// <summary>
         /// Confirms the order but DOES NOT send any message.
@@ -92,9 +114,13 @@ namespace WpfApp1.Models
 
         public float getPrice(){
             float price = 0;
-            foreach (Item item in Items)
+            foreach (Pizza pizza in Pizzas)
             {
-                price+=item.Price;
+                price+=pizza.Price;
+            }
+            foreach (Drink drink in Drinks)
+            {
+                price += drink.Price;
             }
             return price;
         }

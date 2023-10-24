@@ -24,7 +24,7 @@ namespace WpfApp1.Models
         /// </summary>
         public string Name { get; set; }
 
-        public Address? Address { get; set; }
+        public string? Address { get; set; }
 
         public int NbOrders { get; set; }
 

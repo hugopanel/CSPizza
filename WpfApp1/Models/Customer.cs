@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace WpfApp1.Models
     public class Customer
     {
         public CustomerInfo CustomerInfo { get; set; }
-        public Address? Address { get; set; }
+        public string? Address { get; set; }
 
         public float CumulativeAmount { get; set; }
 
@@ -20,7 +21,7 @@ namespace WpfApp1.Models
             CumulativeAmount = 0;
         }
 
-        public Customer(CustomerInfo customerInfo, Address? address) : this(customerInfo)
+        public Customer(CustomerInfo customerInfo, string? address) : this(customerInfo)
         {
             Address = address;
             CumulativeAmount = 0;
@@ -31,9 +32,13 @@ namespace WpfApp1.Models
             CustomerInfo = new CustomerInfo(surname, firstName, telephoneNumber);
         }
 
-        public Customer(string surname, string firstName, string telephoneNumber, DateOnly firstOrderDate)
+        [JsonConstructor]
+        public Customer(string surname, string firstName, string telephoneNumber, DateOnly firstOrderDate, string Address, float CumulativeAmount)
         {
             CustomerInfo = new CustomerInfo(surname, firstName, telephoneNumber, firstOrderDate);
+            this.Address = Address;
+            this.CumulativeAmount = CumulativeAmount;
+            Console.WriteLine(this.CumulativeAmount.ToString());
         }
 
         public float GetCumulativeAmount(List<Order> OrderList)

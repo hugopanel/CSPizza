@@ -1,7 +1,11 @@
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using WpfApp1.Models;
+using System.Text.Json;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace WpfApp1
 {
@@ -20,7 +24,7 @@ namespace WpfApp1
                 }
                 else if (param == "city")
                 {
-                    orderedCustomers = orderedCustomers.OrderBy(customer => customer.Address.City).ToList();
+                    // orderedCustomers = orderedCustomers.OrderBy(customer => customer.Address.City).ToList();
                 }
             }
 
@@ -40,7 +44,7 @@ namespace WpfApp1
                 }
                 else if (param == "city")
                 {
-                    orderedWorkers = orderedWorkers.OrderBy(worker => worker.Address.City).ToList();
+                    // orderedWorkers = orderedWorkers.OrderBy(worker => worker.Address.City).ToList();
                 }
             }
 
@@ -75,17 +79,22 @@ namespace WpfApp1
             Console.WriteLine("hello");
             var stats = new Statistics();
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-            List<Customer> CustomerList = new List<Customer>
+            /*
+            List<Customer> customers = new List<Customer>
             {
-                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), new Address("Genshin Street","Kuala Lumpur", 1200000)),
-                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), new Address("Minoring Avenue","Paris", 1500000)),
-                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), new Address("Karmine Boulevard","Saint-Michel-Chef-Chef", 1500000))
+                new Customer(new CustomerInfo("Brunesseaux", "Lou", "0607080910", currentDate), "Paris, 15 rue de Genshin"),
+                new Customer(new CustomerInfo("Panel", "Hugo", "0102030405", currentDate), "Paris, 3 rue Minoring"),
+                new Customer(new CustomerInfo("David", "Pauline", "0605040302", currentDate), "Bourg-la-Reine, 10 rue du 8 mai 1945")
             };
+            List<Customer> CustomerList = customers;
+
             Clerk Arthur = new Clerk();
             Arthur.Name = "Arthur";
+            Arthur.Address = "Villejuif, 18 rue du Général Leclerc";
             Arthur.AddNewCustomer(CustomerList[0]);
             Clerk Asma = new Clerk();
             Asma.Name = "Asma";
+            Asma.Address = "Vitry, 30 avenue de Villejuif";
             Asma.AddNewCustomer(CustomerList[1]);
             List<Clerk> ClerkList = new List<Clerk>
             {
@@ -105,10 +114,31 @@ namespace WpfApp1
                     Customer = CustomerList[2]
                 },
             };
-            OrderList[0].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita",8), new PizzaSize("small",0)));
-            OrderList[0].AddItem(new Pizza("Pizza", 12000, new PizzaType("calzone", 10), new PizzaSize("medium", 1.5F)));
-            OrderList[1].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("large", 3)));
-            OrderList[2].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));
+            OrderList[0].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita",8), new PizzaSize("small",0)));
+            OrderList[0].AddPizza(new Pizza("Pizza", 12000, new PizzaType("calzone", 10), new PizzaSize("medium", 1.5F)));
+            OrderList[1].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("large", 3)));
+            OrderList[2].AddPizza(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));
+            var opt = new JsonSerializerOptions() { WriteIndented = true };
+            string strJson = JsonSerializer.Serialize<IList<Customer>>(CustomerList, opt);
+            Console.WriteLine(strJson);
+            opt = new JsonSerializerOptions() { WriteIndented = true };
+            strJson = JsonSerializer.Serialize<IList<Clerk>>(ClerkList, opt);
+            Console.WriteLine(strJson);
+            opt = new JsonSerializerOptions() { WriteIndented = true };
+            strJson = JsonSerializer.Serialize<IList<Order>>(OrderList, opt);
+            Console.WriteLine(strJson);
+            */
+            
+            string fileName = "../../../Json/Customers.json";
+            string jsonString = File.ReadAllText(fileName);
+            List<Customer> CustomerList = JsonConvert.DeserializeObject<List<Customer>>(jsonString)!;
+            string fileNameClerks = "../../../Json/Clerks.json";
+            string jsonStringClerks = File.ReadAllText(fileNameClerks);
+            List<Clerk> ClerkList = JsonConvert.DeserializeObject<List<Clerk>>(jsonStringClerks)!;
+            string fileNameOrders = "../../../Json/Orders.json";
+            string jsonStringOrders = File.ReadAllText(fileNameOrders);
+            List<Order> OrderList = JsonConvert.DeserializeObject<List<Order>>(jsonStringOrders)!;
+
             foreach (Customer customer in CustomerList)
             {
                 Console.WriteLine(customer.CustomerInfo.ToString() + ", " + customer.Address.ToString());
@@ -129,12 +159,12 @@ namespace WpfApp1
             Console.WriteLine("\nList ordered by cumulative amount :");
             foreach (Customer customer in CustomerList)
             {
-                Console.WriteLine(customer.CustomerInfo.ToString() + ", " + customer.Address.ToString() + ", Cumulative amount :"+customer.GetCumulativeAmount(OrderList));
+                Console.WriteLine(customer.CustomerInfo.ToString() + ", " + customer.Address.ToString() + ", Cumulative amount :"+customer.CumulativeAmount);
             }
             Console.WriteLine("\nNumber of orders by clerk :");
             foreach (Clerk clerk in ClerkList)
             {
-                Console.WriteLine("Number of orders for "+clerk.Name + " : "+clerk.GetNumberOfOrders(OrderList));
+                Console.WriteLine("Number of orders for "+clerk.Name + " : "+clerk.NbOrders);
             }
             Console.WriteLine("\nAverage price of orders :" + stats.AverageOrderPrice(OrderList));
         }

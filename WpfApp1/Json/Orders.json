@@ -1,0 +1,126 @@
+[
+  {
+    "Id": 0,
+    "Status": 0,
+    "dateTime": "0001-01-01T00:00:00",
+    "Pizzas": [
+      {
+        "PizzaType": {
+          "Name": "margarita",
+          "BasePrice": 8
+        },
+        "PizzaSize": {
+          "Name": "small",
+          "BasePrice": 0
+        },
+        "Name": "Pizza",
+        "Price": 8,
+        "PreparationTime": 10000
+      },
+      {
+        "PizzaType": {
+          "Name": "calzone",
+          "BasePrice": 10
+        },
+        "PizzaSize": {
+          "Name": "medium",
+          "BasePrice": 1.5
+        },
+        "Name": "Pizza",
+        "Price": 11.5,
+        "PreparationTime": 12000
+      }
+    ],
+    "Drinks": [],
+    "Clerk": {
+      "Id": 0,
+      "Name": "Arthur",
+      "Address": "Villejuif, 18 rue du G\u00E9n\u00E9ral Leclerc",
+      "NbOrders": 1
+    },
+    "Customer": {
+      "CustomerInfo": {
+        "Surname": "Brunesseaux",
+        "FirstName": "Lou",
+        "TelephoneNumber": "0607080910",
+        "FirstOrderDate": "2023-10-24"
+      },
+      "Address": "Paris, 15 rue de Genshin",
+      "CumulativeAmount": 19.5
+    }
+  },
+  {
+    "Id": 1,
+    "Status": 0,
+    "dateTime": "0001-01-01T00:00:00",
+    "Pizzas": [
+      {
+        "PizzaType": {
+          "Name": "margarita",
+          "BasePrice": 8
+        },
+        "PizzaSize": {
+          "Name": "large",
+          "BasePrice": 3
+        },
+        "Name": "Pizza",
+        "Price": 11,
+        "PreparationTime": 10000
+      }
+    ],
+    "Drinks": [],
+    "Clerk": {
+      "Id": 1,
+      "Name": "Asma",
+      "Address": "Vitry, 30 avenue de Villejuif",
+      "NbOrders": 2
+    },
+    "Customer": {
+      "CustomerInfo": {
+        "Surname": "Panel",
+        "FirstName": "Hugo",
+        "TelephoneNumber": "0102030405",
+        "FirstOrderDate": "2023-10-24"
+      },
+      "Address": "Paris, 3 rue Minoring",
+      "CumulativeAmount": 11
+    }
+  },
+  {
+    "Id": 2,
+    "Status": 0,
+    "dateTime": "0001-01-01T00:00:00",
+    "Pizzas": [
+      {
+        "PizzaType": {
+          "Name": "margarita",
+          "BasePrice": 8
+        },
+        "PizzaSize": {
+          "Name": "medium",
+          "BasePrice": 1.5
+        },
+        "Name": "Pizza",
+        "Price": 9.5,
+        "PreparationTime": 10000
+      }
+    ],
+    "Drinks": [],
+    "Clerk": {
+      "Id": 1,
+      "Name": "Asma",
+      "Address": "Vitry, 30 avenue de Villejuif",
+      "NbOrders": 2
+    },
+    "Customer": {
+      "CustomerInfo": {
+        "Surname": "David",
+        "FirstName": "Pauline",
+        "TelephoneNumber": "0605040302",
+        "FirstOrderDate": "2023-10-24"
+      },
+      "Address": "Bourg-la-Reine, 10 rue du 8 mai 1945",
+      "CumulativeAmount": 9.5
+    }
+  }
+]

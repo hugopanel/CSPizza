@@ -37,7 +37,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Modules\ButtonStyle.xaml">
+	  <Page Update="Modules\ButtonStyle.xaml">
+	  </Page>
     <Page Update="ClerkStatisticsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

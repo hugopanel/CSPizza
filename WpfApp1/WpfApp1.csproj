@@ -1,20 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <StartupObject>WpfApp1.App</StartupObject>
+    <StartupObject>WpfApp1.Statistics</StartupObject>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="RibbitMQ">
-      <HintPath>..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <EditorConfigFiles Remove="C:\Users\pauli\Documents\M1\S7\Intégration_de_systemes_applications\project\CSPizza\WpfApp1\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\pauli\Documents\M1\S7\Intégration_de_systemes_applications\project\CSPizza\WpfApp1\.editorconfig" />
   </ItemGroup>
 </Project>
