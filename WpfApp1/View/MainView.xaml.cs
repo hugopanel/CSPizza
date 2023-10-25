@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
+using WpfApp1.Models;
 
 namespace WpfApp1.View
 {
@@ -21,10 +22,14 @@ namespace WpfApp1.View
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView()
+        private Customer _currentCustomer;
+
+        public MainView(Customer customer)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
+            _currentCustomer = customer;
         }
 
         [DllImport("user32.dll")]

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -18,6 +19,16 @@ namespace WpfApp1.Models
         /// The Customer the Clerk is handling.
         /// </summary>
         private Customer? _currentCustomer;
+
+        /// <summary>
+        /// Only used when receiving a call.
+        /// Null: We don't know.
+        /// True: The customer is new.
+        /// False: The customer isn't, we need to retrieve their info.
+        /// </summary>
+        private bool? _isCurrentCustomerNew = null;
+
+        private string? _currentCustomerNumber = null;
 
         [JsonConstructor]
         public Clerk(int id, string name)
@@ -132,11 +143,101 @@ namespace WpfApp1.Models
                 WelcomeView welcomeView = (WelcomeView)Application.Current.MainWindow;
 
                 // We add text to the richtextbox
-                welcomeView.AddTextNonUI("Clerk" + Id + ": " + "Hello and welcome to Pizzeria Hulopa! Are you a new customer? (yes/no)");
+                welcomeView.AddText("Clerk" + Id + ": " + "Hello and welcome to Pizzeria Hulopa! Are you a new customer? (yes/no)");
             }, null);
 
+            App.RibbitMq.Unsubscribe(MessageType.InitialCall, ClerkHandleInitialCallAsync);
+            App.RibbitMq.Subscribe(MessageType.AnswerFirstOrder, ClerkHandleAnswerFirstOrder);
             // We ask the customer if it's their first order
-            App.RibbitMq.Send(MessageType.AskFirstOrder, new Message());
+            App.RibbitMq.Send(new Message { MessageType = MessageType.AskFirstOrder });
+        }
+
+        private async Task ClerkHandleAnswerFirstOrder(IMessage<MessageType> message)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                WelcomeView welcomeView = (WelcomeView)Application.Current.MainWindow;
+
+                if ((string) message.Content! == "yes")
+                {
+                    welcomeView.AddText("Clerk" + Id + ": " + "Welcome! Please, tell me your phone number so I can create you an account.");
+                    _isCurrentCustomerNew = true;
+                }
+                else if ((string) message.Content! == "no")
+                {
+                    welcomeView.AddText("Clerk" + Id + ": " + "Welcome back! Please, tell me the phone number you usually use.");
+                    _isCurrentCustomerNew = false;
+                }
+            }, null);
+
+            App.RibbitMq.Unsubscribe(MessageType.AnswerFirstOrder, ClerkHandleAnswerFirstOrder);
+            App.RibbitMq.Subscribe(MessageType.AnswerPhoneNumber, ClerkHandleAnswerPhoneNumber);
+            App.RibbitMq.Send(new Message { MessageType = MessageType.AskPhoneNumber });
+        }
+
+        private async Task ClerkHandleAnswerPhoneNumber(IMessage<MessageType> message)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                WelcomeView welcomeView = (WelcomeView)Application.Current.MainWindow;
+
+                if (_isCurrentCustomerNew == true)
+                {
+                    welcomeView.AddText("Clerk" + Id + ": " + "Thank you! Please fill in the form so I know how to process your request.");
+                }
+                else
+                {
+                    welcomeView.AddText("Clerk" + Id + ": " + "Thank you! Please review the information I have and correct it if needed.");
+                }
+            }, null);
+
+            _currentCustomerNumber = (string) message.Content!;
+            App.RibbitMq.Unsubscribe(MessageType.AnswerPhoneNumber, ClerkHandleAnswerPhoneNumber);
+            App.RibbitMq.Subscribe(MessageType.AnswerInfo, ClerkHandleAnswerInfo);
+            App.RibbitMq.Send(new Message { MessageType = MessageType.AskInfo, Content = new object[] {(bool)_isCurrentCustomerNew!, (string)message.Content!} }); // TODO: Documenter ça
+        }
+
+        private async Task ClerkHandleAnswerInfo(IMessage<MessageType> message)
+        {
+            _currentCustomer = (Customer) message.Content!;
+
+            // We need to ask the customer if their information is correct
+            App.RibbitMq.Unsubscribe(MessageType.AnswerInfo, ClerkHandleAnswerInfo);
+            App.RibbitMq.Subscribe(MessageType.AnswerIsInfoCorrect, ClerkHandleAnswerIsInfoCorrect);
+            App.RibbitMq.Send(new Message() {MessageType = MessageType.AskIsInfoCorrect});
+        }
+
+        private async Task ClerkHandleAnswerIsInfoCorrect(IMessage<MessageType> message)
+        {
+            if ((bool) message.Content! == true)
+            {
+                // We can save the info of the customer
+                try
+                {
+                    // Try to remove the customer if they already exist so we can replace them
+                    Customer? customer = Pizzeria.Customers.Find(c =>
+                        c.CustomerInfo.TelephoneNumber == _currentCustomerNumber);
+
+                    if (customer != null)
+                        Pizzeria.Customers.Remove(customer);
+                }
+                catch
+                {
+                    Console.WriteLine("Could not remove customer...");
+                }
+                
+                Pizzeria.Customers.Add(_currentCustomer);
+
+                App.RibbitMq.Unsubscribe(MessageType.AnswerIsInfoCorrect, ClerkHandleAnswerIsInfoCorrect);
+
+                // TODO: Subscribe to the other events.
+            }
+            else
+            {
+                // The user wants to change the info again.
+                App.RibbitMq.Subscribe(MessageType.AnswerInfo, ClerkHandleAnswerInfo);
+                App.RibbitMq.Unsubscribe(MessageType.AnswerIsInfoCorrect, ClerkHandleAnswerIsInfoCorrect);
+            }
         }
 
         public void Register()

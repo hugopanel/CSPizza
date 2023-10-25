@@ -63,7 +63,8 @@
                         FontFamily="Montserrat"
                         Cursor="Hand"
                         Grid.Column="1"
-                        Click="btnMinimize_Click">
+                        Click="btnMinimize_Click"
+                        Focusable="False">
 
                     <Button.Style>
                         <Style TargetType="Button">
@@ -98,7 +99,8 @@
                         FontFamily="Montserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Click="btnClose_Click">
+                        Click="btnClose_Click"
+                        Focusable="False">
 
 
                     <Button.Style>
@@ -155,7 +157,7 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     
-                    <RichTextBox Grid.Row="1" IsReadOnly="True" IsUndoEnabled="False" Name="rtb_Customer" Background="#36013F" MinHeight="250" MaxHeight="300">
+                    <RichTextBox Grid.Row="1" IsReadOnly="True" IsUndoEnabled="False" Name="rtb_Customer" Background="#36013F" MinHeight="250" MaxHeight="300" Focusable="False">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="5"/>

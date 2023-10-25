@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using RibbitMQ;
 using WpfApp1.Models;
 using WpfApp1.Modules;
+using WpfApp1.View;
 
 namespace WpfApp1
 {
@@ -48,6 +49,13 @@ namespace WpfApp1
 
             // Resume normal closing procedure
             base.OnExit(e);
+        }
+
+        private void App_OnStartup(object sender, StartupEventArgs e)
+        {
+            Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            var dialog = new WelcomeView();
+            dialog.ShowDialog();
         }
     }
 

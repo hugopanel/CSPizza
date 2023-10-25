@@ -9,12 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="lib\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <None Remove="lib\**" />
+    <Page Remove="lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="RibbitMQ">
-      <HintPath>..\..\hugopanel\RibbitMQ\RibbitMQ\bin\Debug\net7.0\RibbitMQ.dll</HintPath>
+      <HintPath>lib\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
 
