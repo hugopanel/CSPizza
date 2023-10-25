@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal class Message : RibbitMQ.IMessage<MessageType>
+    public class Message : RibbitMQ.IMessage<MessageType>
     {
-        MessageType IMessage<MessageType>.MessageType { get; set; }
-        object? IMessage<MessageType>.Content { get; set; }
-        object? IMessage<MessageType>.From { get; set; }
-        object? IMessage<MessageType>.To { get; set; }
-        SendType? IMessage<MessageType>.SendType { get; set; }
+        public MessageType MessageType { get; set; }
+        public object? Content { get; set; }
+        public object? From { get; set; }
+        public object? To { get; set; }
+        public SendType? SendType { get; set; } = RibbitMQ.SendType.All;
+
     }
 }

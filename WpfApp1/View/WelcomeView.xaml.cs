@@ -34,8 +34,6 @@ namespace WpfApp1.View
             // Start exchange
             AddText("Please type 'call' to call the pizzeria.");
 
-            Console.WriteLine("salut");
-
             Clerk myClerk = Pizzeria.Clerks.First();
             myClerk.Register();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal enum MessageType
+    public enum MessageType
     {
         /// <summary>
         /// The Customer is calling the pizzeria.
