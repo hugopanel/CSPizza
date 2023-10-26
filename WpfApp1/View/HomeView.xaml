@@ -67,7 +67,7 @@
                     <DataGridTemplateColumn  Width="25">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="BtnRemovePizza" Content="X" Click="BtnRemovePizza_Click"/>
+                                <Button x:Name="BtnRemovePizza" Content="X" Click="BtnRemovePizza_Click" Tag="{Binding}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -116,7 +116,7 @@
                     <DataGridTemplateColumn  Width="25">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="BtnRemoveDrink" Content="X" Click="BtnRemoveDrink_Click"/>
+                                <Button x:Name="BtnRemoveDrink" Content="X" Click="BtnRemoveDrink_Click" Tag="{Binding}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -144,7 +144,7 @@
 
         <!-- Second Column -->
         <DataGrid Grid.Column="1" AutoGenerateColumns="False" Margin="38,0,38,0" Background="#200F53"
-BorderThickness="0" SelectionChanged="DataGrid_SelectionChanged" x:Name="OrderDataGrid"  CanUserResizeRows="False" IsReadOnly="True" RowHeaderWidth="0">
+BorderThickness="0" x:Name="OrderDataGrid"  CanUserResizeRows="False" IsReadOnly="True" RowHeaderWidth="0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Order" Width="48" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Price" Width="45" Binding="{Binding Price, Mode=TwoWay}"/>

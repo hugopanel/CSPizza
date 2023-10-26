@@ -65,15 +65,17 @@ namespace WpfApp1.View
             OrderDataGrid.ItemsSource = Pizzeria.Orders;
         }
 
-        public void UpdateDataGridPizza()
+        public void UpdateDataGrid()
         {
-            DgPizzas.Items.Refresh();
+            DgPizzas.ItemsSource = null;
+            DgPizzas.ItemsSource = Pizzas;
+        }
+        public void UpdateDataGrid1()
+        {
+            DgDrinks.ItemsSource = null;
+            DgDrinks.ItemsSource = Drinks;
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void DgPizzas_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -193,30 +195,42 @@ namespace WpfApp1.View
         }
 
         // permet de supprimer une pizza de la commande
-        public void BtnRemovePizza_Click(object sender, RoutedEventArgs e)
+        private void BtnRemovePizza_Click(object sender, RoutedEventArgs e)
         {
-            /*if (sender is System.Windows.Controls.Button button)
-            
+            if (sender is Button deleteButton)
             {
-                if (button.DataContext is PizzaViewModel pizza)
+                if (deleteButton.Tag is Pizza pizzaToDelete)
                 {
-                    mainWindow.clerk.RemovePizza(pizza);
+                    // Prompt the user for confirmation or perform the delete action immediately
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this pizza?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Delete the customer
+                        Pizzas.Remove(pizzaToDelete);
+                        /*DgDrinks.Items.Refresh();*/
+                        UpdateDataGrid();
+                    }
                 }
             }
-            UpdateTotalPrice();*/
         }
-        public void BtnRemoveDrink_Click(object sender, RoutedEventArgs e)
+        private void BtnRemoveDrink_Click(object sender, RoutedEventArgs e)
         {
-            /*if (sender is System.Windows.Controls.Button button)
+            if (sender is Button deleteButton)
             {
-                if (button.DataContext is DrinkViewModel addition)
+                if (deleteButton.Tag is Drink drinkToDelete)
                 {
-                    mainWindow.clerk.RemoveDrink(addition);
+                    // Prompt the user for confirmation or perform the delete action immediately
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this drink?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Delete the customer
+                        Drinks.Remove(drinkToDelete);
+                        /*DgDrinks.Items.Refresh();*/
+                        UpdateDataGrid1();
+                    }
                 }
             }
-            UpdateTotalPrice();*/
         }
-
 
         // permet de mettre à jour le prix total de la commande sur l'affichage
         private void UpdateTotalPrice()
