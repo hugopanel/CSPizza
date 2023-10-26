@@ -189,8 +189,7 @@ VerticalAlignment="Top"
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding Name}" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                     <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
                     <DataGridTextColumn Header="Number of Orders" Binding="{Binding NbOrders}" />
                     <DataGridTemplateColumn Header="Delete" Width="*">
