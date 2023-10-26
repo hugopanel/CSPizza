@@ -52,7 +52,7 @@ namespace WpfApp1.Modules
                 Pizzeria.Clerks = JsonSerializer.Deserialize<List<Clerk>>(File.ReadAllText("clerks.json"), App.jsonOptions);
             if (File.Exists("cooks.json"))
                 Pizzeria.Cooks = JsonSerializer.Deserialize<List<Cook>>(File.ReadAllText("cooks.json"), App.jsonOptions);
-            if (File.Exists("deliverymen"))
+            if (File.Exists("deliverymen.json"))
                 Pizzeria.DeliveryMen = JsonSerializer.Deserialize<List<DeliveryMan>>(File.ReadAllText("deliverymen.json"), App.jsonOptions);
         }
 

@@ -24,7 +24,6 @@ namespace WpfApp1.View
     /// </summary>
     public partial class WorkerView : UserControl
     {
-        public ObservableCollection<WorkerPers> Workers { get; set; }
         public WorkerView()
         {
             InitializeComponent();

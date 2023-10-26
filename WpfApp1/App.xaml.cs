@@ -47,6 +47,21 @@ namespace WpfApp1
             FileModule.LoadOrders();
             FileModule.LoadWorkforce();
             FileModule.LoadMenu();
+
+            foreach (var clerk in Pizzeria.Clerks)
+            {
+                clerk.CheckIn();
+            }
+
+            foreach (var cook in Pizzeria.Cooks)
+            {
+                cook.CheckIn();
+            }
+
+            foreach (var deliveryMan in Pizzeria.DeliveryMen)
+            {
+                deliveryMan.CheckIn();
+            }
         }
 
         protected override void OnExit(ExitEventArgs e)

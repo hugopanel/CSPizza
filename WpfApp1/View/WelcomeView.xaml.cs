@@ -32,11 +32,7 @@ namespace WpfApp1.View
 
             // Start exchange
             AddText("Please type 'call' to call the pizzeria.");
-
-            Clerk myClerk = Pizzeria.Clerks.First();
-            //myClerk.Register();
-            // TODO: Remplacer l'usage de la fonction Register !!
-
+            
             txt_UserInput.Focus();
         }
 
@@ -95,7 +91,8 @@ namespace WpfApp1.View
         {
             if (currentMessageType == null && txt_UserInput.Text == "call")
             {
-                App.RibbitMq.Send(new Message {MessageType = MessageType.InitialCall});
+                App.RibbitMq.Send(new Message {MessageType = MessageType.InitialCall, SendType = SendType.FirstFree});
+                // TODO: Vérifier si le message s'est envoyé, sinon renvoyer un message
 
                 App.RibbitMq.Subscribe(MessageType.AskFirstOrder, HandleAskFirstOrder);
                 currentMessageType = MessageType.AskFirstOrder;
