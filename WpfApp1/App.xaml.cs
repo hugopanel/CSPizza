@@ -46,8 +46,7 @@ namespace WpfApp1
             FileModule.LoadCustomers();
             FileModule.LoadOrders();
             FileModule.LoadWorkforce();
-
-            Console.WriteLine("Loaded JSON files.");
+            FileModule.LoadMenu();
         }
 
         protected override void OnExit(ExitEventArgs e)

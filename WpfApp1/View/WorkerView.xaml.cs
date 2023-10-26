@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using WpfApp1.Models;
 using WpfApp1.Modules;
 
+
 namespace WpfApp1.View
 {
     /// <summary>
@@ -22,6 +24,7 @@ namespace WpfApp1.View
     /// </summary>
     public partial class WorkerView : UserControl
     {
+        public ObservableCollection<WorkerPers> Workers { get; set; }
         public WorkerView()
         {
             InitializeComponent();
@@ -40,6 +43,31 @@ namespace WpfApp1.View
         private void BtnShowDeliveryMen_Click(object sender, RoutedEventArgs e)
         {
             WorkerDataGrid.ItemsSource = Pizzeria.DeliveryMen;
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button deleteButton)
+            {
+                if (deleteButton.Tag is Clerk clerkToDelete)
+                {
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this clerk?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Pizzeria.Clerks.Remove(clerkToDelete);
+                    }
+                }
+
+                if (deleteButton.Tag is DeliveryMan deliverymanToDelete)
+                {
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this Delivery Man?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Pizzeria.DeliveryMen.Remove(deliverymanToDelete);
+                    }
+                }
+            }
+
         }
     }
 }

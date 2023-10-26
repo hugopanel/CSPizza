@@ -13,6 +13,13 @@
     <EmbeddedResource Remove="lib\**" />
     <None Remove="lib\**" />
     <Page Remove="lib\**" />
+    <None Remove="Images\pizza.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\pizza.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -24,5 +31,4 @@
       <HintPath>lib\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

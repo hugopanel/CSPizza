@@ -86,7 +86,7 @@
                             Height="35"
                             Margin="15,25,0,40">
                     <Image Source="/Images/Pizza.png" Height="30"/>
-                    <TextBlock Text="PIZZERIA HOLUPA"
+                    <TextBlock Text="PIZZERIA HULOPA"
                                Foreground="#a09fd6"
                                FontSize="20"
                                FontFamily="Montserrat"

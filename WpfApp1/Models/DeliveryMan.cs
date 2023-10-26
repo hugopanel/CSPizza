@@ -110,7 +110,9 @@ namespace WpfApp1.Models
 
                 // We again
                 RibbitMq.Subscribe(MessageType.DeliveryNewOrder, HandleDeliveryNewOrder);
-            }
+
+                NbOrders++;
+            } 
             catch (NullReferenceException ex)
             {
                 await Console.Out.WriteLineAsync("Unable to deliver. The customer hasn't specified an address.");

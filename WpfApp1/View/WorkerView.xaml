@@ -7,8 +7,6 @@
              xmlns:local="clr-namespace:WpfApp1.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
-
     <UserControl.Resources>
         <Style x:Key="NoScrollbarsDataGrid" TargetType="{x:Type DataGrid}">
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
@@ -46,8 +44,7 @@
                           VerticalContentAlignment="Center"
                           Margin="5,5,0,0"></TextBox>
             </StackPanel>
-            <Button Grid.Column="1"
-Command="{Binding LoginCommand}"                            
+            <Button Grid.Column="1"                          
 Content="Clerks"                            
 FontSize="12"
 FontFamily="Montserrat"
@@ -79,8 +76,7 @@ Click="BtnShowClerks_Click">
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Grid.Column="2"
-        Command="{Binding LoginCommand}"                            
+            <Button Grid.Column="2"                      
         Content="Delivery Men"                            
         FontSize="12"
         FontFamily="Montserrat"
@@ -112,8 +108,7 @@ VerticalAlignment="Top"
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Grid.Column="3"
-                         Command="{Binding LoginCommand}"                            
+            <Button Grid.Column="3"                        
                          Content="Search"                            
                          FontSize="12"
                          FontFamily="Montserrat"
@@ -189,10 +184,46 @@ VerticalAlignment="Top"
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding Name}" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                     <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
                     <DataGridTextColumn Header="Number of Orders" Binding="{Binding NbOrders}" />
+                    <DataGridTemplateColumn Header="Delete" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" Click="DeleteButton_Click" Tag="{Binding}" FontSize="10"
+FontFamily="Montserrat"
+Cursor="Hand"
+BorderThickness="0"
+Foreground="White"
+VerticalAlignment="Top"
+                    Margin="10,0"
+                                        Opacity="0.7">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="OrangeRed"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border Height="30"
+                        CornerRadius="15"
+                        Background="{TemplateBinding Background}">
+                                                            <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#836EFB"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
 
             </DataGrid>

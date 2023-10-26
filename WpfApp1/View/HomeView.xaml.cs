@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RibbitMQ;
 using WpfApp1.Models;
+using WpfApp1.Modules;
 
 namespace WpfApp1.View
 {
@@ -27,69 +31,154 @@ namespace WpfApp1.View
     ///public double TotalPrice => mainWindow.clerk.currentCommand.Price;
     public partial class HomeView : UserControl
     {
-        public ObservableCollection<Ordering> Orders { get; set; }
+        List<Pizza> Pizzas = new List<Pizza>();
+        List<Drink> Drinks = new List<Drink>();
+        List<PizzaType> PizzaTypes = Pizzeria.PizzasMenu.Select(item => item.PizzaType).Distinct().ToList();
+        List<PizzaSize> PizzaSizes = Pizzeria.PizzasMenu.Select(item => item.PizzaSize).Distinct().ToList();
+        List<int> PizzaPreparationTimes = Pizzeria.PizzasMenu.Select(item => item.PreparationTime).Distinct().ToList();
+        List<string> PizzaNames {  get; set; }
+        List<string> PizzaSizeNames {  get; set; }
+        Pizza editedPizza;
+
+        List<Drink> drinkDataList;
         public HomeView()
         {
             InitializeComponent();
 
-            // Create sample data
-            Orders = new ObservableCollection<Ordering>
+            ComboPizzaName.ItemsSource = Pizzeria.PizzasMenu.Select(item => item.PizzaType.Name).Distinct();
+            ComboPizzaSize.ItemsSource = Pizzeria.PizzasMenu.Select(item => item.PizzaSize.Name).Distinct();
+
+
+            drinkDataList = Pizzeria.DrinksMenu.Select(item => item).ToList();
+            ComboDrinkName.ItemsSource = Pizzeria.DrinksMenu.Select(item => item.Name).Distinct();
+            ComboDrinkSize.ItemsSource = Pizzeria.DrinksMenu.Select(item => item.Size).Distinct();
+
+
+            DataContext = this;
+            DgPizzas.ItemsSource = Pizzas;
+            DgDrinks.ItemsSource = Drinks;
+            
+
+            OrderDataGrid.ItemsSource = Pizzeria.Orders;
+        }
+
+        public void UpdateDataGrid()
+        {
+            DgPizzas.ItemsSource = null;
+            DgPizzas.ItemsSource = Pizzas;
+        }
+        public void UpdateDataGrid1()
+        {
+            DgDrinks.ItemsSource = null;
+            DgDrinks.ItemsSource = Drinks;
+        }
+
+
+        private void DgPizzas_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit && e.Column is DataGridComboBoxColumn comboBoxColumn)
             {
-                new Ordering { ID = 1, Prize = 21, Status = "In Progress" },
-                new Ordering { ID = 2, Prize = 14, Status = "Delivered" }
-
-            };
-
-            // Set the DataGrid's ItemsSource to your collection
-            OrderDataGrid.ItemsSource = Orders;
-
-            /* // permet de mettre à jour le prix total de la commande lorsque chaque pizza est modifiée
-             foreach (var pizza in mainWindow.clerk.currentCommand.Pizzas)
-             {
-                 pizza.PriceChanged += UpdateTotalPrice;
-             }
-             foreach (var drink in mainWindow.clerk.currentCommand.Drinks)
-             {
-                 drink.PriceChanged += UpdateTotalPrice;
-             }
-
-             // permet de mettre à jour le prix total de la commande lorsque la page est chargée
-             LblTotalPriceValue.Content = TotalPrice;
-             DgPizzas.ItemsSource = mainWindow.clerk.currentCommand.Pizzas;
-             DgDrinks.ItemsSource = mainWindow.clerk.currentCommand.Drinks;*/
+                var editedItem = e.Row.Item as Pizza;
+                if (editedItem != null)
+                {
+                    if (comboBoxColumn.Header.ToString() == "Name")
+                    {
+                        var comboBox = e.EditingElement as ComboBox;
+                        if (comboBox != null)
+                        {
+                            var newValue = comboBox.SelectedValue as string;
+                            if (editedItem.Name != newValue)
+                            {
+                                editedItem.PizzaType= PizzaTypes.FirstOrDefault(item => item.Name == newValue);
+                                editedItem.UpdatePrice();
+                                UpdateTotalPrice();
+                                DgPizzas.ItemsSource = null;
+                                DgPizzas.ItemsSource = Pizzas;
+                            }
+                        }
+                    }
+                    else if (comboBoxColumn.Header.ToString() == "Size")
+                    {
+                        var comboBox = e.EditingElement as ComboBox;
+                        if (comboBox != null)
+                        {
+                            var newValue = comboBox.SelectedValue as string;
+                            if (editedItem.PizzaSize.Name != newValue)
+                            {
+                                editedItem.PizzaSize = PizzaSizes.FirstOrDefault(item => item.Name == newValue);
+                                editedItem.UpdatePrice();
+                                UpdateTotalPrice();
+                                DgPizzas.ItemsSource = null;
+                                DgPizzas.ItemsSource = Pizzas;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        public class Ordering
+        private void DgDrinks_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            public int ID { get; set; }
-            public int Prize { get; set; }
-            public string Status { get; set; }
-
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            if (e.EditAction == DataGridEditAction.Commit && e.Column is DataGridComboBoxColumn comboBoxColumn)
+            {
+                var editedItem = e.Row.Item as Drink;
+                if (editedItem != null)
+                {
+                    if (comboBoxColumn.Header.ToString() == "Name")
+                    {
+                        var comboBox = e.EditingElement as ComboBox;
+                        if (comboBox != null)
+                        {
+                            var newValue = comboBox.SelectedValue as string;
+                            if (editedItem.Name != newValue)
+                            {
+                                editedItem.Name = newValue;
+                                editedItem.UpdatePrice();
+                                UpdateTotalPrice();
+                                DgDrinks.ItemsSource = null;
+                                DgDrinks.ItemsSource = Drinks;
+                            }
+                        }
+                    }
+                   else if (comboBoxColumn.Header.ToString() == "Size")
+                    {
+                        var comboBox = e.EditingElement as ComboBox;
+                        if (comboBox != null)
+                        {
+                            var newValue = comboBox.SelectedValue as string;
+                            if (editedItem.Size != newValue)
+                            {
+                                editedItem.Size = newValue;
+                                editedItem.UpdatePrice();
+                                UpdateTotalPrice();
+                                DgDrinks.ItemsSource = null;
+                                DgDrinks.ItemsSource = Drinks;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // permet d'ajouter une pizza à la commande 
         public void BtnAddPizza_Click(object sender, RoutedEventArgs e)
         {
-            /*mainWindow.clerk.AddPizza();
+            Pizza newPizza = new Pizza(PizzaSizes[0].Name + " " + PizzaTypes[0].Name, PizzaPreparationTimes[0], PizzaTypes[0], PizzaSizes[0]);
+            Pizzas.Add(newPizza);
             UpdateTotalPrice();
-
-            // permet de mettre à jour le prix total de la commande lorsque chaque nouvelle pizza est modifiée
-            foreach (var pizza in mainWindow.clerk.currentCommand.Pizzas)
+            DgPizzas.Items.Refresh();
+            foreach (Pizza pizza in Pizzas)
             {
-                pizza.PriceChanged += UpdateTotalPrice;
+                Console.WriteLine(pizza.PizzaType.Name);
+                Console.WriteLine(pizza.PizzaSize.Name);
             }
-            foreach (var drink in mainWindow.clerk.currentCommand.Drinks)
-            {
-                drink.PriceChanged += UpdateTotalPrice;
-            }*/
         }
         public void BtnAddDrink_Click(object sender, RoutedEventArgs e)
         {
+            Drink newDrink = new Drink(drinkDataList[0].Name, drinkDataList[0].Price, drinkDataList[0].Size);
+            Drinks.Add(newDrink);
+            UpdateTotalPrice();
+            DgDrinks.Items.Refresh();
             /*mainWindow.clerk.AddDrink();
             UpdateTotalPrice();
             foreach (var pizza in mainWindow.clerk.currentCommand.Pizzas)
@@ -103,33 +192,58 @@ namespace WpfApp1.View
         }
 
         // permet de supprimer une pizza de la commande
-        public void BtnRemovePizza_Click(object sender, RoutedEventArgs e)
+        private void BtnRemovePizza_Click(object sender, RoutedEventArgs e)
         {
-            /*if (sender is System.Windows.Controls.Button button)
+            if (sender is Button deleteButton)
             {
-                if (button.DataContext is PizzaViewModel pizza)
+                if (deleteButton.Tag is Pizza pizzaToDelete)
                 {
-                    mainWindow.clerk.RemovePizza(pizza);
+                    // Prompt the user for confirmation or perform the delete action immediately
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this pizza?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Delete the customer
+                        Pizzas.Remove(pizzaToDelete);
+                        /*DgDrinks.Items.Refresh();*/
+                        UpdateTotalPrice();
+                        UpdateDataGrid();
+                    }
                 }
             }
-            UpdateTotalPrice();*/
         }
-        public void BtnRemoveDrink_Click(object sender, RoutedEventArgs e)
+        private void BtnRemoveDrink_Click(object sender, RoutedEventArgs e)
         {
-            /*if (sender is System.Windows.Controls.Button button)
+            if (sender is Button deleteButton)
             {
-                if (button.DataContext is DrinkViewModel addition)
+                if (deleteButton.Tag is Drink drinkToDelete)
                 {
-                    mainWindow.clerk.RemoveDrink(addition);
+                    // Prompt the user for confirmation or perform the delete action immediately
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this drink?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Delete the customer
+                        Drinks.Remove(drinkToDelete);
+                        /*DgDrinks.Items.Refresh();*/
+                        UpdateTotalPrice();
+                        UpdateDataGrid1();
+                    }
                 }
             }
-            UpdateTotalPrice();*/
         }
-
 
         // permet de mettre à jour le prix total de la commande sur l'affichage
         private void UpdateTotalPrice()
         {
+            float totalPrice = 0;
+            foreach (Pizza pizza in Pizzas)
+            {
+                totalPrice += pizza.Price;
+            }
+            foreach(Drink drink in Drinks)
+            {
+                totalPrice += drink.Price;
+            }
+            LblTotalPriceValue.Content = totalPrice;
             /* LblTotalPriceValue.Content = TotalPrice;*/
         }
 
@@ -150,31 +264,95 @@ namespace WpfApp1.View
             /*mainWindow.NaviateToPage(0);*/
         }
 
-        public void BtnLoad_Click(object sender, RoutedEventArgs e)
+        private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Filter = "Fichiers JSON (*.json)|*.json|Tous les fichiers (*.*)|*.*";
-            openFileDialog.FilterIndex = 1;
-            openFileDialog.RestoreDirectory = true;
-
-            /*if (openFileDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                // L'utilisateur a choisi un fichier
-                string nomFichier = openFileDialog.FileName;
-                mainWindow.clerk.LoadCommandFile(nomFichier);
-                DgPizzas.ItemsSource = mainWindow.clerk.currentCommand.Pizzas;
-                UpdateTotalPrice();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true // Ignore case when deserializing properties.
+                };
 
+                // Load the JSON data into a list of order objects.
+                var orders = JsonSerializer.Deserialize<List<Order>>(File.ReadAllText("orders.json"), options);
+
+                // Prompt the user for the order index using a MessageBox.
+                string input = Microsoft.VisualBasic.Interaction.InputBox("Enter the order index:", "Order Selection", "0");
+
+                if (int.TryParse(input, out int orderIndexToLoad) && orderIndexToLoad >= 0 && orderIndexToLoad < orders.Count)
+                {
+                    var orderToDisplay = orders[orderIndexToLoad];
+
+                    // Bind the order data to your XAML controls as needed.
+                    // DgPizzas.ItemsSource = orderToDisplay.Pizzas;
+                    Pizzas = orderToDisplay.Pizzas;
+                    foreach(Pizza pizza in Pizzas)
+                    {
+                        Console.WriteLine(pizza.PizzaType.Name);
+                        Console.WriteLine(pizza.PizzaSize.Name);
+                    }
+                    DgPizzas.ItemsSource = Pizzas;
+                    DgPizzas.Items.Refresh();
+                    // Bind other data like drinks, customer info, and total price to respective controls.
+
+                    // Optionally, you can update the total price label:
+                    LblTotalPriceValue.Content = orderToDisplay.Price;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid order index. Please choose a valid order to display.");
+                }
             }
-            foreach (var pizza in mainWindow.clerk.currentCommand.Pizzas)
+            catch (Exception ex)
             {
-                pizza.PriceChanged += UpdateTotalPrice;
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
-            foreach (var drink in mainWindow.clerk.currentCommand.Drinks)
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                drink.PriceChanged += UpdateTotalPrice;
-            }*/
+                string filePath = "orders.json"; // Replace with the full path to your JSON file.
+
+                if (File.Exists(filePath))
+                {
+                    var json = File.ReadAllText(filePath);
+
+                    var orders = JsonSerializer.Deserialize<List<Order>>(json);
+
+                    // Prompt the user for the order index to delete using a MessageBox.
+                    string input = Microsoft.VisualBasic.Interaction.InputBox("Enter the order index to delete:", "Delete Order", "");
+
+                    if (int.TryParse(input, out int orderIndexToDelete) && orderIndexToDelete >= 0 && orderIndexToDelete < orders.Count)
+                    {
+                        // Remove the order from the list.
+                        orders.RemoveAt(orderIndexToDelete);
+
+                        // Serialize the updated list back to JSON.
+                        var updatedJson = JsonSerializer.Serialize(orders);
+
+                        // Write the updated JSON data back to the file.
+                        File.WriteAllText(filePath, updatedJson);
+                        FileModule.LoadOrders();
+                        OrderDataGrid.ItemsSource = Pizzeria.Orders;
+
+                        MessageBox.Show("Order deleted successfully.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid order index. Please enter a valid order index to delete.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The JSON file does not exist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
         }
 
         /// <summary>

@@ -55,12 +55,7 @@ namespace WpfApp1
             OrderList[0].AddItem(new Pizza("Pizza", 12000, new PizzaType("calzone", 10), new PizzaSize("medium", 1.5F)));
             OrderList[1].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("large", 3)));
             OrderList[2].AddItem(new Pizza("Pizza", 10000, new PizzaType("margarita", 8), new PizzaSize("medium", 1.5F)));*/
-            FileModule.LoadCustomers();
-            FileModule.LoadOrders();
-            foreach(Customer customer in Pizzeria.Customers)
-            {
-                customer.UpdateAverageOrder();
-            }
+
         }
 
         private void UpdateDataGrid(IEnumerable<Customer> customers)
@@ -94,7 +89,7 @@ namespace WpfApp1
 
         private void BtnAverageOrderPrice_Click(object sender, RoutedEventArgs e)
         {
-            float averagePrice = stats.AverageOrderPrice(Pizzeria.Orders);
+            float averagePrice = stats.AverageOrderPrice();
             ListBoxResults.Items.Clear();
             ListBoxResults.Items.Add($"Average Order Price: {averagePrice:C}");
         }
@@ -110,7 +105,7 @@ namespace WpfApp1
             DeliveryStatisticsWindow deliveryStatisticsWindow = new DeliveryStatisticsWindow();
             deliveryStatisticsWindow.Show();
         }
-
+        
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             DatePicker datePicker = (DatePicker)sender;
