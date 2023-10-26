@@ -22,14 +22,10 @@ namespace WpfApp1.View
     /// </summary>
     public partial class MainView : Window
     {
-        private Customer _currentCustomer;
-
-        public MainView(Customer customer)
+        public MainView()
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
-
-            _currentCustomer = customer;
         }
 
         [DllImport("user32.dll")]

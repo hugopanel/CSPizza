@@ -13,7 +13,7 @@ namespace WpfApp1.Models
 
         /// <summary>
         /// The Identification number of the order.
-        /// It cannot be set manually. It increments automatically each time the class is instanciated.
+        /// Unless set manually, it increments automatically each time the class is instanciated.
         /// </summary>
         public int Id { get; } = GlobalIdCount++;
 
@@ -37,7 +37,7 @@ namespace WpfApp1.Models
         /// <summary>
         /// The Clerk in charge of the command.
         /// </summary>
-        public Clerk Clerk { get; init; }
+        public Clerk? Clerk { get; set; }
 
         /// <summary>
         /// Le Customer qui a fait la commande.
@@ -55,24 +55,34 @@ namespace WpfApp1.Models
             this.Clerk = Clerk;
             this.Customer = customer;
             Statistics stats = new Statistics();
-            GlobalIdCount++;
+            if (id > GlobalIdCount)
+            {
+                GlobalIdCount = id + 1;
+            }
         }
+
         public Order(Clerk clerk) 
         {
             Clerk = clerk;
         }
 
-        // Probably shouldn't ever use the following two constructors, but they're here just in case, for now...
-        public Order(Clerk clerk, OrderStatus status) : this(clerk)
+        public Order(Customer customer, List<Pizza> pizzas, List<Drink> drinks, OrderStatus status = OrderStatus.Taking, int? id = null, Clerk? clerk = null)
         {
+            if (id == null)
+                Id = GlobalIdCount++;
+            else
+            {
+                Id = (int) id;
+                GlobalIdCount += 1;
+            }
+
+            Clerk = clerk;
+            Customer = customer;
+            Pizzas = pizzas;
+            Drinks = drinks;
             Status = status;
         }
-
-        public Order(Clerk clerk, OrderStatus status, List<Pizza> items) : this(clerk, status)
-        {
-            Pizzas = items;
-        }
-
+        
 
         /// <summary>
         /// Add an item to the order.

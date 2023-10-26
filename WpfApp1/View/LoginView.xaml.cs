@@ -24,8 +24,6 @@ namespace WpfApp1.View
     /// </summary>
     public partial class LoginView : Window
     {
-        private Customer? _currentCustomer = null;
-
         public LoginView(string telephoneNumber, bool isNewUser)
         {
             InitializeComponent();
@@ -108,7 +106,7 @@ namespace WpfApp1.View
 
             // Send the message
             var customer = new Customer(txtSurname.Text, txtFirstName.Text, txtNumber.Text, DateOnly.FromDateTime(dDate), txtAddress.Text);
-            _currentCustomer = customer;
+            App.CurrentCustomer = customer;
             App.RibbitMq.Send(new Message {MessageType = MessageType.AnswerInfo, Content = customer});
         }
 
@@ -126,7 +124,7 @@ namespace WpfApp1.View
                 // We can open the main window and close this one...
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    MainView mainView = new MainView(_currentCustomer);
+                    MainView mainView = new MainView();
                     mainView.Show();
                     this.Close();
                 });

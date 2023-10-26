@@ -28,8 +28,6 @@ namespace WpfApp1.View
         {
             InitializeComponent();
 
-            App.currentUiDispatcher = Application.Current.Dispatcher;
-
             rtb_Customer.TextChanged += richTextBox_TextChanged;
 
             // Start exchange

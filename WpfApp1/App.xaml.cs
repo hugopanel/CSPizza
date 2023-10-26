@@ -20,15 +20,25 @@ namespace WpfApp1
     /// </summary>
     public partial class App : Application
     {
-        public static Dispatcher currentUiDispatcher = Application.Current.Dispatcher;
-
+        /// <summary>
+        /// Shared RibbitMq instance, to be use throughout the app.
+        /// </summary>
         internal static RibbitMQ<MessageType> RibbitMq = new();
+
+        /// <summary>
+        /// Json Options for the FileModule. 
+        /// </summary>
         internal static JsonSerializerOptions jsonOptions = new()
         {
             IncludeFields = true,
             PropertyNameCaseInsensitive = true,
             Converters = { new DateOnlyConverter() }
         };
+
+        /// <summary>
+        /// The Customer that logged in to the application.
+        /// </summary>
+        internal static Customer? CurrentCustomer;
 
         public App()
         {
@@ -59,6 +69,9 @@ namespace WpfApp1
         }
     }
 
+    /// <summary>
+    /// Converts a JSON value to DateOnly when required. Used in App.jsonOptions.
+    /// </summary>
     public class DateOnlyConverter : JsonConverter<DateOnly>
     {
         public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

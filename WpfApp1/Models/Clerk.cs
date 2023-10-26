@@ -30,6 +30,8 @@ namespace WpfApp1.Models
 
         private string? _currentCustomerNumber = null;
 
+        private Order? _currentOrder;
+
         [JsonConstructor]
         public Clerk(int id, string name)
         {
@@ -223,14 +225,16 @@ namespace WpfApp1.Models
                 }
                 catch
                 {
-                    Console.WriteLine("Could not remove customer...");
+                    Console.WriteLine("Could not remove customer! Moving on...");
                 }
                 
-                Pizzeria.Customers.Add(_currentCustomer);
+                Pizzeria.Customers.Add(_currentCustomer!);
 
                 App.RibbitMq.Unsubscribe(MessageType.AnswerIsInfoCorrect, ClerkHandleAnswerIsInfoCorrect);
 
-                // TODO: Subscribe to the other events.
+                // We subscribe to the SubmitOrder event
+                App.RibbitMq.Subscribe(MessageType.SubmitOrder, ClerkHandleSubmitOrder);
+                // TODO: Subscribe to the HangUp event, when the user closes the app
             }
             else
             {
@@ -240,6 +244,239 @@ namespace WpfApp1.Models
             }
         }
 
+        /// <summary>
+        /// The Clerk receives the order from the customer.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private async Task ClerkHandleSubmitOrder(IMessage<MessageType> message)
+        {
+            // We retrieve the order
+            Order order = (Order) message.Content!;
+
+            order.Status = OrderStatus.Taken; // Change the state of the order
+            order.Clerk = this; // Assign this clerk to the order
+
+            _currentOrder = order; // We'll want to use the _currentOrder variable later to refer to the order
+
+            Pizzeria.Orders.Add(_currentOrder); // Add the order to the list of orders
+
+            App.RibbitMq.Unsubscribe(MessageType.SubmitOrder, ClerkHandleSubmitOrder);
+
+            // We can now send a message to the cooks to tell them a new order is waiting to be cooked.
+            SendKitchenNewOrder(); // We don't want to await that call!
+
+            // Finally, we tell the Customer
+            App.RibbitMq.Send(new Message() {MessageType = MessageType.ConfirmationSubmitOrder, Content = _currentOrder.Id});
+        }
+
+        private bool _isWaitingForCooksAnswer;
+
+        /// <summary>
+        /// Send a message to the cooks once every 5 seconds for as long a no one sends an answer back.
+        /// </summary>
+        /// <returns></returns>
+        private async Task SendKitchenNewOrder()
+        {
+            _isWaitingForCooksAnswer = true;
+            App.RibbitMq.Subscribe(MessageType.KitchenPreparingOrder, HandleKitchenPreparingOrder);
+
+            while (_isWaitingForCooksAnswer)
+            {
+                App.RibbitMq.Send(new Message() {MessageType = MessageType.KitchenNewOrder, Content = _currentOrder, SendType = SendType.FirstFree});
+                await Task.Delay(5000); // Wait for 5 seconds before sending the message again.
+            }
+        }
+
+        private async Task HandleKitchenPreparingOrder(IMessage<MessageType> message)
+        {
+            // We must check if the message is for us 
+            if ((int) message.Content! == _currentOrder!.Id)
+            {
+                // We know one cook took the order
+                _isWaitingForCooksAnswer = false;
+
+                App.RibbitMq.Unsubscribe(MessageType.KitchenPreparingOrder, HandleKitchenPreparingOrder);
+                App.RibbitMq.Subscribe(MessageType.KitchenOrderReady, HandleKitchenOrderReady);
+
+                // We can inform the Customer
+                App.RibbitMq.Send(new Message() {MessageType = MessageType.ClerkOrderPreparing, Content = _currentOrder.Id});
+
+                // We update the Order
+                _currentOrder.Status = OrderStatus.Preparing;
+            }
+        }
+
+        private async Task HandleKitchenOrderReady(IMessage<MessageType> message)
+        {
+            // We must check if the message is for us
+            if ((int) message.Content! == _currentOrder!.Id)
+            {
+                // It is
+
+                App.RibbitMq.Unsubscribe(MessageType.KitchenOrderReady, HandleKitchenOrderReady);
+
+                // We can inform the customer
+                App.RibbitMq.Send(new Message()
+                    {MessageType = MessageType.ClerkOrderWaiting, Content = _currentOrder.Id});
+
+                // We update the order
+                _currentOrder.Status = OrderStatus.Waiting;
+
+                // Now we tell the DeliveryMen
+                SendDeliveryNewOrder();
+            }
+        }
+
+        private bool _isWaitingForDeliveryMansAnswer;
+        
+        /// <summary>
+        /// Send a message to the delivery men once every 5 seconds for as long a no one sends an answer back.
+        /// </summary>
+        /// <returns></returns>
+        private async Task SendDeliveryNewOrder()
+        {
+            _isWaitingForDeliveryMansAnswer = true;
+
+            App.RibbitMq.Subscribe(MessageType.DeliveryGoing, HandleDeliveryGoing);
+
+            while (!_isWaitingForDeliveryMansAnswer)
+            {
+                App.RibbitMq.Send(new Message()
+                {
+                    MessageType = MessageType.DeliveryNewOrder, 
+                    Content = _currentOrder, 
+                    SendType = SendType.FirstFree
+                });
+
+                await Task.Delay(5000); // We wait 5 seconds before sending the message again.
+            }
+        }
+
+        private async Task HandleDeliveryGoing(IMessage<MessageType> message)
+        {
+            // We check if the message was for us
+            if ((int) message.Content! == _currentOrder!.Id)
+            {
+                _isWaitingForDeliveryMansAnswer = false;
+
+                App.RibbitMq.Subscribe(MessageType.DeliveryArrivedToCustomer, HandleDeliveryArrivedToCustomer);
+                App.RibbitMq.Subscribe(MessageType.DeliveryDropped, HandleDeliveryDropped);
+
+                App.RibbitMq.Unsubscribe(MessageType.DeliveryGoing, HandleDeliveryGoing);
+
+                // We can inform the Customer
+                App.RibbitMq.Send(new Message()
+                {
+                    MessageType = MessageType.ClerkOrderDelivering,
+                    Content = _currentOrder.Id
+                });
+
+                // We update the order
+                _currentOrder.Status = OrderStatus.Delivering;
+            }
+        }
+
+        private async Task HandleDeliveryArrivedToCustomer(IMessage<MessageType> message)
+        {
+            // We check if the message is for us
+            if ((int) message.Content! == _currentOrder!.Id)
+            {
+                // The order has been delivered!
+
+                App.RibbitMq.Subscribe(MessageType.DeliveryArrivedAtPizzeria, HandleDeliveryArrivedAtPizzeria);
+                App.RibbitMq.Unsubscribe(MessageType.DeliveryArrivedToCustomer, HandleDeliveryArrivedToCustomer);
+                App.RibbitMq.Unsubscribe(MessageType.DeliveryDropped, HandleDeliveryDropped);
+
+                // We can inform the Customer
+                App.RibbitMq.Send(new Message()
+                {
+                    MessageType = MessageType.ClerkOrderDelivered,
+                    Content = _currentOrder.Id
+                });
+
+                // And update the order
+                _currentOrder.Status = OrderStatus.Delivered;
+            }
+        }
+
+        private async Task HandleDeliveryDropped(IMessage<MessageType> message)
+        {
+            // We check if the message is for us
+            if ((int) message.Content! == _currentOrder!.Id)
+            {
+                // Sadly for the customer, it is... :(
+
+                App.RibbitMq.Unsubscribe(MessageType.DeliveryDropped, HandleDeliveryDropped);
+                App.RibbitMq.Unsubscribe(MessageType.DeliveryArrivedAtPizzeria, HandleDeliveryArrivedAtPizzeria);
+
+                // We should probably tell the Customer (or not?)
+                App.RibbitMq.Send(new Message()
+                {
+                    MessageType = MessageType.DeliveryDropped,
+                    Content = _currentOrder.Id
+                });
+
+                // And update their order
+                _currentOrder.Status = OrderStatus.Dropped;
+
+                // We hang up
+                HangUp();
+            }
+        }
+
+        private async Task HandleDeliveryArrivedAtPizzeria(IMessage<MessageType> message)
+        {
+            // We check if the message is for us
+            if ((int) message.Content! == _currentOrder!.Id)
+            {
+                // It is! And the order is complete!
+
+                App.RibbitMq.Unsubscribe(MessageType.DeliveryArrivedAtPizzeria, HandleDeliveryArrivedAtPizzeria);
+
+                // The Clerk takes the money
+                App.RibbitMq.Send(new Message()
+                {
+                    MessageType = MessageType.ClerkOrderDone,
+                    Content = _currentOrder.Id,
+                    From = this
+                });
+
+                // The Clerk tells the Customer
+                App.RibbitMq.Send(new Message()
+                {
+                    MessageType = MessageType.ClerkOrderDone,
+                    Content = _currentOrder.Id
+                });
+
+                // We update the Order
+                _currentOrder.Status = OrderStatus.Done;
+
+                // We hang up
+                HangUp();
+            }
+        }
+
+        /// <summary>
+        /// Reset the _current variables (order, customer, etc.) so the Clerk is ready to answer another call.
+        /// </summary>
+        private void HangUp()
+        {
+            // We set the variables to null...
+            _currentOrder = null;
+            _currentCustomer = null;
+            _currentCustomerNumber = null;
+            _isCurrentCustomerNew = null;
+
+            // ... and we subscribe the Clerk to the initial call event
+            App.RibbitMq.Subscribe(MessageType.InitialCall, ClerkHandleInitialCallAsync);
+        }
+
+        /// <summary>
+        /// Temporary function to subscribe the clerk to the initial call event.
+        /// </summary>
+        // TODO: Supprimer cette fonction quand on n'en a plus besoin. Il faudrait register tous les Clerks au lancement de l'application
+        [Obsolete]
         public void Register()
         {
             App.RibbitMq.Subscribe(MessageType.InitialCall, ClerkHandleInitialCallAsync);

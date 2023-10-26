@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RibbitMQ;
+using WpfApp1.Models;
 
 namespace WpfApp1.View
 {
@@ -138,6 +140,8 @@ namespace WpfApp1.View
             DgPizzas.ItemsSource = mainWindow.clerk.currentCommand.Pizzas;
             DgDrinks.ItemsSource = mainWindow.clerk.currentCommand.Drinks;
             //mainWindow.NaviateToPage(0);*/
+
+            // TODO: Appeler la fonction pour envoyer la commande au Clerk
         }
 
         // permet de passer à la page de connection
@@ -171,6 +175,120 @@ namespace WpfApp1.View
             {
                 drink.PriceChanged += UpdateTotalPrice;
             }*/
+        }
+
+        /// <summary>
+        /// Envoie la commande au Clerk.
+        /// </summary>
+        private void SubmitOrderToClerk()
+        {
+            // TODO: Get the Order
+            // In the meantime, we create a fake order:
+            List<Pizza> pizzas = new();
+            List<Drink> drinks = new();
+            Order order = new(App.CurrentCustomer!, pizzas, drinks);
+            
+            App.RibbitMq.Subscribe(MessageType.ConfirmationSubmitOrder, HandleConfirmationSubmitOrder);
+            App.RibbitMq.Send(new Message {MessageType = MessageType.SubmitOrder, Content = order});
+        }
+
+        /// <summary>
+        /// Handles the ConfirmationSubmitOrder message event sent from the Clerk to confirm that our Order has been received.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private async Task HandleConfirmationSubmitOrder(IMessage<MessageType> message)
+        {
+            App.RibbitMq.Unsubscribe(MessageType.ConfirmationSubmitOrder, HandleConfirmationSubmitOrder);
+
+            // TODO: Add the Order to the table or change its status in the table from Taking to Taken
+
+            // Now we can subscribe to events related to our Order
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderPreparing, HandleClerkOrderPreparing);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderWaiting, HandleClerkOrderWaiting);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivering, HandleClerkOrderDelivering);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivered, HandleClerkOrderDelivered);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDropped, HandleClerkOrderDropped);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivered, HandleClerkOrderDelivered);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDone, HandleClerkOrderDone);
+        }
+
+        /// <summary>
+        /// For when the Order is being prepared by a Cook.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private async Task HandleClerkOrderPreparing(IMessage<MessageType> message)
+        {
+            App.RibbitMq.Unsubscribe(MessageType.ClerkOrderPreparing, HandleClerkOrderPreparing);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// For when the Order is waiting to be delivered.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private async Task HandleClerkOrderWaiting(IMessage<MessageType> message)
+        {
+            App.RibbitMq.Unsubscribe(MessageType.ClerkOrderWaiting, HandleClerkOrderWaiting);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// For when the Order is being delivered by a DeliveryMan.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private async Task HandleClerkOrderDelivering(IMessage<MessageType> message)
+        {
+            App.RibbitMq.Unsubscribe(MessageType.ClerkOrderDelivering, HandleClerkOrderDelivering);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// For when the Order has been dropped by the DeliveryMan. Possibly because of a wrong address.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private async Task HandleClerkOrderDropped(IMessage<MessageType> message)
+        {
+            App.RibbitMq.Unsubscribe(MessageType.ClerkOrderDropped, HandleClerkOrderDropped);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// For when the Order has been delivered.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private async Task HandleClerkOrderDelivered(IMessage<MessageType> message)
+        {
+            App.RibbitMq.Unsubscribe(MessageType.ClerkOrderDelivered, HandleClerkOrderDelivered);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// For when the DeliveryMan returned to the Pizzeria and the money has been cashed in. The order is complete.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private async Task HandleClerkOrderDone(IMessage<MessageType> message)
+        {
+            App.RibbitMq.Unsubscribe(MessageType.ClerkOrderDone, HandleClerkOrderDone);
+
+            throw new NotImplementedException();
         }
     }
 }
