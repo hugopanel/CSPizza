@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="lib\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <None Remove="lib\**" />
+    <Page Remove="lib\**" />
     <None Remove="Images\pizza.png" />
   </ItemGroup>
 
@@ -24,7 +28,7 @@
 
   <ItemGroup>
     <Reference Include="RibbitMQ">
-      <HintPath>bin\Debug\net7.0-windows\RibbitMQ.dll</HintPath>
+      <HintPath>lib\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

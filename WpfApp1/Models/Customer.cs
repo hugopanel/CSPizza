@@ -71,5 +71,30 @@ namespace WpfApp1.Models
 
         }
 
+        public void UpdateAverageOrder()
+        {
+            float totalAmount = 0;
+            int orderCount = 0;
+
+            foreach (Order order in Pizzeria.Orders)
+            {
+                Console.WriteLine(order.Customer.CustomerInfo.Surname);
+                if (order.Customer == this)
+                {
+                    totalAmount += order.getPrice();
+                    orderCount++;
+                }
+            }
+            Console.WriteLine(totalAmount.ToString());
+
+            if (orderCount > 0)
+            {
+                AverageOrder = totalAmount / orderCount;
+            }
+            else
+            {
+                AverageOrder = 0;
+            }
+        }
     }
 }

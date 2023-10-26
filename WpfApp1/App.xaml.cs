@@ -7,9 +7,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using RibbitMQ;
 using WpfApp1.Models;
 using WpfApp1.Modules;
+using WpfApp1.View;
 
 namespace WpfApp1
 {
@@ -18,13 +20,25 @@ namespace WpfApp1
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Shared RibbitMq instance, to be use throughout the app.
+        /// </summary>
         internal static RibbitMQ<MessageType> RibbitMq = new();
+
+        /// <summary>
+        /// Json Options for the FileModule. 
+        /// </summary>
         internal static JsonSerializerOptions jsonOptions = new()
         {
             IncludeFields = true,
             PropertyNameCaseInsensitive = true,
             Converters = { new DateOnlyConverter() }
         };
+
+        /// <summary>
+        /// The Customer that logged in to the application.
+        /// </summary>
+        internal static Customer? CurrentCustomer;
 
         public App()
         {
@@ -45,8 +59,18 @@ namespace WpfApp1
             // Resume normal closing procedure
             base.OnExit(e);
         }
+
+        private void App_OnStartup(object sender, StartupEventArgs e)
+        {
+            Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            var dialog = new WelcomeView();
+            dialog.ShowDialog();
+        }
     }
 
+    /// <summary>
+    /// Converts a JSON value to DateOnly when required. Used in App.jsonOptions.
+    /// </summary>
     public class DateOnlyConverter : JsonConverter<DateOnly>
     {
         public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
