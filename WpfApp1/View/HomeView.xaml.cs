@@ -47,10 +47,6 @@ namespace WpfApp1.View
             ComboPizzaName.ItemsSource = Pizzeria.PizzasMenu.Select(item => item.PizzaType.Name).Distinct();
             ComboPizzaSize.ItemsSource = Pizzeria.PizzasMenu.Select(item => item.PizzaSize.Name).Distinct();
 
-            foreach(string name in Pizzeria.PizzasMenu.Select(item => item.PizzaType.Name).Distinct())
-            {
-                Console.WriteLine(name);
-            }
 
             drinkDataList = Pizzeria.DrinksMenu.Select(item => item).ToList();
             ComboDrinkName.ItemsSource = Pizzeria.DrinksMenu.Select(item => item.Name).Distinct();
@@ -208,6 +204,7 @@ namespace WpfApp1.View
                         // Delete the customer
                         Pizzas.Remove(pizzaToDelete);
                         /*DgDrinks.Items.Refresh();*/
+                        UpdateTotalPrice();
                         UpdateDataGrid();
                     }
                 }
@@ -226,6 +223,7 @@ namespace WpfApp1.View
                         // Delete the customer
                         Drinks.Remove(drinkToDelete);
                         /*DgDrinks.Items.Refresh();*/
+                        UpdateTotalPrice();
                         UpdateDataGrid1();
                     }
                 }
