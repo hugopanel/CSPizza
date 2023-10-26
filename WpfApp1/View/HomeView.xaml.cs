@@ -296,7 +296,7 @@ namespace WpfApp1.View
                     // Bind other data like drinks, customer info, and total price to respective controls.
 
                     // Optionally, you can update the total price label:
-                    LblTotalPriceValue.Content = orderToDisplay.Price;
+                    UpdateTotalPrice();
                 }
                 else
                 {
