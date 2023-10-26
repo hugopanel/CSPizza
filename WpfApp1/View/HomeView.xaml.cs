@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp1.Models;
+using WpfApp1.Modules;
 
 namespace WpfApp1.View
 {
@@ -233,6 +234,52 @@ namespace WpfApp1.View
                 else
                 {
                     MessageBox.Show("Invalid order index. Please choose a valid order to display.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string filePath = "orders.json"; // Replace with the full path to your JSON file.
+
+                if (File.Exists(filePath))
+                {
+                    var json = File.ReadAllText(filePath);
+
+                    var orders = JsonSerializer.Deserialize<List<Order>>(json);
+
+                    // Prompt the user for the order index to delete using a MessageBox.
+                    string input = Microsoft.VisualBasic.Interaction.InputBox("Enter the order index to delete:", "Delete Order", "");
+
+                    if (int.TryParse(input, out int orderIndexToDelete) && orderIndexToDelete >= 0 && orderIndexToDelete < orders.Count)
+                    {
+                        // Remove the order from the list.
+                        orders.RemoveAt(orderIndexToDelete);
+
+                        // Serialize the updated list back to JSON.
+                        var updatedJson = JsonSerializer.Serialize(orders);
+
+                        // Write the updated JSON data back to the file.
+                        File.WriteAllText(filePath, updatedJson);
+                        FileModule.LoadOrders();
+                        OrderDataGrid.ItemsSource = Pizzeria.Orders;
+
+                        MessageBox.Show("Order deleted successfully.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid order index. Please enter a valid order index to delete.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The JSON file does not exist.");
                 }
             }
             catch (Exception ex)
