@@ -9,12 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\pizza.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\pizza.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="RibbitMQ">
-      <HintPath>..\..\..\..\..\..\..\Downloads\RibbitMQ.dll</HintPath>
+      <HintPath>bin\Debug\net7.0-windows\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

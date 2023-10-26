@@ -38,7 +38,7 @@ namespace WpfApp1.Modules
 
         public static void SaveOrders()
         {
-            var jsonOrders = JsonSerializer.Serialize(Pizzeria.Customers, App.jsonOptions);
+            var jsonOrders = JsonSerializer.Serialize(Pizzeria.Orders, App.jsonOptions);
             File.WriteAllText("orders.json", jsonOrders);
         }
 

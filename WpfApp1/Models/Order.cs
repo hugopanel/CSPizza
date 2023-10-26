@@ -27,6 +27,8 @@ namespace WpfApp1.Models
         /// </summary>
         public DateTime dateTime { get; }
 
+        public float Price { get; set; }
+
         /// <summary>
         /// The list of items in the order.
         /// </summary>
@@ -45,11 +47,12 @@ namespace WpfApp1.Models
         public Customer Customer { get; init; }
 
         [JsonConstructor]
-        public Order(int id, OrderStatus Status, DateTime dateTime, List<Pizza> Pizzas, List<Drink> Drinks, Clerk Clerk, Customer customer)
+        public Order(int id, OrderStatus Status, DateTime dateTime, float Price, List<Pizza> Pizzas, List<Drink> Drinks, Clerk Clerk, Customer customer)
         {
             this.Id = id;
             this.Status = Status;
             this.dateTime = dateTime;
+            this.Price = Price;
             this.Pizzas = Pizzas;
             this.Drinks = Drinks;
             this.Clerk = Clerk;
@@ -57,7 +60,7 @@ namespace WpfApp1.Models
             Statistics stats = new Statistics();
             GlobalIdCount++;
         }
-        public Order(Clerk clerk) 
+        public Order(Clerk clerk)
         {
             Clerk = clerk;
             clerk.NbOrders++;
@@ -135,7 +138,7 @@ namespace WpfApp1.Models
 
         public float addToCumulative(Customer customer, float amount)
         {
-            if(Customer == customer)
+            if (Customer == customer)
             {
                 customer.CumulativeAmount += this.getPrice();
             }

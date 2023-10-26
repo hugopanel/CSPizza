@@ -34,6 +34,11 @@ namespace WpfApp1.Models
             Price = PizzaType.BasePrice + PizzaSize.BasePrice;
         }
 
+        public void UpdatePrice()
+        {
+            Price = PizzaType.BasePrice + PizzaSize.BasePrice;
+        }
+
         /// <summary>
         /// Returns a string representation of the pizza.
         /// </summary>

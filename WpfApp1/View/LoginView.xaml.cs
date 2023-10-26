@@ -86,7 +86,7 @@ namespace WpfApp1.View
             
             FileModule.LoadMenu();
             Pizzeria.PizzasMenu.Add(new Pizza("Default Medium Pizza", 1000, new PizzaType("Default", 2), new PizzaSize("Medium", 5)));
-            Pizzeria.DrinksMenu.Add(new Drink("Premium Tap Water", 12));
+            Pizzeria.DrinksMenu.Add(new Drink("Premium Tap Water", 12,"Small"));
             FileModule.SaveMenu();
 
             Application.Current.Shutdown();
