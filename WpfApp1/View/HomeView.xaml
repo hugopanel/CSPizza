@@ -76,7 +76,7 @@
             <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" >
                 <Label Content="Drinks" HorizontalAlignment="Center" Foreground="White"/>
             </Border>
-            <DataGrid x:Name="DgDrinks" AutoGenerateColumns="False" Grid.Row="3" >
+            <DataGrid x:Name="DgDrinks" AutoGenerateColumns="False" Grid.Row="3" CellEditEnding="DgDrinks_CellEditEnding">
                 <DataGrid.Background>
                     <SolidColorBrush Color="Gray" Opacity="0.6"  />
                 </DataGrid.Background>

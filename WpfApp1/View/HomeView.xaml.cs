@@ -37,7 +37,7 @@ namespace WpfApp1.View
         List<int> PizzaPreparationTimes = Pizzeria.PizzasMenu.Select(item => item.PreparationTime).Distinct().ToList();
         List<string> PizzaNames {  get; set; }
         List<string> PizzaSizeNames {  get; set; }
-        private Pizza editedPizza;
+        Pizza editedPizza;
 
         List<Drink> drinkDataList;
         public HomeView()
@@ -90,10 +90,11 @@ namespace WpfApp1.View
                             var newValue = comboBox.SelectedValue as string;
                             if (editedItem.Name != newValue)
                             {
-                                Console.WriteLine("Old value :" + editedItem.PizzaType.Name);
                                 editedItem.PizzaType= PizzaTypes.FirstOrDefault(item => item.Name == newValue);
-                                Console.WriteLine("New value :" + editedItem.PizzaType.Name);
                                 editedItem.UpdatePrice();
+                                UpdateTotalPrice();
+                                DgPizzas.ItemsSource = null;
+                                DgPizzas.ItemsSource = Pizzas;
                             }
                         }
                     }
@@ -105,20 +106,59 @@ namespace WpfApp1.View
                             var newValue = comboBox.SelectedValue as string;
                             if (editedItem.PizzaSize.Name != newValue)
                             {
-                                // Size value has changed, update the PizzaSize object
-                                editedItem.PizzaSize.Name = newValue;
-                                Console.WriteLine("New value :" + editedItem.PizzaType.Name);
-                                // Update other properties of Pizza if needed
-                                // ...
-
-                                // Refresh the DataGrid to update the display
-                                // DgPizzas.Items.Refresh();
+                                editedItem.PizzaSize = PizzaSizes.FirstOrDefault(item => item.Name == newValue);
+                                editedItem.UpdatePrice();
+                                UpdateTotalPrice();
+                                DgPizzas.ItemsSource = null;
+                                DgPizzas.ItemsSource = Pizzas;
                             }
                         }
                     }
                 }
             }
-            // UpdateDataGridPizza();
+        }
+
+        private void DgDrinks_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit && e.Column is DataGridComboBoxColumn comboBoxColumn)
+            {
+                var editedItem = e.Row.Item as Drink;
+                if (editedItem != null)
+                {
+                    if (comboBoxColumn.Header.ToString() == "Name")
+                    {
+                        var comboBox = e.EditingElement as ComboBox;
+                        if (comboBox != null)
+                        {
+                            var newValue = comboBox.SelectedValue as string;
+                            if (editedItem.Name != newValue)
+                            {
+                                editedItem.Name = newValue;
+                                editedItem.UpdatePrice();
+                                UpdateTotalPrice();
+                                DgDrinks.ItemsSource = null;
+                                DgDrinks.ItemsSource = Drinks;
+                            }
+                        }
+                    }
+                   else if (comboBoxColumn.Header.ToString() == "Size")
+                    {
+                        var comboBox = e.EditingElement as ComboBox;
+                        if (comboBox != null)
+                        {
+                            var newValue = comboBox.SelectedValue as string;
+                            if (editedItem.Size != newValue)
+                            {
+                                editedItem.Size = newValue;
+                                editedItem.UpdatePrice();
+                                UpdateTotalPrice();
+                                DgDrinks.ItemsSource = null;
+                                DgDrinks.ItemsSource = Drinks;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // permet d'ajouter une pizza à la commande 
@@ -126,6 +166,7 @@ namespace WpfApp1.View
         {
             Pizza newPizza = new Pizza(PizzaSizes[0].Name + " " + PizzaTypes[0].Name, PizzaPreparationTimes[0], PizzaTypes[0], PizzaSizes[0]);
             Pizzas.Add(newPizza);
+            UpdateTotalPrice();
             DgPizzas.Items.Refresh();
             foreach (Pizza pizza in Pizzas)
             {
@@ -135,8 +176,9 @@ namespace WpfApp1.View
         }
         public void BtnAddDrink_Click(object sender, RoutedEventArgs e)
         {
-            Drink newDrink = new Drink("Premium Tap Water",7,"Small");
+            Drink newDrink = new Drink(drinkDataList[0].Name, drinkDataList[0].Price, drinkDataList[0].Size);
             Drinks.Add(newDrink);
+            UpdateTotalPrice();
             DgDrinks.Items.Refresh();
             /*mainWindow.clerk.AddDrink();
             UpdateTotalPrice();
@@ -179,6 +221,16 @@ namespace WpfApp1.View
         // permet de mettre à jour le prix total de la commande sur l'affichage
         private void UpdateTotalPrice()
         {
+            float totalPrice = 0;
+            foreach (Pizza pizza in Pizzas)
+            {
+                totalPrice += pizza.Price;
+            }
+            foreach(Drink drink in Drinks)
+            {
+                totalPrice += drink.Price;
+            }
+            LblTotalPriceValue.Content = totalPrice;
             /* LblTotalPriceValue.Content = TotalPrice;*/
         }
 
