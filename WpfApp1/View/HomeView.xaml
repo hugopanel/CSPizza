@@ -33,33 +33,33 @@
             <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" >
                 <Label Content="Pizzas"  HorizontalAlignment="Center" Foreground="White"/>
             </Border>
-            <DataGrid x:Name="DgPizzas" AutoGenerateColumns="False" Grid.Row="1" >
+            <DataGrid x:Name="DgPizzas" AutoGenerateColumns="False" Grid.Row="1" CellEditEnding="DgPizzas_CellEditEnding">
                 <DataGrid.Background>
                     <SolidColorBrush Color="Gray" Opacity="0.6"  />
                 </DataGrid.Background>
 
-                <DataGrid.Columns >
-                    <DataGridComboBoxColumn Header="Name" SelectedItemBinding="{Binding Pizza.SelectedName}" Width="3*">
+                <DataGrid.Columns>
+                    <DataGridComboBoxColumn Header="Name" SelectedItemBinding="{Binding PizzaType.Name}" x:Name="ComboPizzaName" Width="3*">
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="ComboBox">
-                                <Setter Property="ItemsSource" Value="{Binding Pizza.AvailableName}" />
+                                <Setter Property="ItemsSource" Value="{Binding ElementName=ComboPizzaName, Path=Items}" />
                             </Style>
                         </DataGridComboBoxColumn.ElementStyle>
                         <DataGridComboBoxColumn.EditingElementStyle>
                             <Style TargetType="ComboBox">
-                                <Setter Property="ItemsSource" Value="{Binding Pizza.AvailableName}" />
+                                <Setter Property="ItemsSource" Value="{Binding ElementName=ComboPizzaName, Path=Items}" />
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
-                    <DataGridComboBoxColumn Header="Size" SelectedItemBinding="{Binding Pizza.SelectedSize}"  Width="3*">
+                    <DataGridComboBoxColumn Header="Size" SelectedItemBinding="{Binding PizzaSize.Name}" x:Name="ComboPizzaSize" Width="3*">
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="ComboBox">
-                                <Setter Property="ItemsSource" Value="{Binding Pizza.AvailableSizes}" />
+                                <Setter Property="ItemsSource" Value="{Binding ElementName=ComboPizzaSize, Path=Items}" />
                             </Style>
                         </DataGridComboBoxColumn.ElementStyle>
                         <DataGridComboBoxColumn.EditingElementStyle>
                             <Style TargetType="ComboBox">
-                                <Setter Property="ItemsSource" Value="{Binding Pizza.AvailableSizes}" />
+                                <Setter Property="ItemsSource" Value="{Binding ElementName=ComboPizzaSize, Path=Items}" />
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
@@ -88,27 +88,27 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns >
-                    <DataGridComboBoxColumn Header="Name" SelectedItemBinding="{Binding Drink.SelectedType}" Width="3*">
+                    <DataGridComboBoxColumn Header="Name" SelectedItemBinding="{Binding Name}" x:Name="ComboDrinkName" Width="3*">
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="ComboBox">
-                                <Setter Property="ItemsSource" Value="{Binding Drink.AvailableType}" />
+                                <Setter Property="ItemsSource" Value="{Binding ElementName=ComboDrinkName, Path=Items}" />
                             </Style>
                         </DataGridComboBoxColumn.ElementStyle>
                         <DataGridComboBoxColumn.EditingElementStyle>
                             <Style TargetType="ComboBox">
-                                <Setter Property="ItemsSource" Value="{Binding Drink.AvailableType}" />
+                                <Setter Property="ItemsSource" Value="{Binding ElementName=ComboDrinkName, Path=Items}" />
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
-                    <DataGridComboBoxColumn Header="Size" SelectedItemBinding="{Binding Drink.SelectedVolume}"  Width="3*">
+                    <DataGridComboBoxColumn Header="Size" SelectedItemBinding="{Binding Size}"  x:Name="ComboDrinkSize" Width="3*">
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="ComboBox">
-                                <Setter Property="ItemsSource" Value="{Binding Drink.AvailableVolume}" />
+                                <Setter Property="ItemsSource" Value="{Binding ElementName=ComboDrinkSize, Path=Items}" />
                             </Style>
                         </DataGridComboBoxColumn.ElementStyle>
                         <DataGridComboBoxColumn.EditingElementStyle>
                             <Style TargetType="ComboBox">
-                                <Setter Property="ItemsSource" Value="{Binding Drink.AvailableVolume}" />
+                                <Setter Property="ItemsSource" Value="{Binding ElementName=ComboDrinkSize, Path=Items}" />
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>

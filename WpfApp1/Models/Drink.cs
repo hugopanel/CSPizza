@@ -8,9 +8,11 @@ namespace WpfApp1.Models
 {
     public class Drink : Item
     {
-        public Drink(string name, float price) {
+        public string Size;
+        public Drink(string name, float price, string size) {
             Name = name;
             Price = price;
+            Size = size;
             PreparationTime = 0;
         }
     }
