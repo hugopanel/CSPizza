@@ -24,14 +24,8 @@ namespace WpfApp1.Models
 
         public int NbOrders { get; set; }
 
-        public void CheckIn()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void CheckIn();
 
-        public void CheckOut()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void CheckOut();
     }
 }

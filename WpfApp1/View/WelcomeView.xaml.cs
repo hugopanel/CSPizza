@@ -34,7 +34,8 @@ namespace WpfApp1.View
             AddText("Please type 'call' to call the pizzeria.");
 
             Clerk myClerk = Pizzeria.Clerks.First();
-            myClerk.Register();
+            //myClerk.Register();
+            // TODO: Remplacer l'usage de la fonction Register !!
 
             txt_UserInput.Focus();
         }

@@ -472,14 +472,15 @@ namespace WpfApp1.Models
             App.RibbitMq.Subscribe(MessageType.InitialCall, ClerkHandleInitialCallAsync);
         }
 
-        /// <summary>
-        /// Temporary function to subscribe the clerk to the initial call event.
-        /// </summary>
-        // TODO: Supprimer cette fonction quand on n'en a plus besoin. Il faudrait register tous les Clerks au lancement de l'application
-        [Obsolete]
-        public void Register()
+        public override void CheckIn()
         {
             App.RibbitMq.Subscribe(MessageType.InitialCall, ClerkHandleInitialCallAsync);
+        }
+
+        public override void CheckOut()
+        {
+            // We don't need to do anything...
+            // We could try to unsubscribe from every Clerk event.
         }
     }
 }
