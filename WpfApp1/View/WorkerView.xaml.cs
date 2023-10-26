@@ -54,6 +54,8 @@ namespace WpfApp1.View
                     if (result == MessageBoxResult.Yes)
                     {
                         Pizzeria.Clerks.Remove(clerkToDelete);
+                        WorkerDataGrid.ItemsSource = null;
+                        WorkerDataGrid.ItemsSource = Pizzeria.Clerks;
                     }
                 }
 
@@ -63,6 +65,8 @@ namespace WpfApp1.View
                     if (result == MessageBoxResult.Yes)
                     {
                         Pizzeria.DeliveryMen.Remove(deliverymanToDelete);
+                        WorkerDataGrid.ItemsSource = null;
+                        WorkerDataGrid.ItemsSource = Pizzeria.DeliveryMen;
                     }
                 }
             }

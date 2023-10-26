@@ -122,7 +122,8 @@ namespace WpfApp1.View
                     {
                         // Delete the customer
                         Pizzeria.Customers.Remove(customerToDelete);
-                        UpdateDataGrid();
+                        ClientDataGrid.ItemsSource = null;
+                        ClientDataGrid.ItemsSource = Pizzeria.Customers;
                     }
                 }
             }
