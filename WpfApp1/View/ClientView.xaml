@@ -14,7 +14,7 @@
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
         </Style>
     </UserControl.Resources>
-
+   
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -92,8 +92,6 @@
                         <Setter Property="FontSize" Value="15"/>
                         <Setter Property="BorderBrush" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0" />
-
-
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.RowStyle>
@@ -113,7 +111,6 @@
                         <Setter Property="FontSize" Value="15"/>
                         <Setter Property="BorderBrush" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0" />
-
                     </Style>
                 </DataGrid.CellStyle>
 
@@ -165,7 +162,6 @@ VerticalAlignment="Top"
                 </DataGrid.Columns>
 
             </DataGrid>
-
         </Border>
     </Grid>
 </UserControl>

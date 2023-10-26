@@ -22,6 +22,7 @@ namespace WpfApp1.View
     /// </summary>
     public partial class ClientView : UserControl
     {
+        public ObservableCollection<Person> People { get; set; }
         public ClientView()
         {
             InitializeComponent();

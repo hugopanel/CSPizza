@@ -105,7 +105,7 @@ namespace WpfApp1
             DeliveryStatisticsWindow deliveryStatisticsWindow = new DeliveryStatisticsWindow();
             deliveryStatisticsWindow.Show();
         }
-
+        
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             DatePicker datePicker = (DatePicker)sender;

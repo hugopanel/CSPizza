@@ -27,5 +27,4 @@
       <HintPath>bin\Debug\net7.0-windows\RibbitMQ.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

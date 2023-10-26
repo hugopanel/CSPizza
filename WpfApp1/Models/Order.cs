@@ -63,6 +63,7 @@ namespace WpfApp1.Models
         public Order(Clerk clerk)
         {
             Clerk = clerk;
+            clerk.NbOrders++;
         }
 
         // Probably shouldn't ever use the following two constructors, but they're here just in case, for now...
