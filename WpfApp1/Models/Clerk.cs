@@ -251,6 +251,8 @@ namespace WpfApp1.Models
         /// <returns></returns>
         private async Task ClerkHandleSubmitOrder(IMessage<MessageType> message)
         {
+            HomeView.ClerkPrintText("Received an order...", this);
+
             // We retrieve the order
             Order order = (Order) message.Content!;
 
@@ -263,11 +265,11 @@ namespace WpfApp1.Models
 
             App.RibbitMq.Unsubscribe(MessageType.SubmitOrder, ClerkHandleSubmitOrder);
 
+            // We tell the Customer
+            App.RibbitMq.Send(new Message() { MessageType = MessageType.ConfirmationSubmitOrder, Content = _currentOrder.Id });
+
             // We can now send a message to the cooks to tell them a new order is waiting to be cooked.
             SendKitchenNewOrder(); // We don't want to await that call!
-
-            // Finally, we tell the Customer
-            App.RibbitMq.Send(new Message() {MessageType = MessageType.ConfirmationSubmitOrder, Content = _currentOrder.Id});
         }
 
         private bool _isWaitingForCooksAnswer;
@@ -283,6 +285,7 @@ namespace WpfApp1.Models
 
             while (_isWaitingForCooksAnswer)
             {
+                HomeView.ClerkPrintText("Sending a new message to the kitchen...", this);
                 App.RibbitMq.Send(new Message() {MessageType = MessageType.KitchenNewOrder, Content = _currentOrder, SendType = SendType.FirstFree});
                 await Task.Delay(5000); // Wait for 5 seconds before sending the message again.
             }
@@ -290,6 +293,8 @@ namespace WpfApp1.Models
 
         private async Task HandleKitchenPreparingOrder(IMessage<MessageType> message)
         {
+            HomeView.ClerkPrintText("The kitchen is preparing the order...", this);
+
             // We must check if the message is for us 
             if ((int) message.Content! == _currentOrder!.Id)
             {
@@ -309,6 +314,8 @@ namespace WpfApp1.Models
 
         private async Task HandleKitchenOrderReady(IMessage<MessageType> message)
         {
+            HomeView.ClerkPrintText("The order is ready!", this);
+
             // We must check if the message is for us
             if ((int) message.Content! == _currentOrder!.Id)
             {
@@ -339,9 +346,13 @@ namespace WpfApp1.Models
             _isWaitingForDeliveryMansAnswer = true;
 
             App.RibbitMq.Subscribe(MessageType.DeliveryGoing, HandleDeliveryGoing);
+            App.RibbitMq.Subscribe(MessageType.DeliveryArrivedToCustomer, HandleDeliveryArrivedToCustomer);
+            App.RibbitMq.Subscribe(MessageType.DeliveryDropped, HandleDeliveryDropped);
 
-            while (!_isWaitingForDeliveryMansAnswer)
+            while (_isWaitingForDeliveryMansAnswer)
             {
+                HomeView.ClerkPrintText("Searching for a free delivery man...", this);
+
                 App.RibbitMq.Send(new Message()
                 {
                     MessageType = MessageType.DeliveryNewOrder, 
@@ -355,13 +366,12 @@ namespace WpfApp1.Models
 
         private async Task HandleDeliveryGoing(IMessage<MessageType> message)
         {
+            HomeView.ClerkPrintText("The delivery man left the pizzeria!", this);
+
             // We check if the message was for us
             if ((int) message.Content! == _currentOrder!.Id)
             {
                 _isWaitingForDeliveryMansAnswer = false;
-
-                App.RibbitMq.Subscribe(MessageType.DeliveryArrivedToCustomer, HandleDeliveryArrivedToCustomer);
-                App.RibbitMq.Subscribe(MessageType.DeliveryDropped, HandleDeliveryDropped);
 
                 App.RibbitMq.Unsubscribe(MessageType.DeliveryGoing, HandleDeliveryGoing);
 
@@ -379,6 +389,8 @@ namespace WpfApp1.Models
 
         private async Task HandleDeliveryArrivedToCustomer(IMessage<MessageType> message)
         {
+            HomeView.ClerkPrintText("The delivery man arrived at the customer's house!", this);
+
             // We check if the message is for us
             if ((int) message.Content! == _currentOrder!.Id)
             {
@@ -387,7 +399,7 @@ namespace WpfApp1.Models
                 App.RibbitMq.Subscribe(MessageType.DeliveryArrivedAtPizzeria, HandleDeliveryArrivedAtPizzeria);
                 App.RibbitMq.Unsubscribe(MessageType.DeliveryArrivedToCustomer, HandleDeliveryArrivedToCustomer);
                 App.RibbitMq.Unsubscribe(MessageType.DeliveryDropped, HandleDeliveryDropped);
-
+                
                 // We can inform the Customer
                 App.RibbitMq.Send(new Message()
                 {
@@ -402,6 +414,8 @@ namespace WpfApp1.Models
 
         private async Task HandleDeliveryDropped(IMessage<MessageType> message)
         {
+            HomeView.ClerkPrintText("The delivery man dropped the order! :(", this);
+
             // We check if the message is for us
             if ((int) message.Content! == _currentOrder!.Id)
             {
@@ -427,6 +441,8 @@ namespace WpfApp1.Models
 
         private async Task HandleDeliveryArrivedAtPizzeria(IMessage<MessageType> message)
         {
+            HomeView.ClerkPrintText("The delivery man came back at the pizzeria...", this);
+
             // We check if the message is for us
             if ((int) message.Content! == _currentOrder!.Id)
             {
@@ -435,6 +451,8 @@ namespace WpfApp1.Models
                 App.RibbitMq.Unsubscribe(MessageType.DeliveryArrivedAtPizzeria, HandleDeliveryArrivedAtPizzeria);
 
                 // The Clerk takes the money
+                HomeView.ClerkPrintText("I got the money.", this);
+
                 App.RibbitMq.Send(new Message()
                 {
                     MessageType = MessageType.ClerkOrderDone,
@@ -470,6 +488,8 @@ namespace WpfApp1.Models
 
             // ... and we subscribe the Clerk to the initial call event
             App.RibbitMq.Subscribe(MessageType.InitialCall, ClerkHandleInitialCallAsync);
+
+            HomeView.ClerkPrintText("Ready to receive more orders!", this);
         }
 
         public override void CheckIn()

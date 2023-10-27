@@ -204,12 +204,12 @@ BorderThickness="0" x:Name="OrderDataGrid"  CanUserResizeRows="False" IsReadOnly
             <RichTextBox Grid.Row="1" IsReadOnly="True" IsUndoEnabled="False"  Name="rtb_Clerk" Background="#36013F">
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Margin" Value="0"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="Foreground" Value="#BCBEE0"/>
                         <Setter Property="Padding" Value="10,0,0,10"/>
                         <Setter Property="FontFamily" Value="Montserrat"/>
-                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="FontSize" Value="11"/>
                     </Style>
                 </RichTextBox.Resources>
             </RichTextBox>
@@ -217,12 +217,12 @@ BorderThickness="0" x:Name="OrderDataGrid"  CanUserResizeRows="False" IsReadOnly
             <RichTextBox Grid.Row="3" IsReadOnly="True" IsUndoEnabled="False"  Name="rtb_Cook" Background="#36013F">
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Margin" Value="0"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="Foreground" Value="#BCBEE0"/>
                         <Setter Property="Padding" Value="10,0,0,10"/>
                         <Setter Property="FontFamily" Value="Montserrat"/>
-                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="FontSize" Value="11"/>
                     </Style>
                 </RichTextBox.Resources>
             </RichTextBox>
@@ -230,12 +230,12 @@ BorderThickness="0" x:Name="OrderDataGrid"  CanUserResizeRows="False" IsReadOnly
             <RichTextBox Grid.Row="5" IsReadOnly="True" IsUndoEnabled="False"  Name="rtb_Deliverer" Background="#36013F">
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Margin" Value="0"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="Foreground" Value="#BCBEE0"/>
                         <Setter Property="Padding" Value="10,0,0,10"/>
                         <Setter Property="FontFamily" Value="Montserrat"/>
-                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="FontSize" Value="11"/>
                     </Style>
                 </RichTextBox.Resources>
             </RichTextBox>

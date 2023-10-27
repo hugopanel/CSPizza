@@ -16,7 +16,8 @@ namespace WpfApp1.Models
             new Address("136 bis Bd Maxime Gorki", "Villejuif", 9000),
             new Address("Genshin Street","Kuala Lumpur", 1200000),
             new Address("Minoring Avenue","Paris", 1500000),
-            new Address("Karmine Boulevard","Saint-Michel-Chef-Chef", 1500000)
+            new Address("Karmine Boulevard","Saint-Michel-Chef-Chef", 1500000),
+            new Address("3 rue Minoring", "Paris", 3000)
         };
 
         public static List<Customer> Customers { get; set; } = new();
