@@ -470,6 +470,9 @@ namespace WpfApp1.Models
                 // We update the Order
                 _currentOrder.Status = OrderStatus.Done;
 
+                // We update the Customer
+                _currentCustomer!.CumulativeAmount += _currentOrder.Price;
+
                 // We hang up
                 HangUp();
             }
