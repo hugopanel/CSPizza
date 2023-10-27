@@ -6,11 +6,12 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using RibbitMQ;
+using WpfApp1.View;
 using static WpfApp1.App;
 
 namespace WpfApp1.Models
 {
-    internal class DeliveryMan : Worker
+    public class DeliveryMan : Worker
     {
         /// <summary>
         /// Number of deliveries made.
@@ -57,6 +58,7 @@ namespace WpfApp1.Models
         private async Task HandleDeliveryNewOrder(IMessage<MessageType> message)
         {
             // We have a new order to deliver!
+            HomeView.DeliveryManPrintText("I have a new order to deliver! Let's go!", this);
 
             Order order = (Order) message.Content!;
 
@@ -78,6 +80,8 @@ namespace WpfApp1.Models
                 if (customerAddress == null)
                 {
                     // The address is not in the GPS, we must drop the order
+                    HomeView.DeliveryManPrintText("The customer's address is not listed on my map! I can't deliver! :(", this);
+
                     RibbitMq.Send(new Message()
                     {
                         MessageType = MessageType.DeliveryDropped,
@@ -85,11 +89,14 @@ namespace WpfApp1.Models
                     });
 
                     RibbitMq.Subscribe(MessageType.DeliveryNewOrder, HandleDeliveryNewOrder);
+                    HomeView.DeliveryManPrintText("I'm ready to make another delivery!", this);
                     return;
                 }
 
                 // Deliver the order to the customer
                 await Task.Delay(customerAddress.DeliveryTime);
+
+                HomeView.DeliveryManPrintText("I'm at the customer's house!", this);
 
                 RibbitMq.Send(new Message()
                 {
@@ -98,9 +105,12 @@ namespace WpfApp1.Models
                 });
 
                 // We take the money from the Customer (gently)...
+                HomeView.DeliveryManPrintText("I took the money from the customer. Heading back to the pizzeria!", this);
 
                 // Go back to the pizzeria
                 await Task.Delay(customerAddress.DeliveryTime);
+
+                HomeView.DeliveryManPrintText("I am back at the pizzeria.", this);
 
                 RibbitMq.Send(new Message()
                 {
@@ -109,14 +119,17 @@ namespace WpfApp1.Models
                 });
 
                 // We give the money to the Clerk...
+                HomeView.DeliveryManPrintText("I gave the money to the clerk!", this);
 
                 // We again
                 RibbitMq.Subscribe(MessageType.DeliveryNewOrder, HandleDeliveryNewOrder);
+                HomeView.DeliveryManPrintText("I'm ready to make another delivery!", this);
 
                 NbOrders++;
             } 
             catch (NullReferenceException ex)
             {
+                HomeView.DeliveryManPrintText("Unable to deliver. The customer hasn't specified an address!", this);
                 await Console.Out.WriteLineAsync("Unable to deliver. The customer hasn't specified an address.");
             }
         }

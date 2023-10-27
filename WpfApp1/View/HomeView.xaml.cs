@@ -41,6 +41,11 @@ namespace WpfApp1.View
         Pizza editedPizza;
 
         List<Drink> drinkDataList;
+
+        public static RichTextBox? ClerkRTB;
+        public static RichTextBox? CookRTB;
+        public static RichTextBox? DeliveryManRTB;
+
         public HomeView()
         {
             InitializeComponent();
@@ -60,6 +65,10 @@ namespace WpfApp1.View
             
 
             OrderDataGrid.ItemsSource = Pizzeria.Orders;
+
+            ClerkRTB = rtb_Clerk;
+            CookRTB = rtb_Cook;
+            DeliveryManRTB = rtb_Deliverer;
         }
 
         public void UpdateDataGrid()
@@ -395,29 +404,22 @@ namespace WpfApp1.View
             Console.WriteLine("Subscribing to everything...");
 
             // Now we can subscribe to events related to our Order
-            App.RibbitMq.Subscribe(MessageType.ClerkOrderPreparing, HandleClerkOrderPreparing);
-            App.RibbitMq.Subscribe(MessageType.ClerkOrderWaiting, HandleClerkOrderPreparing);
-            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivering, HandleClerkOrderPreparing);
-            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivered, HandleClerkOrderPreparing);
-            App.RibbitMq.Subscribe(MessageType.ClerkOrderDropped, HandleClerkOrderPreparing);
-            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivered, HandleClerkOrderPreparing);
-            App.RibbitMq.Subscribe(MessageType.ClerkOrderDone, HandleClerkOrderPreparing);
-
-            //App.RibbitMq.Subscribe(MessageType.ClerkOrderWaiting, HandleClerkOrderWaiting);
-            //App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivering, HandleClerkOrderDelivering);
-            //App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivered, HandleClerkOrderDelivered);
-            //App.RibbitMq.Subscribe(MessageType.ClerkOrderDropped, HandleClerkOrderDropped);
-            //App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivered, HandleClerkOrderDelivered);
-            //App.RibbitMq.Subscribe(MessageType.ClerkOrderDone, HandleClerkOrderDone);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderPreparing, HandleClerkMessage);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderWaiting, HandleClerkMessage);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivering, HandleClerkMessage);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivered, HandleClerkMessage);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDropped, HandleClerkMessage);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDelivered, HandleClerkMessage);
+            App.RibbitMq.Subscribe(MessageType.ClerkOrderDone, HandleClerkMessage);
         }
 
         /// <summary>
-        /// For when the Order is being prepared by a Cook.
+        /// Update the OrderDataGrid to reflect the status of the orders in real-time.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private async Task HandleClerkOrderPreparing(IMessage<MessageType> message)
+        private async Task HandleClerkMessage(IMessage<MessageType> message)
         {
             Console.WriteLine("Received " + message.MessageType);
 
@@ -428,59 +430,40 @@ namespace WpfApp1.View
             });
         }
 
-        /// <summary>
-        /// For when the Order is waiting to be delivered.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private async Task HandleClerkOrderWaiting(IMessage<MessageType> message)
+        public static void ClerkPrintText(string message, Clerk clerk)
         {
-            OrderDataGrid.Items.Refresh();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var paragraph = new Paragraph();
+                paragraph.Inlines.Add(new Run(clerk.Name + ": " + message));
+                ClerkRTB!.Document.Blocks.Add(paragraph);
+
+                ClerkRTB.ScrollToEnd();
+            }, null);
         }
 
-        /// <summary>
-        /// For when the Order is being delivered by a DeliveryMan.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private async Task HandleClerkOrderDelivering(IMessage<MessageType> message)
+        public static void CookPrintText(string message, Cook cook)
         {
-            OrderDataGrid.Items.Refresh();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var paragraph = new Paragraph();
+                paragraph.Inlines.Add(new Run(cook.Name + ": " + message));
+                CookRTB!.Document.Blocks.Add(paragraph);
+
+                CookRTB.ScrollToEnd();
+            }, null);
         }
 
-        /// <summary>
-        /// For when the Order has been dropped by the DeliveryMan. Possibly because of a wrong address.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private async Task HandleClerkOrderDropped(IMessage<MessageType> message)
+        public static void DeliveryManPrintText(string message, DeliveryMan deliveryMan)
         {
-            OrderDataGrid.Items.Refresh();
-        }
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var paragraph = new Paragraph();
+                paragraph.Inlines.Add(new Run(deliveryMan.Name + ": " + message));
+                DeliveryManRTB!.Document.Blocks.Add(paragraph);
 
-        /// <summary>
-        /// For when the Order has been delivered.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private async Task HandleClerkOrderDelivered(IMessage<MessageType> message)
-        {
-            OrderDataGrid.Items.Refresh();
-        }
-
-        /// <summary>
-        /// For when the DeliveryMan returned to the Pizzeria and the money has been cashed in. The order is complete.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private async Task HandleClerkOrderDone(IMessage<MessageType> message)
-        {
-            OrderDataGrid.Items.Refresh();
+                DeliveryManRTB.ScrollToEnd();
+            }, null);
         }
     }
 }

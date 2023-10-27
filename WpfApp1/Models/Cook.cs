@@ -5,11 +5,12 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using RibbitMQ;
+using WpfApp1.View;
 using static WpfApp1.App;
 
 namespace WpfApp1.Models
 {
-    internal class Cook : Worker
+    public class Cook : Worker
     {
         [JsonConstructor]
         public Cook(int id, string name)
@@ -35,7 +36,9 @@ namespace WpfApp1.Models
         /// <returns></returns>
         public async Task CookItem(Item item)
         {
+            HomeView.CookPrintText("Cooking " + item.Name + "...", this);
             await Task.Delay(item.PreparationTime);
+            HomeView.CookPrintText("Done cooking " + item.Name + "!", this);
         }
 
         /// <summary>
@@ -45,6 +48,7 @@ namespace WpfApp1.Models
         /// <returns></returns>
         private async Task HandleKitchenNewOrder(IMessage<MessageType> message)
         {
+            HomeView.CookPrintText("I received a new order. Let's cook!", this);
             RibbitMq.Unsubscribe(MessageType.KitchenNewOrder, HandleKitchenNewOrder); // We unsubscribe
 
             Order order = (Order) message.Content!;
@@ -66,6 +70,8 @@ namespace WpfApp1.Models
                 await CookItem(drink);
             }
 
+            HomeView.CookPrintText("The order is ready!", this);
+
             // Cooking is finished!
             // We send a message to tell the Clerk
             RibbitMq.Send(new Message()
@@ -76,6 +82,7 @@ namespace WpfApp1.Models
 
             // And we subscribe to KitchenNewOrder to be able to cook again!
             RibbitMq.Subscribe(MessageType.KitchenNewOrder, HandleKitchenNewOrder);
+            HomeView.CookPrintText("I'm ready to cook some more!", this);
         }
     }
 }
