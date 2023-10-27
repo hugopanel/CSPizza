@@ -3,8 +3,32 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
+    <StartupObject>WpfApp1.App</StartupObject>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="lib\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <None Remove="lib\**" />
+    <Page Remove="lib\**" />
+    <None Remove="Images\pizza.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\pizza.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RibbitMQ">
+      <HintPath>lib\RibbitMQ.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

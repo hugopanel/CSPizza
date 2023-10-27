@@ -2,60 +2,172 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal class Order
+    public class Order
     {
         private static int GlobalIdCount = 0;
 
         /// <summary>
         /// The Identification number of the order.
-        /// It cannot be set manually. It increments automatically each time the class is instanciated.
+        /// Unless set manually, it increments automatically each time the class is instanciated.
         /// </summary>
         public int Id { get; } = GlobalIdCount++;
 
         /// <summary>
         /// The status of the order, as defined by OrderStatus.
         /// </summary>
-        public OrderStatus Status { get; set; } = OrderStatus.Taken;
-        
+        public OrderStatus Status { get; set; } = OrderStatus.Taking;
+
+        /// <summary>
+        /// Date and time of when the command was taken. 
+        /// </summary>
+        public DateTime dateTime { get; }
+
+        private float? _price;
+        public float Price
+        {
+            get => _price ?? Pizzas.Sum(p => p.Price) + Drinks.Sum(d => d.Price);
+
+            set => _price = value;
+        }
+
         /// <summary>
         /// The list of items in the order.
         /// </summary>
-        public List<Item> Items { get; set; } = new();
+        public List<Pizza> Pizzas { get; set; } = new();
 
-        public Order() { }
+        public List<Drink> Drinks { get; set; } = new();
 
-        // Probably shouldn't ever use the following two constructors, but they're here just in case, for now...
-        public Order(OrderStatus status)
+        /// <summary>
+        /// The Clerk in charge of the command.
+        /// </summary>
+        public Clerk? Clerk { get; set; }
+
+        /// <summary>
+        /// Le Customer qui a fait la commande.
+        /// </summary>
+        public Customer Customer { get; init; }
+
+        [JsonConstructor]
+        public Order(int id, OrderStatus Status, DateTime dateTime, float Price, List<Pizza> Pizzas, List<Drink> Drinks, Clerk Clerk, Customer customer)
         {
-            Status = status;
+            this.Id = id;
+            this.Status = Status;
+            this.dateTime = dateTime;
+            this.Price = Price;
+            this.Pizzas = Pizzas;
+            this.Drinks = Drinks;
+            this.Clerk = Clerk;
+            this.Customer = customer;
+            Statistics stats = new Statistics();
+            if (id > GlobalIdCount)
+            {
+                GlobalIdCount = id + 1;
+            }
+        }
+      
+        public Order(Clerk clerk) 
+        {
+            Clerk = clerk;
+            clerk.NbOrders++;
         }
 
-        public Order(OrderStatus status, List<Item> items)
+        public Order(Customer customer, List<Pizza> pizzas, List<Drink> drinks, OrderStatus status = OrderStatus.Taking, int? id = null, Clerk? clerk = null)
         {
+            if (id == null)
+                Id = GlobalIdCount++;
+            else
+            {
+                Id = (int) id;
+                GlobalIdCount += 1;
+            }
+
+            Clerk = clerk;
+            Customer = customer;
+            Pizzas = pizzas;
+            Drinks = drinks;
             Status = status;
-            Items = items;
         }
+        
 
         /// <summary>
         /// Add an item to the order.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        public void AddItem(Item item)
+        public void AddPizza(Pizza pizza)
         {
-            Items.Add(item);
+            Pizzas.Add(pizza);
+            Customer.CumulativeAmount += pizza.Price;
+        }
+
+
+        public void AddDrink(Drink drink)
+        {
+            Drinks.Add(drink);
+            Customer.CumulativeAmount += drink.Price;
         }
 
         /// <summary>
         /// Remove an item from the order.
         /// </summary>
         /// <param name="item">The item to remove.</param>
-        public void RemoveItem(Item item)
+        public void RemovePizza(Pizza pizza)
         {
-            Items.Remove(item);
+            Pizzas.Remove(pizza);
+            Customer.CumulativeAmount -= pizza.Price;
+        }
+
+        public void RemoveDrink(Drink drink)
+        {
+            Drinks.Remove(drink);
+            Customer.CumulativeAmount -= drink.Price;
+        }
+
+        /// <summary>
+        /// Confirms the order but DOES NOT send any message.
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        public void Confirm()
+        {
+            Status = OrderStatus.Taken;
+
+            // Remarque : le message pour signaler que la commande a été validée est envoyée depuis une autre fonction. 
+        }
+
+        public float getPrice()
+        {
+            float price = 0;
+            foreach (Pizza pizza in Pizzas)
+            {
+                price += pizza.Price;
+            }
+            foreach (Drink drink in Drinks)
+            {
+                price += drink.Price;
+            }
+            return price;
+        }
+
+        public float addToCumulative(Customer customer, float amount)
+        {
+            if (Customer == customer)
+            {
+                customer.CumulativeAmount += this.getPrice();
+            }
+            return amount;
+        }
+
+        public int IsToClerk(Clerk clerk, int nbOrders)
+        {
+            if (this.Clerk == clerk)
+            {
+                nbOrders += 1;
+            }
+            return nbOrders;
         }
     }
 }

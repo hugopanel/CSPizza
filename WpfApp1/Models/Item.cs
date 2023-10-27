@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal abstract class Item
+    public abstract class Item
     {
         /// <summary>
         /// Name of the item.

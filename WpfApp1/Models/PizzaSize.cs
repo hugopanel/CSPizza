@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal class PizzaSize
+    public class PizzaSize
     {
         /// <summary>
         /// Name of the size (small, medium...).
@@ -17,5 +17,10 @@ namespace WpfApp1.Models
         /// Base price of the size (can be increased depending on the type).
         /// </summary>
         public float BasePrice { get; set; }
+
+        public PizzaSize(string name, float baseprice) {
+            Name = name;
+            BasePrice = baseprice;
+        }
     }
 }

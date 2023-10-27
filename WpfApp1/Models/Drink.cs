@@ -6,12 +6,20 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Models
 {
-    internal class Drink : Item
+    public class Drink : Item
     {
-        public Drink(string name, float price) {
+        public string Size { get; set; }
+        public Drink(string name, float price, string size) {
             Name = name;
             Price = price;
+            Size = size;
             PreparationTime = 0;
+        }
+
+        public void UpdatePrice()
+        {
+            var typeDrink = Pizzeria.DrinksMenu.FirstOrDefault(item => item.Name == this.Name && item.Size == this.Size);
+            Price = typeDrink.Price;
         }
     }
 }

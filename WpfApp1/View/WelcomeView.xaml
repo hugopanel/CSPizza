@@ -1,0 +1,178 @@
+﻿<Window x:Class="WpfApp1.View.WelcomeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.View"
+        mc:Ignorable="d"
+        Title="WelcomeView" Height="550" Width="800"
+         WindowStyle="None"
+         ResizeMode="NoResize"
+         WindowStartupLocation="CenterScreen"
+         Background="Transparent"
+         AllowsTransparency="True"
+         MouseDown="Window_MouseDown">
+
+    <Border CornerRadius="30"
+            BorderThickness="2"
+            Opacity="0.95">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#462AD8" Offset="0"/>
+                <GradientStop Color="#DA34AE" Offset="0.75"/>
+                <GradientStop Color="#FFA62F" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                <GradientStop Color="#060531" Offset="0"/>
+                <GradientStop Color="#1B1448" Offset="0.75"/>
+                <GradientStop Color="#151B54" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text=""
+                           Foreground="DarkGray"
+                           FontSize="20"
+                           FontFamily="Montserrat"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="50,10,0,0"/>
+
+                <Button x:Name="btnMinimize"
+                        BorderBrush="DarkGray"
+                        Content="-"
+                        Foreground="DarkGray"
+                        FontSize="35"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        Grid.Column="1"
+                        Click="btnMinimize_Click"
+                        Focusable="False">
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+
+                                    <Setter Property="Background" Value="Black"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="38" Height="41"
+                                    CornerRadius="15"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                </Button>
+
+                <Button x:Name="btnClose"
+                        BorderBrush="#DA34AE"
+                        Content="X"
+                        Foreground="#DA34AE"
+                        FontSize="15"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        Grid.Column="2"
+                        Click="btnClose_Click"
+                        Focusable="False">
+
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+
+                                    <Setter Property="Background" Value="Black"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="38" Height="38"
+                                    CornerRadius="15"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                </Button>
+            </Grid>
+
+            <StackPanel Width="550"
+                        Grid.Row="1"
+                        Orientation="Vertical"
+                        Margin="0,2,0,0">
+
+                <TextBlock Text="WELCOME TO PIZZERIA HULOPA !"
+                           Foreground="White"
+                           FontSize="20"
+                           FontWeight="Medium"
+                           FontFamily="Montserrat"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+
+                <TextBlock Text="HOW MAY WE HELP YOU TODAY ?"
+                   Foreground="LightGray"
+                   FontSize="15"
+                   FontFamily="Montserrat"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   Margin="0,15,0,40"/>
+
+                <Grid Grid.Column="1" Grid.Row="1" Background="transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <RichTextBox Grid.Row="1" IsReadOnly="True" IsUndoEnabled="False" Name="rtb_Customer" Background="#36013F" MinHeight="250" MaxHeight="300" Focusable="False">
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="5"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="#BCBEE0"/>
+                                <Setter Property="Padding" Value="10,0,0,10"/>
+                                <Setter Property="FontFamily" Value="Montserrat"/>
+                                <Setter Property="FontSize" Value="15"/>
+                            </Style>
+                        </RichTextBox.Resources>
+                    </RichTextBox>
+                    <TextBox TextWrapping="Wrap" Name="txt_UserInput" Grid.Row="2" KeyDown="OnTextBoxKeyPressed" Background="#4B0150" Foreground="white" Padding="0,8" FontSize="13"/>
+                </Grid>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Window>
