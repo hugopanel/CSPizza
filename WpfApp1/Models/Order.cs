@@ -27,7 +27,13 @@ namespace WpfApp1.Models
         /// </summary>
         public DateTime dateTime { get; }
 
-        public float Price { get; set; }
+        private float? _price;
+        public float Price
+        {
+            get => _price ?? Pizzas.Sum(p => p.Price) + Drinks.Sum(d => d.Price);
+
+            set => _price = value;
+        }
 
         /// <summary>
         /// The list of items in the order.

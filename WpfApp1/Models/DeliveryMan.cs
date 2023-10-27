@@ -18,11 +18,13 @@ namespace WpfApp1.Models
         public int Deliveries { get; set; } = 0;
 
         [JsonConstructor]
-        public DeliveryMan(int id, string name, int deliveries)
+        public DeliveryMan(int id, string name, int deliveries, string address, int nbOrders)
         {
             Id = id;
             Name = name;
             Deliveries = deliveries;
+            Address = address;
+            NbOrders = nbOrders;
         }
 
         public DeliveryMan(string name)
